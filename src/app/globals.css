@@ -1,0 +1,13 @@
+/* color */
+:root {
+  --black: #101318;
+  --white: #ffffff;
+
+  --grayscale-100: #f2f4f8;
+  --grayscale-300: #cfdbea;
+  --grayscale-500: #9facbd;
+  --grayscale-800: #2d3034;
+
+  --primary-purple-100: #6a43db;
+  --primary-purple-10: #f1edfc;
+}

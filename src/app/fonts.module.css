@@ -1,0 +1,116 @@
+/* font */
+.text-3xl,
+.text-3xl-semibold,
+.text-2xl,
+.text-2xl-semibold,
+.text-2xl-medium,
+.text-2xl-regular,
+.text-xl,
+.text-xl-semibold,
+.text-xl-medium,
+.text-xl-regular,
+.text-2lg,
+.text-2lg-semibold,
+.text-2lg-medium,
+.text-2lg-regular,
+.text-lg,
+.text-lg-semibold,
+.text-lg-medium,
+.text-lg-regular,
+.text-md,
+.text-md-semibold,
+.text-md-medium,
+.text-md-regular,
+.text-sm-semibold,
+.text-sm-medium,
+.text-xs-semibold,
+.text-xs-medium,
+.text-xs-regular {
+  font-family: var(--font-pretendard);
+  font-size: 32px;
+  line-height: 42px;
+  font-weight: bold;
+}
+
+.text-2xl,
+.text-2xl-semibold,
+.text-2xl-medium,
+.text-2xl-regular {
+  font-size: 24px;
+  line-height: 32px;
+}
+
+.text-xl,
+.text-xl-semibold,
+.text-xl-medium,
+.text-xl-regular {
+  font-size: 20px;
+  line-height: 32px;
+}
+
+.text-2lg,
+.text-2lg-semibold,
+.text-2lg-medium,
+.text-2lg-regular {
+  font-size: 18px;
+  line-height: 26px;
+}
+
+.text-lg,
+.text-lg-semibold,
+.text-lg-medium,
+.text-lg-regular {
+  font-size: 16px;
+  line-height: 26px;
+}
+
+.text-md,
+.text-md-semibold,
+.text-md-medium,
+.text-md-regular {
+  font-size: 14px;
+  line-height: 24px;
+}
+
+.text-sm-semibold,
+.text-sm-medium {
+  font-size: 13px;
+  line-height: 22px;
+}
+
+.text-xs-semibold,
+.text-xs-medium,
+.text-xs-regular {
+  font-size: 12px;
+  line-height: 18px;
+}
+
+.text-3xl-semibold,
+.text-2xl-semibold,
+.text-xl-semibold,
+.text-2lg-semibold,
+.text-lg-semibold,
+.text-md-semibold,
+.text-sm-semibold,
+.text-xs-semibold {
+  font-weight: 600;
+}
+
+.text-2xl-medium,
+.text-xl-medium,
+.text-2lg-medium,
+.text-lg-medium,
+.text-md-medium,
+.text-sm-medium,
+.text-xs-medium {
+  font-weight: 500;
+}
+
+.text-2xl-regular,
+.text-xl-regular,
+.text-2lg-regular,
+.text-lg-regular,
+.text-md-regular,
+.text-xs-regular {
+  font-weight: 400;
+}
