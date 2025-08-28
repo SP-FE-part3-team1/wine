@@ -16,7 +16,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${pretendard.variable}`}>
-      <body className={`${pretendard.className}`}>{children}</body>
+      <body className={`${pretendard.className}`}>
+        <div>{children}</div>
+        <div className="modal-root"></div>
+      </body>
     </html>
   );
 }
