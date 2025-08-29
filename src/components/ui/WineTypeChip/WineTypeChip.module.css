@@ -1,0 +1,138 @@
+/* WineTypeChip Design Tokens - Using Global Variables */
+.container {
+  /* Color Variables from Global */
+  --chip-primary: var(--primary-purple-100);
+  --chip-primary-light: var(--primary-purple-10);
+  --chip-primary-hover: #5a38c7;
+  --chip-white: var(--white);
+  --chip-gray-light: var(--grayscale-300);
+  --chip-gray-medium: var(--grayscale-500);
+  --chip-gray-dark: var(--grayscale-800);
+  
+  /* Local Spacing Variables */
+  --chip-spacing-xs: 4px;
+  --chip-spacing-sm: 8px;
+  --chip-spacing-md: var(--small);
+  --chip-spacing-lg: 16px;
+  
+  /* Font Variables from Global */
+  --chip-font-sm: var(--md-size);
+  --chip-font-weight: var(--medium);
+  
+  /* Border Radius from Global */
+  --chip-radius: var(--small);
+  
+  /* Local Effect Variables */
+  --chip-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --chip-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --chip-transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  /* Container Styles */
+  display: flex;
+  gap: var(--chip-spacing-sm);
+  flex-wrap: wrap;
+}
+
+.chip {
+  /* 기본 스타일 */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  
+  /* 크기 */
+  padding: var(--chip-spacing-sm) var(--chip-spacing-lg);
+  min-height: 36px;
+  
+  /* 폰트 */
+  font-size: var(--chip-font-sm);
+  font-weight: var(--chip-font-weight);
+  font-family: inherit;
+  
+  /* 테두리 */
+  border: 1px solid var(--chip-gray-light);
+  border-radius: var(--chip-radius);
+  
+  /* 배경 */
+  background-color: var(--chip-white);
+  
+  /* 색상 */
+  color: var(--chip-gray-dark);
+  
+  /* 인터랙션 */
+  cursor: pointer;
+  transition: var(--chip-transition);
+  
+  /* 포커스 및 접근성 */
+  outline: none;
+  user-select: none;
+}
+
+/* 호버 상태 */
+.chip:hover:not(:disabled) {
+  border-color: var(--chip-primary);
+  background-color: var(--chip-primary-light);
+  color: var(--chip-primary);
+  transform: translateY(-1px);
+  box-shadow: var(--chip-shadow-sm);
+}
+
+/* 선택된 상태 */
+.chip.selected {
+  border-color: var(--chip-primary);
+  background-color: var(--chip-primary);
+  color: var(--chip-white);
+  box-shadow: var(--chip-shadow-sm);
+}
+
+.chip.selected:hover:not(:disabled) {
+  background-color: var(--chip-primary-hover);
+  border-color: var(--chip-primary-hover);
+  transform: translateY(-1px);
+  box-shadow: var(--chip-shadow-md);
+}
+
+/* 포커스 상태 */
+.chip:focus-visible {
+  outline: 2px solid var(--chip-primary);
+  outline-offset: 2px;
+}
+
+/* 비활성화 상태 */
+.chip.disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.chip:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.chip:disabled:hover {
+  transform: none;
+  box-shadow: none;
+  border-color: var(--chip-gray-light);
+  background-color: var(--chip-white);
+  color: var(--chip-gray-dark);
+}
+
+.chip.selected:disabled {
+  background-color: var(--chip-gray-medium);
+  border-color: var(--chip-gray-medium);
+  color: var(--chip-white);
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+  .chip {
+    min-height: 32px;
+    padding: var(--chip-spacing-xs) var(--chip-spacing-md);
+    font-size: var(--sm-size);
+  }
+  
+  .container {
+    gap: var(--chip-spacing-xs);
+  }
+}
