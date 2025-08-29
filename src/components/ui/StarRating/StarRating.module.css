@@ -1,0 +1,249 @@
+/* StarRating Design Tokens - Using Global Variables */
+.container {
+  /* Color Variables from Global */
+  --star-primary: var(--primary-purple-100);
+  --star-empty: var(--grayscale-300);
+  --star-gray-medium: var(--grayscale-500);
+  --star-gray-dark: var(--grayscale-800);
+  
+  /* Local Variables */
+  --star-spacing-xs: 4px;
+  --star-transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  /* Container Styles */
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--star-spacing-xs);
+}
+
+.stars {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+/* 별 기본 스타일 */
+.star {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--star-empty);
+  transition: var(--star-transition);
+  position: relative;
+}
+
+/* 별 크기 */
+.star.small {
+  width: 16px;
+  height: 16px;
+}
+
+.star.medium {
+  width: 20px;
+  height: 20px;
+}
+
+.star.large {
+  width: 24px;
+  height: 24px;
+}
+
+/* 인터랙티브 별 (버튼) */
+.star.interactive {
+  background: none;
+  border: none;
+  padding: 2px;
+  cursor: pointer;
+  border-radius: var(--xm-size);
+  outline: none;
+}
+
+.star.interactive:hover {
+  transform: scale(1.1);
+}
+
+.star.interactive:active {
+  transform: scale(0.95);
+}
+
+/* 별 상태 */
+.star.empty {
+  color: var(--star-empty);
+}
+
+.star.filled {
+  color: var(--star-primary);
+}
+
+.star.half {
+  color: var(--star-primary);
+}
+
+/* 호버 상태 */
+.star.interactive:hover {
+  color: var(--star-primary);
+}
+
+/* 포커스 상태 */
+.star.focused {
+  outline: 2px solid var(--star-primary);
+  outline-offset: 2px;
+  border-radius: var(--xm-size);
+}
+
+/* 비활성화 상태 */
+.star.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.star.disabled:hover {
+  transform: none;
+  color: var(--star-empty);
+}
+
+/* 컨테이너 크기별 조정 */
+.container.small .stars {
+  gap: 1px;
+}
+
+.container.medium .stars {
+  gap: 2px;
+}
+
+.container.large .stars {
+  gap: 3px;
+}
+
+/* 스크린 리더 전용 텍스트 */
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* 별 그라데이션 효과 (반별 표시용) */
+.star.half svg path {
+  fill: url(#star-gradient);
+}
+
+/* 키보드 네비게이션 지원 */
+.star.interactive:focus-visible {
+  outline: 2px solid var(--star-primary);
+  outline-offset: 2px;
+  border-radius: var(--xm-size);
+}
+
+/* 별점 애니메이션 */
+@keyframes starFill {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.star.interactive.filled {
+  animation: starFill 0.2s ease-out;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+  .star.small {
+    width: 14px;
+    height: 14px;
+  }
+  
+  .star.medium {
+    width: 18px;
+    height: 18px;
+  }
+  
+  .star.large {
+    width: 22px;
+    height: 22px;
+  }
+  
+  .star.interactive {
+    padding: 4px;
+  }
+}
+
+/* 터치 디바이스 최적화 */
+@media (pointer: coarse) {
+  .star.interactive {
+    padding: 4px;
+    min-width: 44px;
+    min-height: 44px;
+  }
+  
+  .container.small .star.interactive {
+    min-width: 40px;
+    min-height: 40px;
+  }
+  
+  .container.large .star.interactive {
+    min-width: 48px;
+    min-height: 48px;
+  }
+}
+
+/* 고대비 모드 지원 */
+@media (prefers-contrast: high) {
+  .star.empty {
+    color: var(--star-gray-medium);
+    stroke: var(--grayscale-800);
+    stroke-width: 2px;
+  }
+  
+  .star.filled {
+    color: var(--star-primary);
+    stroke: var(--star-gray-dark);
+    stroke-width: 1px;
+  }
+  
+  .star.focused {
+    outline-width: 3px;
+  }
+}
+
+/* 동작 줄이기 설정 지원 */
+@media (prefers-reduced-motion: reduce) {
+  .star {
+    transition: none;
+  }
+  
+  .star.interactive:hover {
+    transform: none;
+  }
+  
+  .star.interactive:active {
+    transform: none;
+  }
+  
+  .star.interactive.filled {
+    animation: none;
+  }
+}
+
+/* 다크모드 대응 (추후 확장 가능) */
+@media (prefers-color-scheme: dark) {
+  .star.empty {
+    color: var(--star-gray-medium);
+  }
+  
+  .star.filled {
+    color: var(--star-primary);
+  }
+}
