@@ -13,6 +13,10 @@
   line-height: var(--lg-li-he);
 }
 
+.text-invalid {
+  border: 1px solid red;
+}
+
 .text::placeholder {
   color: var(--grayscale-500);
 }
@@ -20,6 +24,16 @@
 .text:focus {
   border-color: var(--primary-purple-100);
   outline: none;
+}
+
+.error-text {
+  margin-top: 5px;
+  margin-left: 10px;
+
+  font-size: var(--xm-size);
+  font-weight: var(--regular);
+
+  color: red;
 }
 
 @media screen and (max-width: 375px) {

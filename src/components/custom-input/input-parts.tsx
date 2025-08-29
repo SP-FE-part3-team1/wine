@@ -18,7 +18,7 @@ const InputParts = ({
   src,
   width,
   height,
-  error = false,
+  error,
   errorText,
   value,
   handleChange,
