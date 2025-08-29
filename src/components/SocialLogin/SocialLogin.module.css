@@ -1,0 +1,39 @@
+.snsButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  background-color: white;
+  color: #2d3034;
+  border: 1px solid #cfdbea;
+  font-family: var(--font-pretendard);
+  cursor: pointer;
+}
+
+.logo {
+  width: 24px;
+  height: 24px;
+}
+
+/* 사이즈 */
+.sm {
+  width: 303px;
+  height: 48px;
+  font-size: 14px;
+  border-radius: 12px;
+}
+
+.md {
+  width: 400px;
+  height: 52px;
+  font-size: 16px;
+  border-radius: 16px;
+}
+
+.snsButton:hover {
+  background-color: #f2f4f8;
+}
+
+.snsButton:active {
+  opacity: 0.8;
+}
