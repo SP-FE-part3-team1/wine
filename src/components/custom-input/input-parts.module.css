@@ -1,0 +1,87 @@
+.input,
+.container {
+  width: 100%;
+  max-width: 484px;
+}
+
+.container {
+  position: relative;
+}
+
+.input {
+  padding: 14px 20px;
+  height: 48px;
+
+  border: 1px solid var(--grayscale-300);
+  border-radius: var(--middle);
+  outline: none;
+}
+
+.input::placeholder {
+  font-size: var(--lg-size);
+  font-weight: var(--regular);
+  line-height: var(--lg-li-he);
+  color: var(--grayscale-500);
+}
+
+.input:focus {
+  border: 1px solid var(--primary-purple-100);
+}
+
+.input-invalid {
+  border: 1px solid red;
+}
+
+.visible-btn {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+
+  padding: 0;
+  border: none;
+  background-color: var(--white);
+}
+
+.file {
+  display: none;
+}
+
+.file-btn {
+  width: 140px;
+  height: 140px;
+  border: 1px solid var(--grayscale-300);
+  border-radius: var(--middle);
+  background-color: var(--white);
+
+  cursor: pointer;
+}
+
+.error-text {
+  margin-top: 5px;
+  margin-left: 10px;
+
+  font-size: var(--xm-size);
+  font-weight: var(--regular);
+
+  color: red;
+}
+
+@media screen and (max-width: 375px) {
+  .input {
+    height: 42px;
+
+    border-radius: var(--small);
+  }
+
+  .input::placeholder {
+    font-size: var(--md-size);
+    line-height: var(--md-li-he);
+  }
+
+  .file-btn {
+    width: 120px;
+    height: 120px;
+    border-radius: var(--small);
+  }
+}

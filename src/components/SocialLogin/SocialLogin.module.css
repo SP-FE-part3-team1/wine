@@ -1,0 +1,39 @@
+.snsButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--xm-size);
+  background-color: var(--white);
+  color: var(--grayscale-800);
+  border: 1px solid var(--grayscale-300);
+  font-family: var(--font-pretendard);
+  cursor: pointer;
+}
+
+.logo {
+  width: var(--2xl-size);
+  height: var(--2xl-size);
+}
+
+/* 사이즈 */
+.sm {
+  width: 303px;
+  height: 48px;
+  font-size: var(--md-size);
+  border-radius: var(--small);
+}
+
+.md {
+  width: 400px;
+  height: 52px;
+  font-size: var(--lg-size);
+  border-radius: var(--middle);
+}
+
+.snsButton:hover {
+  background-color: var(--grayscale-100);
+}
+
+.snsButton:active {
+  opacity: 0.8;
+}

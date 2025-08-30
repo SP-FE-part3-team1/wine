@@ -1,0 +1,159 @@
+/* SearchInput Design Tokens - Using Global Variables */
+.container {
+  /* Color Variables from Global */
+  --search-primary: var(--primary-purple-100);
+  --search-primary-light: var(--primary-purple-10);
+  --search-white: var(--white);
+  --search-gray-light: var(--grayscale-100);
+  --search-gray-medium: var(--grayscale-300);
+  --search-gray-dark: var(--grayscale-500);
+  --search-gray-darker: var(--grayscale-800);
+  
+  /* Local Spacing Variables */
+  --search-spacing-xs: 4px;
+  --search-spacing-sm: 8px;
+  --search-spacing-md: var(--small);
+  
+  /* Font Variables from Global */
+  --search-font-sm: var(--md-size);
+  --search-font-md: var(--lg-size);
+  
+  /* Border Radius from Global */
+  --search-radius: var(--small);
+  --search-radius-sm: var(--xm-size);
+  
+  /* Local Effect Variables */
+  --search-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --search-transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  /* Container Styles */
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 400px;
+  background-color: var(--search-white);
+  border: 1px solid var(--search-gray-medium);
+  border-radius: var(--search-radius);
+  box-shadow: var(--search-shadow-sm);
+  transition: var(--search-transition);
+}
+
+/* 포커스 상태 */
+.container.focused {
+  border-color: var(--search-primary);
+  box-shadow: 0 0 0 3px rgba(106, 67, 219, 0.1), var(--search-shadow-sm);
+}
+
+/* 비활성화 상태 */
+.container.disabled {
+  background-color: var(--search-gray-light);
+  border-color: var(--search-gray-medium);
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* 검색 아이콘 */
+.searchIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--search-spacing-md);
+  background: none;
+  border: none;
+  color: var(--search-gray-dark);
+  cursor: pointer;
+  transition: var(--search-transition);
+  border-radius: var(--search-radius-sm);
+  margin-right: var(--search-spacing-xs);
+}
+
+.searchIcon:hover:not(:disabled) {
+  color: var(--search-primary);
+  background-color: var(--search-primary-light);
+}
+
+.searchIcon:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.searchIcon:focus-visible {
+  outline: 2px solid var(--search-primary);
+  outline-offset: 2px;
+}
+
+/* 입력 필드 */
+.input {
+  flex: 1;
+  padding: var(--search-spacing-md) var(--search-spacing-sm);
+  border: none;
+  background: none;
+  font-size: var(--search-font-md);
+  font-family: inherit;
+  color: var(--search-gray-darker);
+  outline: none;
+}
+
+.input::placeholder {
+  color: var(--search-gray-dark);
+  opacity: 1;
+}
+
+.input:disabled {
+  cursor: not-allowed;
+  color: var(--search-gray-dark);
+}
+
+/* 클리어 버튼 */
+.clearButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  margin: var(--search-spacing-xs);
+  padding: 0;
+  background: none;
+  border: none;
+  color: var(--search-gray-dark);
+  cursor: pointer;
+  border-radius: var(--search-radius-sm);
+  transition: var(--search-transition);
+}
+
+.clearButton:hover:not(:disabled) {
+  color: var(--search-gray-darker);
+  background-color: var(--search-gray-light);
+}
+
+.clearButton:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.clearButton:focus-visible {
+  outline: 2px solid var(--search-primary);
+  outline-offset: 1px;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+  .container {
+    max-width: 100%;
+  }
+  
+  .input {
+    font-size: var(--search-font-sm);
+  }
+  
+  .searchIcon,
+  .clearButton {
+    padding: var(--search-spacing-sm);
+  }
+}
+
+/* 다크모드 대응 (추후 확장 가능) */
+@media (prefers-color-scheme: dark) {
+  /* 다크모드 스타일은 추후 구현 */
+}
