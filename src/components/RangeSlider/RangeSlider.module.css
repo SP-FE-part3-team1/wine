@@ -1,0 +1,79 @@
+.track {
+  position: relative;
+  width: 100%;
+  max-width: 260px;
+  height: 6px;
+  background: #ddd;
+  border-radius: 6px;
+}
+
+/* 값 풍선 */
+.bubble {
+  position: absolute;
+  top: -28px;
+  transform: translateX(-50%);
+  color: var(--primary-purple-100);
+  font-weight: var(--semibold);
+  font-size: var(--xm-size);
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  position: absolute;
+  top: 0;
+  height: 0;
+  width: 100%;
+  pointer-events: none;
+}
+
+.thumb::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  pointer-events: auto;
+  width: var(--xl-size);
+  height: var(--xl-size);
+  border-radius: 50%;
+  background: var(--white);
+  border: 1px solid #aaa;
+  cursor: pointer;
+}
+
+.thumb::-moz-range-thumb {
+  width: var(--xl-size);
+  height: var(--xl-size);
+  border-radius: 50%;
+  background: var(--white);
+  border: 1px solid var(--grayscale-300);
+  cursor: pointer;
+}
+
+/* single 전용 트랙 */
+.trackSingle {
+  background: var(--grayscale-100);
+  border: 1px solid var(--grayscale-300);
+}
+
+/* single 모드 전용 thumb */
+.thumbSingle::-webkit-slider-thumb {
+  background: var(--primary-purple-100); /* 보라색 */
+  border: none;
+}
+.thumbSingle::-moz-range-thumb {
+  background: var(--primary-purple-100);
+  border: none;
+}
+
+/* 겹칠 때 오른쪽이 위에 오도록 */
+.thumbLeft {
+  z-index: 2;
+}
+.thumbRight {
+  z-index: 3;
+}
+
+/* 왼쪽이 위로 올라가야 될 경우 */
+.thumbOnTop {
+  z-index: 4;
+}
