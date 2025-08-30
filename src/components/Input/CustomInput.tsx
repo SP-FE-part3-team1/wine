@@ -1,8 +1,9 @@
 import { CustomInputAndLabelAndRefType } from "@/types/input-component-types";
-import InputParts from "./input-parts";
-import LabelParts from "./label-parts";
-import style from "./custom-input.module.css";
+import InputParts from "./InputParts";
+import LabelParts from "./LabelParts";
+import style from "./CustomInput.module.css";
 
+//error값을 사용하지 않으려면 false로 설정해주시면 됩니다.
 const CustomInput = ({
   id,
   name,
