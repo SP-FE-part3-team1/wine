@@ -1,3 +1,16 @@
+// Wine Platform - RatingRadio 컴포넌트 타입 정의
+
+// 평점 라디오 컴포넌트
+export interface RatingOption {
+  label: string;
+  value: string;
+}
+
+export interface RatingRadioProps {
+  value: string;
+  onChange: (value: string) => void;
+  options: RatingOption[];
+  name: string;
 // Wine Platform - WineTypeChip 컴포넌트 타입 정의
 
 // API 타입에서 가져온 와인 타입
