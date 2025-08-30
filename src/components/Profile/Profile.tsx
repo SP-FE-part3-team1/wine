@@ -1,3 +1,5 @@
+"use client";
+
 import styles from "./Profile.module.css";
 
 type ProfileProps = {
