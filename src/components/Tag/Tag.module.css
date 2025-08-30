@@ -1,0 +1,29 @@
+/* mobile */
+.tag {
+  display: inline-flex; 
+  align-items: center; 
+  padding: 6px 10px;
+  border-radius: 12px; 
+  
+  background-color: var(--primary-purple-10); 
+  color: var(--primary-purple-100); 
+  
+  font-size: 14px;
+  font-weight: 600; 
+  font-family: 'Pretendard Variable', Pretendard, sans-serif;
+}
+
+.iconWrapper {
+  display: flex;
+  align-items: center;
+  margin-right: 2px; 
+}
+
+/* desktop */
+
+@media (min-width: 768px) {
+  .tag {
+    padding: 8px 15px;
+    font-size: 18px;
+  }
+}

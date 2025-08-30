@@ -1,0 +1,13 @@
+.label {
+  font-size: var(--lg-size);
+  font-weight: var(--medium);
+  line-height: var(--lg-li-he);
+  color: var(--grayscale-800);
+}
+
+@media screen and (max-width: 375px) {
+  .label {
+    font-size: var(--md-size);
+    line-height: var(--md-li-he);
+  }
+}

@@ -1,0 +1,188 @@
+/* RatingRadio Design Tokens - Using Global Variables */
+.container {
+  /* Color Variables from Global */
+  --radio-primary: var(--primary-purple-100);
+  --radio-primary-light: var(--primary-purple-10);
+  --radio-white: var(--white);
+  --radio-gray-light: var(--grayscale-100);
+  --radio-gray-medium: var(--grayscale-300);
+  --radio-gray-dark: var(--grayscale-500);
+  --radio-gray-darker: var(--grayscale-800);
+  --radio-gray-button: var(--grayscale-500);
+  --radio-gray-disabled: var(--grayscale-300);
+  
+  /* Local Spacing Variables */
+  --radio-spacing-xs: 4px;
+  --radio-spacing-sm: 8px;
+  --radio-spacing-md: var(--small);
+  
+  /* Font Variables from Global */
+  --radio-font-sm: var(--md-size);
+  --radio-font-md: var(--lg-size);
+  --radio-font-weight: var(--medium);
+  --radio-font-weight-bold: var(--semibold);
+  
+  /* Border Radius from Global */
+  --radio-radius: var(--small);
+  
+  /* Local Effect Variables */
+  --radio-transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  /* Container Styles */
+  display: flex;
+  flex-direction: column;
+  gap: var(--radio-spacing-sm);
+  width: 100%;
+  max-width: 300px;
+}
+
+/* 비활성화 상태 */
+.container.disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* 라디오 옵션 */
+.option {
+  display: flex;
+  align-items: center;
+  padding: var(--radio-spacing-md);
+  background-color: var(--radio-white);
+  border: 2px solid var(--radio-gray-medium);
+  border-radius: var(--radio-radius);
+  cursor: pointer;
+  transition: var(--radio-transition);
+  position: relative;
+}
+
+.option:hover:not(.container.disabled .option) {
+  border-color: var(--radio-primary);
+  background-color: var(--radio-primary-light);
+}
+
+.option:focus-within {
+  outline: 2px solid var(--radio-primary);
+  outline-offset: 2px;
+}
+
+/* 선택된 상태 */
+.option.selected {
+  border-color: var(--radio-primary);
+  background-color: var(--radio-primary-light);
+  color: var(--radio-primary);
+  font-weight: var(--radio-font-weight-bold);
+}
+
+/* 라디오 입력 숨김 */
+.radioInput {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  margin: 0;
+}
+
+/* 커스텀 라디오 버튼 */
+.radioLabel {
+  display: flex;
+  align-items: center;
+  font-size: var(--radio-font-md);
+  font-weight: var(--radio-font-weight);
+  color: var(--radio-gray-darker);
+  width: 100%;
+  position: relative;
+  padding-left: 32px;
+}
+
+.radioLabel::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--radio-gray-button);
+  border-radius: 50%;
+  background-color: var(--radio-white);
+  transition: var(--radio-transition);
+}
+
+/* 선택된 라디오 버튼 스타일 */
+.option.selected .radioLabel::before {
+  border-color: var(--radio-primary);
+  background-color: var(--radio-primary);
+  box-shadow: inset 0 0 0 3px var(--radio-white);
+}
+
+/* 호버 상태 라디오 버튼 */
+.option:hover:not(.container.disabled .option) .radioLabel::before {
+  border-color: var(--radio-primary);
+}
+
+/* 라디오 버튼 포커스 상태 */
+.radioInput:focus + .radioLabel::before {
+  outline: 2px solid var(--radio-primary);
+  outline-offset: 2px;
+}
+
+/* 비활성화 상태 */
+.container.disabled .option {
+  cursor: not-allowed;
+  border-color: var(--radio-gray-medium);
+  background-color: var(--radio-gray-light);
+}
+
+.container.disabled .radioLabel {
+  color: var(--radio-gray-dark);
+}
+
+.container.disabled .radioLabel::before {
+  border-color: var(--radio-gray-button);
+  background-color: var(--radio-gray-disabled);
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+  .container {
+    gap: var(--radio-spacing-xs);
+  }
+  
+  .option {
+    padding: var(--radio-spacing-sm);
+  }
+  
+  .radioLabel {
+    font-size: var(--radio-font-sm);
+    padding-left: 28px;
+  }
+  
+  .radioLabel::before {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+/* 접근성 및 고대비 모드 */
+@media (prefers-contrast: high) {
+  .option {
+    border-width: 3px;
+  }
+  
+  .radioLabel::before {
+    border-width: 3px;
+  }
+}
+
+/* 동작 줄이기 설정 지원 */
+@media (prefers-reduced-motion: reduce) {
+  .option,
+  .radioLabel::before {
+    transition: none;
+  }
+}
+
+/* 다크모드 대응 (추후 확장 가능) */
+@media (prefers-color-scheme: dark) {
+  /* 다크모드 스타일은 추후 구현 */
+}
