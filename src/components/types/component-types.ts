@@ -1,3 +1,12 @@
+// Wine Platform - StarRating 컴포넌트 타입 정의
+
+// 별점 컴포넌트
+export interface StarRatingProps {
+  value: number;
+  onChange?: (rating: number) => void;
+  maxRating?: number;
+  readOnly?: boolean;
+  size?: 'small' | 'medium' | 'large';
 // Wine Platform - SearchInput 컴포넌트 타입 정의
 
 // 검색 입력 컴포넌트
