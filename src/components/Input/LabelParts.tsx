@@ -1,4 +1,4 @@
-import style from "./label-parts.module.css";
+import style from "./LabelParts.module.css";
 
 const LabelParts = ({ id, labelText }: { id: string; labelText: string }) => {
   return (
