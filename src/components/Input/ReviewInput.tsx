@@ -1,5 +1,5 @@
 import { ReviewType } from "@/types/input-component-types";
-import style from "./review-input.module.css";
+import style from "./ReviewInput.module.css";
 
 const ReviewInput = ({
   name,
