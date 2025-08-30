@@ -2,36 +2,36 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 12px;
-  background-color: white;
-  color: #2d3034;
-  border: 1px solid #cfdbea;
+  gap: var(--xm-size);
+  background-color: var(--white);
+  color: var(--grayscale-800);
+  border: 1px solid var(--grayscale-300);
   font-family: var(--font-pretendard);
   cursor: pointer;
 }
 
 .logo {
-  width: 24px;
-  height: 24px;
+  width: var(--2xl-size);
+  height: var(--2xl-size);
 }
 
 /* 사이즈 */
 .sm {
   width: 303px;
   height: 48px;
-  font-size: 14px;
-  border-radius: 12px;
+  font-size: var(--md-size);
+  border-radius: var(--small);
 }
 
 .md {
   width: 400px;
   height: 52px;
-  font-size: 16px;
-  border-radius: 16px;
+  font-size: var(--lg-size);
+  border-radius: var(--middle);
 }
 
 .snsButton:hover {
-  background-color: #f2f4f8;
+  background-color: var(--grayscale-100);
 }
 
 .snsButton:active {

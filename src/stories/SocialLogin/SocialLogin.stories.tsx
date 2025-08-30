@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import SocialLogin from "@/components/SocialLogin/SocialLogin";
+import "@/app/globals.css";
+import "@/app/fonts.module.css";
 
 const meta: Meta<typeof SocialLogin> = {
   title: "Components/SocialLogin",
