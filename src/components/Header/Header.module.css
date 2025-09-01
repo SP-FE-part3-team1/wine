@@ -9,7 +9,6 @@
   min-width: 343px;
   box-sizing: border-box;
   background: var(--black);
-  margin: 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
