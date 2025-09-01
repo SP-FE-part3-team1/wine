@@ -68,6 +68,7 @@ const InputParts = ({
         {PWDTYPE === type && (
           <button
             className={style["visible-btn"]}
+            type="button"
             onClick={handleVisibleButtonClick}
           >
             <Image
@@ -83,7 +84,11 @@ const InputParts = ({
           </button>
         )}
         {type === "file" && (
-          <button className={style["file-btn"]} onClick={handleFileButtonClick}>
+          <button
+            className={style["file-btn"]}
+            type="button"
+            onClick={handleFileButtonClick}
+          >
             <Image
               src={src ? src : "/assets/images/icon/photo.svg"}
               width={width ? width : 32}
