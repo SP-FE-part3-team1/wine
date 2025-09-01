@@ -1,0 +1,72 @@
+.card {
+  display: flex;
+  background-color: var(--white);
+  gap: 3rem;
+  border-radius: var(--small);
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: 0px 2px 20px rgba(0, 0, 0, 0.04);
+  padding: 2.4rem 3rem 0 3rem;
+
+  /* 기본(=모바일) */
+  width: 19.3rem;
+  height: 16rem;
+}
+
+.body {
+  display: flex;
+  gap: 2.8rem;
+  align-items: flex-start;
+  width: 100%;
+  height: 100%;
+}
+
+.imageWrapper {
+  display: flex;
+  align-items: flex-end;
+}
+
+.image {
+  width: 3.8rem;
+  height: 13.6rem;
+  object-fit: cover;
+}
+
+.ratingWrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.ratingValue {
+  font-size: 3.6rem;
+  font-weight: 800;
+}
+
+.description {
+  color: var(--grayscale-500);
+  width: 10rem;
+  height: auto;
+}
+
+/* 태블릿 + 브라우저 공통 (37.6rem 이상) */
+@media screen and (min-width: 37.6rem) {
+  .card {
+    width: 23.2rem;
+    height: 18.5rem;
+  }
+
+  .image {
+    width: 4.4rem;
+    height: 16.1rem;
+  }
+
+  .content {
+    width: 10rem;
+    height: 14.3rem;
+  }
+
+  .description {
+    width: 10rem;
+    height: 7.2rem;
+  }
+}
