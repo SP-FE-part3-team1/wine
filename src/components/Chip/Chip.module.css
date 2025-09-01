@@ -126,7 +126,7 @@
 }
 
 /* 반응형 디자인 */
-@media (max-width: 74.4rem) {
+@media (max-width: 76.8rem) {
   .chip {
     min-height: 3.2rem;
     padding: var(--chip-spacing-xs) var(--chip-spacing-md);

@@ -139,7 +139,7 @@
 }
 
 /* 반응형 디자인 */
-@media (max-width: 74.4rem) {
+@media (max-width: 76.8rem) {
   .container {
     width: 21rem;
     height: 3.8rem;

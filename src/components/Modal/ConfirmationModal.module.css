@@ -16,9 +16,9 @@
   --confirm-white: var(--white);
   
   /* Local Spacing Variables */
-  --confirm-spacing-sm: 8px;
-  --confirm-spacing-md: 16px;
-  --confirm-spacing-lg: 24px;
+  --confirm-spacing-sm: 0.8rem;
+  --confirm-spacing-md: 1.6rem;
+  --confirm-spacing-lg: 2.4rem;
   
   /* Local Effect Variables */
   --confirm-transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
@@ -37,8 +37,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 48px;
-  height: 48px;
+  width: 4.8rem;
+  height: 4.8rem;
   border-radius: 50%;
   margin-bottom: var(--confirm-spacing-sm);
 }
@@ -86,7 +86,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 12px 20px;
+  padding: 1.2rem 2rem;
   font-size: var(--md-size);
   font-weight: var(--medium);
   font-family: inherit;
@@ -94,13 +94,13 @@
   cursor: pointer;
   transition: var(--confirm-transition);
   outline: none;
-  min-height: 44px;
+  min-height: 4.4rem;
 }
 
 /* Cancel Button */
 .cancelButton {
   background-color: var(--confirm-white);
-  border: 1px solid var(--confirm-gray-medium);
+  border: 0.1rem solid var(--confirm-gray-medium);
   color: var(--confirm-gray-darker);
 }
 
@@ -151,15 +151,15 @@
 }
 
 /* 반응형 디자인 */
-@media (max-width: 768px) {
+@media (max-width: 76.8rem) {
   .content {
     padding: var(--confirm-spacing-md) 0;
     gap: var(--confirm-spacing-md);
   }
   
   .iconContainer {
-    width: 40px;
-    height: 40px;
+    width: 4rem;
+    height: 4rem;
   }
   
   .title {

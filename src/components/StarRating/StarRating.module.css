@@ -161,7 +161,7 @@
 }
 
 /* 반응형 디자인 */
-@media (max-width: 74.4rem) {
+@media (max-width: 76.8rem) {
   .star.small {
     width: 1.4rem;
     height: 1.4rem;
