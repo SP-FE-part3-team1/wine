@@ -16,7 +16,7 @@ const WineSummaryCard = ({imageUrl, name, origin, price}: WineSummaryCardProps) 
       <div className={styles.cardContent}>
         <h2 className={styles.name}>{name}</h2>
         <p className={styles.origin}>{origin}</p>
-        <Tag>{price}</Tag>
+        <Tag size='M'>{price}</Tag>
       </div>
     </div>
   );

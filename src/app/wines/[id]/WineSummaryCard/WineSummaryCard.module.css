@@ -1,0 +1,63 @@
+/* mobile */
+.card {
+  position: relative; /* 자식 요소(이미지)의 absolute 위치 기준점 */
+  display: flex;
+  align-items: center;
+  background-color: var(--white); /* 흰색 배경 */
+  border: 1px solid var(--grayscale-300);
+  border-radius: 12px;
+  padding: 33px 20px 30px;
+  min-width: 343px; /* 카드 최대 너비 (조정 가능) */
+  /* 이미지가 위로 튀어나갈 공간을 만들기 위해 마진 추가 */
+  margin-top: 40px; /* 이미지가 위로 30px 나가므로, 카드 자체도 아래로 30px + 여유 공간만큼 내려야 합니다. */
+  margin-left: 30px; /* 이미지가 왼쪽으로 튀어나갈 공간을 만들기 위해 마진 추가 */
+}
+
+.wineImage {
+  position: absolute; /* 부모(.card)를 기준으로 위치를 잡음 */
+  bottom: 0px; /* 카드 상단보다 30px 위로 이동 */
+  width: 58px; /* 이미지 너비 */
+  height: auto; /* 비율 유지 */
+  z-index: 1; /* 이미지가 다른 요소 위에 보이도록 */
+  object-fit: contain;
+}
+
+.cardContent {
+  /* 이미지가 absolute로 빠져나가면서 공간을 차지하지 않으므로,
+     텍스트가 이미지와 겹치지 않도록 왼쪽 여백을 줌 */
+  margin-left: 110px; /* 이미지 너비(120px)와 좌측 여백(-20px)을 고려한 값 */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.name {
+  font-size: var(--xl-size); /* 24px */
+  font-weight: var(--semibold); /* Bold */
+  color: #333333;
+  margin-bottom: 15px; /* 기본 마진 제거 */
+}
+
+.origin {
+  font-size: 0.9rem; /* 14px */
+  color: #888888;
+  margin-bottom: 10px; /* 기본 마진 제거 */
+}
+
+.price {
+  font-size: 1.25rem; /* 20px */
+  font-weight: 700;
+  color: #6a0dad; /* 보라색 계열 (예시) */
+  background-color: #f0e6fa; /* 보라색 배경 (예시) */
+  padding: 8px 16px;
+  border-radius: 20px;
+  display: inline-block; /* 텍스트 길이에 맞춰 너비 조절 */
+  margin-top: 10px; /* 다른 텍스트와의 간격 */
+  width: fit-content; /* 내용에 맞춰 너비 조정 */
+}
+
+
+/* Tablet */
+.card {
+    
+}
