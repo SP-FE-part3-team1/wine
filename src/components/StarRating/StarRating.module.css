@@ -7,7 +7,7 @@
   --star-gray-dark: var(--grayscale-800);
   
   /* Local Variables */
-  --star-spacing-xs: 4px;
+  --star-spacing-xs: 0.4rem;
   --star-transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   
   /* Container Styles */
@@ -20,7 +20,7 @@
 .stars {
   display: flex;
   align-items: center;
-  gap: 2px;
+  gap: 0.2rem;
 }
 
 /* 별 기본 스타일 */
@@ -35,25 +35,25 @@
 
 /* 별 크기 */
 .star.small {
-  width: 16px;
-  height: 16px;
+  width: 1.6rem;
+  height: 1.6rem;
 }
 
 .star.medium {
-  width: 20px;
-  height: 20px;
+  width: 2rem;
+  height: 2rem;
 }
 
 .star.large {
-  width: 24px;
-  height: 24px;
+  width: 2.4rem;
+  height: 2.4rem;
 }
 
 /* 인터랙티브 별 (버튼) */
 .star.interactive {
   background: none;
   border: none;
-  padding: 2px;
+  padding: 0.2rem;
   cursor: pointer;
   border-radius: var(--xm-size);
   outline: none;
@@ -85,10 +85,9 @@
   color: var(--star-primary);
 }
 
-/* 포커스 상태 */
+/* 포커스 상태 - outline 제거 */
 .star.focused {
-  outline: 2px solid var(--star-primary);
-  outline-offset: 2px;
+  outline: none;
   border-radius: var(--xm-size);
 }
 
@@ -105,15 +104,15 @@
 
 /* 컨테이너 크기별 조정 */
 .container.small .stars {
-  gap: 1px;
+  gap: 0.1rem;
 }
 
 .container.medium .stars {
-  gap: 2px;
+  gap: 0.2rem;
 }
 
 .container.large .stars {
-  gap: 3px;
+  gap: 0.3rem;
 }
 
 /* 스크린 리더 전용 텍스트 */
@@ -134,11 +133,14 @@
   fill: url(#star-gradient);
 }
 
-/* 키보드 네비게이션 지원 */
+/* 키보드 네비게이션 지원 - outline 제거 */
 .star.interactive:focus-visible {
-  outline: 2px solid var(--star-primary);
-  outline-offset: 2px;
+  outline: none;
   border-radius: var(--xm-size);
+}
+
+.star.interactive:focus {
+  outline: none;
 }
 
 /* 별점 애니메이션 */
@@ -159,43 +161,64 @@
 }
 
 /* 반응형 디자인 */
-@media (max-width: 768px) {
+@media (max-width: 74.4rem) {
   .star.small {
-    width: 14px;
-    height: 14px;
+    width: 1.4rem;
+    height: 1.4rem;
   }
   
   .star.medium {
-    width: 18px;
-    height: 18px;
+    width: 1.8rem;
+    height: 1.8rem;
   }
   
   .star.large {
-    width: 22px;
-    height: 22px;
+    width: 2.2rem;
+    height: 2.2rem;
   }
   
   .star.interactive {
-    padding: 4px;
+    padding: 0.4rem;
+  }
+}
+
+@media (max-width: 37.5rem) {
+  .star.small {
+    width: 1.2rem;
+    height: 1.2rem;
+  }
+  
+  .star.medium {
+    width: 1.6rem;
+    height: 1.6rem;
+  }
+  
+  .star.large {
+    width: 2rem;
+    height: 2rem;
+  }
+  
+  .star.interactive {
+    padding: 0.3rem;
   }
 }
 
 /* 터치 디바이스 최적화 */
 @media (pointer: coarse) {
   .star.interactive {
-    padding: 4px;
-    min-width: 44px;
-    min-height: 44px;
+    padding: 0.4rem;
+    min-width: 4.4rem;
+    min-height: 4.4rem;
   }
   
   .container.small .star.interactive {
-    min-width: 40px;
-    min-height: 40px;
+    min-width: 4rem;
+    min-height: 4rem;
   }
   
   .container.large .star.interactive {
-    min-width: 48px;
-    min-height: 48px;
+    min-width: 4.8rem;
+    min-height: 4.8rem;
   }
 }
 
@@ -204,17 +227,17 @@
   .star.empty {
     color: var(--star-gray-medium);
     stroke: var(--grayscale-800);
-    stroke-width: 2px;
+    stroke-width: 0.2rem;
   }
   
   .star.filled {
     color: var(--star-primary);
     stroke: var(--star-gray-dark);
-    stroke-width: 1px;
+    stroke-width: 0.1rem;
   }
   
   .star.focused {
-    outline-width: 3px;
+    outline: none;
   }
 }
 

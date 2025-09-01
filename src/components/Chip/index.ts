@@ -1,0 +1,1 @@
+export { Chip, WineTypeChip } from './Chip';

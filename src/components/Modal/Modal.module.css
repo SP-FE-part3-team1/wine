@@ -10,14 +10,14 @@
   --modal-text-secondary: var(--grayscale-600);
   
   /* Local Spacing Variables */
-  --modal-spacing-xs: 8px;
-  --modal-spacing-sm: 12px;
-  --modal-spacing-md: 16px;
-  --modal-spacing-lg: 24px;
-  --modal-spacing-xl: 32px;
+  --modal-spacing-xs: 0.8rem;
+  --modal-spacing-sm: 1.2rem;
+  --modal-spacing-md: 1.6rem;
+  --modal-spacing-lg: 2.4rem;
+  --modal-spacing-xl: 3.2rem;
   
   /* Border Radius from Global */
-  --modal-radius: 16px;
+  --modal-radius: var(--middle);
   
   /* Local Effect Variables */
   --modal-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -47,7 +47,7 @@
   box-shadow: var(--modal-shadow);
   display: flex;
   flex-direction: column;
-  max-height: calc(100vh - 32px);
+  max-height: calc(100vh - 3.2rem);
   overflow: hidden;
   position: relative;
   
@@ -83,9 +83,9 @@
 .header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   padding: var(--modal-spacing-lg);
-  border-bottom: 1px solid var(--modal-border);
+  border-bottom: 0.1rem solid var(--modal-border);
   flex-shrink: 0;
 }
 
@@ -97,35 +97,9 @@
   line-height: 1.4;
 }
 
-/* Close Button */
+/* Close Button - Hidden for consistent design */
 .closeButton {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  background: none;
-  border: none;
-  border-radius: var(--sm-size);
-  color: var(--modal-text-secondary);
-  cursor: pointer;
-  transition: var(--modal-transition);
-  padding: 0;
-  flex-shrink: 0;
-}
-
-.closeButton:hover {
-  background-color: var(--grayscale-100);
-  color: var(--modal-text);
-}
-
-.closeButton:focus-visible {
-  outline: 2px solid var(--modal-primary);
-  outline-offset: 2px;
-}
-
-.closeButton:active {
-  transform: scale(0.95);
+  display: none;
 }
 
 /* Content */
@@ -186,7 +160,7 @@
 }
 
 /* 반응형 디자인 */
-@media (max-width: 768px) {
+@media (max-width: 74.4rem) {
   .backdrop {
     padding: var(--modal-spacing-sm);
     align-items: flex-end;
@@ -219,6 +193,28 @@
   }
 }
 
+@media (max-width: 37.5rem) {
+  .backdrop {
+    padding: var(--modal-spacing-xs);
+  }
+  
+  .modal {
+    max-height: 95vh;
+  }
+  
+  .header {
+    padding: var(--modal-spacing-sm) var(--modal-spacing-md);
+  }
+  
+  .content {
+    padding: var(--modal-spacing-sm) var(--modal-spacing-md);
+  }
+  
+  .title {
+    font-size: var(--md-size);
+  }
+}
+
 @keyframes modalSlideUp {
   from {
     opacity: 0;
@@ -237,12 +233,10 @@
   }
   
   .header {
-    border-bottom: 2px solid var(--modal-border);
+    border-bottom: 0.2rem solid var(--modal-border);
   }
   
-  .closeButton:focus-visible {
-    outline-width: 3px;
-  }
+  /* Close button removed */
 }
 
 /* 동작 줄이기 설정 지원 */

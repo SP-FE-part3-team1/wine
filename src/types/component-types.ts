@@ -3,7 +3,22 @@
 // API 타입에서 가져온 와인 타입
 export type WineType = "RED" | "WHITE" | "SPARKLING";
 
-// 와인 타입 칩 컴포넌트
+// 칩 컴포넌트 공통 인터페이스
+export interface ChipOption {
+  value: string;
+  label: string;
+}
+
+export interface ChipProps {
+  options: ChipOption[];
+  selectedValues: string[];
+  onSelectionChange: (values: string[]) => void;
+  disabled?: boolean;
+  multiple?: boolean;
+  ariaLabel?: string;
+}
+
+// 와인 타입 칩 컴포넌트 (하위 호환성)
 export interface WineTypeChipProps {
   types: WineType[];
   selectedTypes: WineType[];
