@@ -1,16 +1,16 @@
 .track {
   position: relative;
   width: 100%;
-  max-width: 260px;
-  height: 6px;
+  max-width: 26rem;
+  height: 0.6rem;
   background: #ddd;
-  border-radius: 6px;
+  border-radius: 0.6rem;
 }
 
 /* 값 풍선 */
 .bubble {
   position: absolute;
-  top: -28px;
+  top: -2.8rem;
   transform: translateX(-50%);
   color: var(--primary-purple-100);
   font-weight: var(--semibold);
@@ -36,7 +36,7 @@
   height: var(--xl-size);
   border-radius: 50%;
   background: var(--white);
-  border: 1px solid #aaa;
+  border: 0.1rem solid #aaa;
   cursor: pointer;
 }
 
@@ -45,14 +45,14 @@
   height: var(--xl-size);
   border-radius: 50%;
   background: var(--white);
-  border: 1px solid var(--grayscale-300);
+  border: 0.1rem solid var(--grayscale-300);
   cursor: pointer;
 }
 
 /* single 전용 트랙 */
 .trackSingle {
   background: var(--grayscale-100);
-  border: 1px solid var(--grayscale-300);
+  border: 0.1rem solid var(--grayscale-300);
 }
 
 /* single 모드 전용 thumb */

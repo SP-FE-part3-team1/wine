@@ -17,13 +17,16 @@
   border-radius: 1.2rem;
 }
 
-@media (min-width: 37.5rem) {
+/* 모바일: 0 ~ 37.5rem */
+@media (max-width: 37.5rem) {
   .inner {
     height: 5.6rem;
     padding: 1.4rem 2.8rem;
     border-radius: 1.4rem;
   }
 }
+
+/* 태블릿: 37.6rem ~ 76.8rem */
 @media (min-width: 37.6rem) and (max-width: 76.8rem) {
   .inner {
     height: 6.4rem;
@@ -31,6 +34,8 @@
     border-radius: 1.6rem;
   }
 }
+
+/* 브라우저: 76.9rem ~ */
 @media (min-width: 76.9rem) {
   .inner {
     height: 7rem;
