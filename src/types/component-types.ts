@@ -46,6 +46,27 @@ export interface SearchInputProps {
   maxLength?: number;
 }
 
+// Modal 컴포넌트 타입 정의
+export interface BaseModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  title?: string;
+  size?: 'small' | 'medium' | 'large';
+  className?: string;
+  children: React.ReactNode;
+}
+
+export interface ConfirmationModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  onConfirm: () => void;
+  title: string;
+  message: string;
+  confirmText?: string;
+  cancelText?: string;
+  variant?: 'default' | 'destructive';
+}
+
 // 공통 컴포넌트 기본 props
 export interface BaseComponentProps {
   className?: string;

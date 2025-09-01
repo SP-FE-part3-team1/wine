@@ -1,0 +1,207 @@
+/* ConfirmationModal Design Tokens */
+.confirmationModal {
+  /* Inherits styles from base Modal */
+}
+
+.content {
+  /* Color Variables from Global */
+  --confirm-primary: var(--primary-purple-100);
+  --confirm-destructive: #DC2626;
+  --confirm-destructive-light: #FEF2F2;
+  --confirm-destructive-hover: #B91C1C;
+  --confirm-gray-light: var(--grayscale-100);
+  --confirm-gray-medium: var(--grayscale-300);
+  --confirm-gray-dark: var(--grayscale-500);
+  --confirm-gray-darker: var(--grayscale-800);
+  --confirm-white: var(--white);
+  
+  /* Local Spacing Variables */
+  --confirm-spacing-sm: 8px;
+  --confirm-spacing-md: 16px;
+  --confirm-spacing-lg: 24px;
+  
+  /* Local Effect Variables */
+  --confirm-transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  /* Layout */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--confirm-spacing-md);
+  padding: var(--confirm-spacing-sm) 0;
+}
+
+/* Icon Container */
+.iconContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  margin-bottom: var(--confirm-spacing-sm);
+}
+
+.iconContainer.default {
+  background-color: var(--primary-purple-10);
+  color: var(--confirm-primary);
+}
+
+.iconContainer.destructive {
+  background-color: var(--confirm-destructive-light);
+  color: var(--confirm-destructive);
+}
+
+/* Title */
+.title {
+  margin: 0;
+  font-size: var(--lg-size);
+  font-weight: var(--semibold);
+  color: var(--confirm-gray-darker);
+  line-height: 1.4;
+}
+
+/* Message */
+.message {
+  margin: 0;
+  font-size: var(--md-size);
+  color: var(--confirm-gray-dark);
+  line-height: 1.5;
+  max-width: 320px;
+}
+
+/* Actions */
+.actions {
+  display: flex;
+  gap: var(--confirm-spacing-md);
+  width: 100%;
+  margin-top: var(--confirm-spacing-sm);
+}
+
+/* Buttons */
+.cancelButton,
+.confirmButton {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 20px;
+  font-size: var(--md-size);
+  font-weight: var(--medium);
+  font-family: inherit;
+  border-radius: var(--small);
+  cursor: pointer;
+  transition: var(--confirm-transition);
+  outline: none;
+  min-height: 44px;
+}
+
+/* Cancel Button */
+.cancelButton {
+  background-color: var(--confirm-white);
+  border: 1px solid var(--confirm-gray-medium);
+  color: var(--confirm-gray-darker);
+}
+
+.cancelButton:hover {
+  background-color: var(--confirm-gray-light);
+  border-color: var(--confirm-gray-dark);
+}
+
+.cancelButton:focus-visible {
+  outline: 2px solid var(--confirm-primary);
+  outline-offset: 2px;
+}
+
+.cancelButton:active {
+  transform: translateY(1px);
+}
+
+/* Confirm Button */
+.confirmButton {
+  border: none;
+}
+
+.confirmButton.default {
+  background-color: var(--confirm-primary);
+  color: var(--confirm-white);
+}
+
+.confirmButton.default:hover {
+  background-color: #5a38c7;
+}
+
+.confirmButton.destructive {
+  background-color: var(--confirm-destructive);
+  color: var(--confirm-white);
+}
+
+.confirmButton.destructive:hover {
+  background-color: var(--confirm-destructive-hover);
+}
+
+.confirmButton:focus-visible {
+  outline: 2px solid var(--confirm-primary);
+  outline-offset: 2px;
+}
+
+.confirmButton:active {
+  transform: translateY(1px);
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+  .content {
+    padding: var(--confirm-spacing-md) 0;
+    gap: var(--confirm-spacing-md);
+  }
+  
+  .iconContainer {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .title {
+    font-size: var(--md-size);
+  }
+  
+  .message {
+    font-size: var(--sm-size);
+  }
+  
+  .actions {
+    flex-direction: column;
+    gap: var(--confirm-spacing-sm);
+  }
+  
+  .cancelButton,
+  .confirmButton {
+    width: 100%;
+  }
+}
+
+/* 접근성 및 고대비 모드 */
+@media (prefers-contrast: high) {
+  .cancelButton {
+    border-width: 2px;
+  }
+  
+  .confirmButton:focus-visible,
+  .cancelButton:focus-visible {
+    outline-width: 3px;
+  }
+}
+
+/* 동작 줄이기 설정 지원 */
+@media (prefers-reduced-motion: reduce) {
+  .cancelButton,
+  .confirmButton {
+    transition: none;
+  }
+  
+  .cancelButton:active,
+  .confirmButton:active {
+    transform: none;
+  }
+}
