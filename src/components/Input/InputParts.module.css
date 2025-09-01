@@ -1,7 +1,7 @@
 .input,
 .container {
   width: 100%;
-  max-width: 484px;
+  max-width: 48.4rem;
 }
 
 .container {
@@ -9,10 +9,10 @@
 }
 
 .input {
-  padding: 14px 20px;
-  height: 48px;
+  padding: 1.4rem 2rem;
+  height: 4.8rem;
 
-  border: 1px solid var(--grayscale-300);
+  border: 0.1rem solid var(--grayscale-300);
   border-radius: var(--middle);
   outline: none;
 }
@@ -25,17 +25,17 @@
 }
 
 .input:focus {
-  border: 1px solid var(--primary-purple-100);
+  border: 0.1rem solid var(--primary-purple-100);
 }
 
 .input-invalid {
-  border: 1px solid red;
+  border: 0.1rem solid red;
 }
 
 .visible-btn {
   position: absolute;
   top: 50%;
-  right: 10px;
+  right: 1rem;
   transform: translateY(-50%);
 
   padding: 0;
@@ -48,9 +48,9 @@
 }
 
 .file-btn {
-  width: 140px;
-  height: 140px;
-  border: 1px solid var(--grayscale-300);
+  width: 1.4rem;
+  height: 1.4rem;
+  border: 0.1rem solid var(--grayscale-300);
   border-radius: var(--middle);
   background-color: var(--white);
 
@@ -58,7 +58,7 @@
 }
 
 .error-text {
-  margin-left: 10px;
+  margin-left: 1rem;
 
   font-size: var(--xm-size);
   font-weight: var(--regular);
@@ -66,9 +66,9 @@
   color: red;
 }
 
-@media screen and (max-width: 375px) {
+@media screen and (max-width: 37.5rem) {
   .input {
-    height: 42px;
+    height: 4.2rem;
 
     border-radius: var(--small);
   }
@@ -79,8 +79,8 @@
   }
 
   .file-btn {
-    width: 120px;
-    height: 120px;
+    width: 12rem;
+    height: 12rem;
     border-radius: var(--small);
   }
 }

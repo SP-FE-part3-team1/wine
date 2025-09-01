@@ -1,10 +1,10 @@
 .text {
-  padding: 14px 20px;
+  padding: 1.4rem 2rem;
   width: 100%;
-  max-width: 480px;
-  min-width: 327px;
-  height: 120px;
-  border: 1px solid var(--grayscale-300);
+  max-width: 48rem;
+  min-width: 32.7rem;
+  height: 12rem;
+  border: 0.1rem solid var(--grayscale-300);
   border-radius: var(--middle);
   resize: none;
 
@@ -14,7 +14,7 @@
 }
 
 .text-invalid {
-  border: 1px solid red;
+  border: 0.1rem solid red;
 }
 
 .text::placeholder {
@@ -27,8 +27,8 @@
 }
 
 .error-text {
-  margin-top: 5px;
-  margin-left: 10px;
+  margin-top: 0.5rem;
+  margin-left: 1rem;
 
   font-size: var(--xm-size);
   font-weight: var(--regular);
@@ -36,9 +36,9 @@
   color: red;
 }
 
-@media screen and (max-width: 375px) {
+@media screen and (max-width: 37.5rem) {
   .text {
-    height: 100px;
+    height: 10rem;
     border-radius: var(--small);
 
     font-size: var(--md-size);
