@@ -82,9 +82,14 @@ video {
   margin: 0;
   padding: 0;
   border: 0;
-  font-size: 100%;
+  -moz-text-size-adjust: none;
+  -webkit-text-size-adjust: none;
+  text-size-adjust: none;
   font: inherit;
   vertical-align: baseline;
+}
+html {
+  font-size: 62.5%;
 }
 /* HTML5 display-role reset for older browsers */
 article,
@@ -99,9 +104,6 @@ menu,
 nav,
 section {
   display: block;
-}
-body {
-  line-height: 1;
 }
 ol,
 ul {
@@ -130,18 +132,19 @@ table {
 }
 
 body {
-  padding-top: 40px;
+  line-height: 1;
+  padding-top: 4rem;
   min-height: 100vh;
 }
 
-@media screen and (max-width: 744px) {
+@media screen and (max-width: 74.4rem) {
   body {
-    padding: 30px 20px 0px;
+    padding: 3rem 2rem 0;
   }
 }
 
-@media screen and (max-width: 375px) {
+@media screen and (max-width: 37.5rem) {
   body {
-    padding: 20px 16px 0px;
+    padding: 2rem 1.6rem 0;
   }
 }
