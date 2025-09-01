@@ -2,20 +2,20 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid transparent;
+  border: 0.1rem solid transparent;
   cursor: pointer;
   user-select: none;
 }
 
 /* radius */
 .r12 {
-  border-radius: 12px;
+  border-radius: 1.2rem;
 }
 .r16 {
-  border-radius: 16px;
+  border-radius: 1.6rem;
 }
 .r100 {
-  border-radius: 100px;
+  border-radius: 10rem;
 }
 
 /* primary */
@@ -46,24 +46,24 @@
 .ghost {
   background: var(--white);
   color: var(--grayscale-500);
-  border: 1px solid var(--grayscale-300);
+  border: 0.1rem solid var(--grayscale-300);
 }
 .ghost:hover {
   background: var(--white);
   color: var(--grayscale-500);
-  border: 1px solid var(--grayscale-300);
+  border: 0.1rem solid var(--grayscale-300);
 }
 .ghost:active {
   background: var(--white);
   color: var(--grayscale-500);
-  border: 1px solid var(--grayscale-300);
+  border: 0.1rem solid var(--grayscale-300);
 }
 
 /* icon */
 .icon {
   background: none;
   color: var(--grayscale-300);
-  padding: 3px;
+  padding: 0.3rem;
 }
 .icon:hover {
   background: none;
