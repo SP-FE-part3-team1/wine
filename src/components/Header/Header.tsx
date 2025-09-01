@@ -14,7 +14,7 @@ function Header({ rightBox }: Props) {
         <div className={styles.left}>
           <Link href="/" className={styles.logo}>
             <Image
-              src="/assets/images/logo/white_log_md.svg" // public 폴더 기준
+              src="/assets/images/logo/white_log_md.svg"
               alt="헤더로고"
               width={52}
               height={12}
