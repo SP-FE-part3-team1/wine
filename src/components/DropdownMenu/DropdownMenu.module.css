@@ -1,7 +1,7 @@
 .container {
   position: relative;
   display: inline-block;
-  font-family: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;
+  font-family: 'Pretendard Variable', Pretendard, sans-serif;
 }
 
 .trigger {
@@ -13,24 +13,21 @@
   position: absolute;
   top: calc(100% + 8px);
   right: 0;
-  width: 101px;
   background-color: var(--white);
   border: 1px solid var(--grayscale-300);
-  border-radius: 16px;
+  border-radius: 1.6rem;
   list-style: none;
   margin: 0;
-  padding: 3px 4px;
+  padding: 0.3rem 0.4rem;
   z-index: 20;
-  font-size: 14px;
 }
 
 .menuItem {
-  padding: 8px 16px;
   cursor: pointer;
   border-radius: 12px;
   transition: background-color 0.2s, color 0.2s;
   color: var(--black);
-  font-weight: 500;
+  font-weight: var(--medium);
   text-align: center;
 }
 
@@ -39,14 +36,24 @@
   color: var(--primary-purple-100);
 }
 
-/* desktop */
-@media (min-width: 768px) {
-  .menu {
-    font-size: 16px;
-    width: 126px;
-  }
 
-  .menuItem {
-    padding: 13px 28px;
-  }
+/* --- S 사이즈 스타일 (S Size Styles) --- */
+.menuS {
+  width: 10.1rem;
+  font-size: 1.4rem;
+}
+
+.menuItemS {
+  padding: 0.8rem 1.6rem;
+}
+
+
+/* --- M 사이즈 스타일 (M Size Styles) --- */
+.menuM {
+  width: 12.6rem;
+  font-size: 1.6rem;
+}
+
+.menuItemM {
+  padding: 1.3rem 2.8rem;
 }

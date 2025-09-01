@@ -1,29 +1,30 @@
-/* mobile */
+/* 사이즈별 변수 정의 */
+.S {
+  --tag-padding: 0.6rem 1rem;
+  --tag-font-size: 1.4rem;
+}
+
+.M {
+  --tag-padding: 0.8rem 1.5rem;
+  --tag-font-size: 1.8rem;
+}
+
+/* 공통 스타일 (변수 사용) */
 .tag {
-  display: inline-flex; 
-  align-items: center; 
-  padding: 6px 10px;
-  border-radius: 12px; 
+  display: inline-flex;
+  align-items: center;
+  padding: var(--tag-padding);
+  font-size: var(--tag-font-size);
   
-  background-color: var(--primary-purple-10); 
-  color: var(--primary-purple-100); 
-  
-  font-size: 14px;
-  font-weight: 600; 
+  border-radius: 1.2rem;
+  background-color: var(--primary-purple-10);
+  color: var(--primary-purple-100);
+  font-weight: var(--semibold);
   font-family: 'Pretendard Variable', Pretendard, sans-serif;
 }
 
 .iconWrapper {
   display: flex;
   align-items: center;
-  margin-right: 2px; 
-}
-
-/* desktop */
-
-@media (min-width: 768px) {
-  .tag {
-    padding: 8px 15px;
-    font-size: 18px;
-  }
+  margin-right: 0.2rem;
 }
