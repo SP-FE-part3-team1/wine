@@ -1,15 +1,18 @@
 // import { getAllWines, getWineDetail } from '../../services/wineApi';
 import { wineDetailData } from './dummyWines.js';
+
 import { notFound } from 'next/navigation';
+import styles from './page.module.css'
 // import { getWineDetail } from '@/app/wines/[id]/wineApi';
-import WineSummaryCard from './WineSummaryCard/WineSummaryCard';
+
+
+import WineSummaryCard from './Components/WineSummaryCard/WineSummaryCard';
+import ReviewCard from './Components/ReviewCard/ReviewCard';
 
 // --- 데이터 로직 ---
-// 실제 API 대신 더미 데이터에서 와인 정보를 찾는 모의 함수
+// dummyWines.js를 직접 사용하도록 모의 함수를 수정합니다.
 const getWineDetail = async (id: string) => {
-  const wine = wineDetailData.find(wine => wine.id === Number(id));
-  
-  // 실제 API 호출처럼 Promise를 반환하여 비동기 동작을 유지합니다.
+  const wine = wineDetailData.find(w => w.id === Number(id));
   return Promise.resolve(wine);
 };
 
@@ -29,35 +32,57 @@ const getWineDetail = async (id: string) => {
 
 // 1. 페이지 Props 타입을 공식 문서에 맞게 Promise 형태로 정의합니다.
 type PageProps = {
-  params: Promise<{ id: string }>;
+  params: { id: string };
 };
 
-// 2. 페이지 컴포넌트는 전체 props 객체를 받습니다
-export default async function WineDetailPage(props: PageProps) {
-  const params = await props.params;
-  const id = params.id;
+// 페이지 컴포넌트는 props 객체에서 params를 바로 구조분해 할당하는 것이 더 간단합니다.
+export default async function WineDetailPage({ params }: PageProps) {
+  const { id } = params;
 
-  // 더미 데이터를 조회하는 getWineDetail 함수를 호출합니다.
+  // 와인 상세 정보 (리뷰 포함)를 조회합니다.
   const wine = await getWineDetail(id);
 
   if (!wine) {
     notFound();
-    // notFound()는 렌더링을 중단하므로 아래 return은 실행되지 않습니다.
   }
+  
+  // wine 객체에서 리뷰 목록을 바로 가져옵니다.
+  const reviews = wine.reviews || [];
+
+  // 서버 컴포넌트이므로 실제 동작은 클라이언트 컴포넌트에서 구현해야 합니다.
+  // 여기서는 콘솔 로그만 남기는 예시 함수입니다.
+  // const handleLike = (reviewId: number) => {
+  //   'use server';
+  //   console.log(`${reviewId}번 리뷰에 좋아요 클릭!`);
+  // };
+
+  // const handleMore = (reviewId: number) => {
+  //   'use server';
+  //   console.log(`${reviewId}번 리뷰 더보기 클릭!`);
+  // };
 
   return (
-    <div>
-      <h1>와인 상세 정보</h1>
-      {/* 더미 데이터의 필드명(image, region)에 맞게 props를 전달하고,
-        숫자인 price를 '원' 단위 문자열로 포맷팅합니다.
-      */}
+    <main className={styles.main}>
       <WineSummaryCard
         imageUrl={wine.image}
         name={wine.name}
         origin={wine.region}
         price={`₩ ${wine.price.toLocaleString()}`}
       />
-      {/* 여기에 리뷰 목록 등 상세 페이지의 다른 UI를 추가할 수 있습니다. */}
-    </div>
+      
+      <div className={styles.reviewSection}>
+        <div className={styles.reviewList}>
+          {reviews.map((review) => (
+            <ReviewCard
+              key={review.id}
+              review={review}
+              // onLikeClick={() => handleLike(review.id)}
+              // onMoreClick={() => handleMore(review.id)}
+            />
+          ))}
+        </div>
+      </div>
+    </main>
   );
 }
+

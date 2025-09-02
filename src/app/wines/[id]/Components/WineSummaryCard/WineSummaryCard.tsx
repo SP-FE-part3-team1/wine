@@ -1,5 +1,5 @@
 import styles from './WineSummaryCard.module.css'
-import Tag from '../../../../components/Tag/Tag'
+import Tag from '../../../../../components/Tag/Tag'
 
 type WineSummaryCardProps = {
     imageUrl: string;
@@ -16,7 +16,7 @@ const WineSummaryCard = ({imageUrl, name, origin, price}: WineSummaryCardProps) 
       <div className={styles.cardContent}>
         <h2 className={styles.name}>{name}</h2>
         <p className={styles.origin}>{origin}</p>
-        <Tag size='M'>{price}</Tag>
+        <Tag size='S'>{price}</Tag>
       </div>
     </div>
   );
