@@ -1,0 +1,147 @@
+.card {
+  background-color: var(--white);
+  border: 1px solid var(--grayscale-300);
+  border-radius: 1.6rem;
+  padding: 1.6rem 2rem ;
+  width: 100%;
+}
+
+/* --- 카드 헤더 --- */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.6rem;
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+  gap: 1.6rem;
+}
+
+.userMeta {
+  display: flex;
+  flex-direction: column;
+}
+
+.nickname {
+  font-size: var(--lg-size);
+  font-weight: var(--semibold);
+  color: var(--grayscale-800);
+  margin-bottom: 1rem;
+}
+
+.timeAgo {
+  font-size: var(--md-size);
+  font-weight: var(--regular);
+  color: var(--grayscale-500);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 1.8rem;
+}
+
+/* --- 아로마 & 별점 --- */
+.tagsWrapper {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.8rem;
+  margin-bottom: 1.6rem;
+}
+
+.ratingTag {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 2;
+}
+
+/* 3. 별점 태그 뒤에 뿌연 배경(backdrop) */
+.ratingTag::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: -1rem; 
+  z-index: -1; 
+
+  /* 그라데이션을 이용한 블러 효과 */
+  background: linear-gradient(to right, transparent, var(--white) 30%);
+  filter: blur(2px);
+  border-radius: 1.2rem;
+}
+
+
+.starIcon {
+  color: var(--primary-);
+  width: 2rem;
+  height: 2rem;
+}
+
+/* --- 리뷰 본문 --- */
+.contentText {
+  font-size: var(--md-size);
+  line-height: var(--md-li-he);
+  color: var(--grayscale-800);
+  margin-bottom: 1.6rem;
+}
+
+/* --- 맛 슬라이더 --- */
+.tasteSliders {
+  display: grid;
+  grid-template-columns: max-content max-content 1fr max-content;
+  align-items: center;
+  row-gap: 2rem;
+  column-gap: 1.2rem;
+  pointer-events: none;
+}
+
+.sliderItem {
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: subgrid;
+  gap: inherit;
+  align-items: center;
+}
+
+/* 👇 '바디감', '타닌' 등에 적용될 .sliderTag 클래스 */
+.sliderTag {
+  font-size: var(--xm-size);
+  font-weight: var(--semibold);
+  color: var(--grayscale-500);
+  background-color: var(--grayscale-100);
+  padding: 0.4rem 0.8rem;
+  border-radius: 0.6rem;
+  text-align: center;
+  justify-self: start;
+}
+
+/* 👇 '가벼워요', '진해요' 등에 적용될 .sliderLabel 클래스 */
+.sliderLabel {
+  font-size: var(--md-size);
+  font-weight: var(--medium);
+  color: var(--grayscale-800);
+}
+
+/* 👇 4번째 열에 있는 라벨(진해요, 떫어요 등)만 오른쪽 정렬 */
+.sliderItem > .sliderLabel:last-of-type {
+  text-align: right;
+}
+
+/* --- 푸터 --- */
+.footer {
+  display: flex;
+  justify-content: center;
+  padding-top: 1.6rem;
+}
+
+.foldIcon {
+  /* 위쪽 화살표로 보이도록 180도 회전 */
+  transform: rotate(180deg);
+}
