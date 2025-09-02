@@ -1,15 +1,17 @@
 import Link from "next/link";
 import style from "./Nav.module.css";
 
-const Nav = () => {
+const Nav = ({ path }: { path: string }) => {
   return (
     <div className={style.container}>
       <Link className={style.login} href={"/login"}>
         로그인
       </Link>
-      <Link className={style.signup} href={"/signup"}>
-        회원가입
-      </Link>
+      {path === "/" && (
+        <Link className={style.signup} href={"/signup"}>
+          회원가입
+        </Link>
+      )}
     </div>
   );
 };

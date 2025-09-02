@@ -4,14 +4,26 @@
   height: 100vh;
 }
 
+.header {
+  margin-bottom: 8rem;
+}
+
 @media screen and (max-width: 768px) {
   .body {
     padding: 3rem 2rem 0;
+  }
+
+  .header {
+    margin-bottom: 2.4rem;
   }
 }
 
 @media screen and (max-width: 375px) {
   .body {
     padding: 2rem 1.6rem 0;
+  }
+
+  .header {
+    width: 34.3rem;
   }
 }
