@@ -13,12 +13,12 @@ const CustomInput = ({
   src,
   width,
   height,
-  error,
+  error = false,
   errorText,
   value,
   handleChange,
 }: CustomInputAndLabelAndRefType & {
-  error: boolean;
+  error?: boolean;
   errorText?: string;
 }) => {
   const props = {

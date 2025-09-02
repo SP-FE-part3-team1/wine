@@ -36,7 +36,7 @@
   color: red;
 }
 
-@media screen and (max-width: 37.5rem) {
+@media screen and (max-width: 375px) {
   .text {
     height: 10rem;
     border-radius: var(--small);
