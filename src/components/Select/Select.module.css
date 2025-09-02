@@ -1,4 +1,19 @@
-/* mobile */
+/* 사이즈별 변수 정의 */
+.S {
+  --field-label-font-size: 1.4rem;
+  --container-font-size: 1.4rem;
+  --select-wrapper-padding: 0.9rem 2rem;
+  --option-padding: 1.1rem 2.2rem;
+}
+
+.M {
+  --field-label-font-size: 1.6rem;
+  --container-font-size: 1.6rem;
+  --select-wrapper-padding: 1.1rem 2rem;
+  --option-padding: 1.3rem 2.2rem;
+}
+
+/* 공통 스타일 (이제 변수를 사용합니다) */
 .selectComponentWrapper {
   display: flex;
   flex-direction: column;
@@ -6,36 +21,45 @@
 }
 
 .fieldLabel {
-  margin-bottom: 10px;
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--grayscale-800)
+  margin-bottom: 1rem;
+  font-size: var(--field-label-font-size);
+  font-weight: var(--semibold);
+  color: var(--grayscale-800);
 }
 
 .container {
   position: relative;
-  width: 303px;
-  border: 1px solid var(--grayscale-300);
+  width: 100%;
+  border: 0.1rem solid var(--grayscale-300);
   border-radius: 16px;
-  background-color: #ffffff;
+  background-color: var(--white);
   cursor: pointer;
   transition: border-color 0.2s, box-shadow 0.2s;
-  font-size: 14px;
-  font-weight: 400;
-}
-
-.container:focus-within,
-.container[data-is-open='true'] {
-  border-color: #a78bfa;
-  box-shadow: 0 0 0 3px #f5f3ff;
-  outline: none;
+  font-size: var(--container-font-size);
+  font-weight: var(--regular);
 }
 
 .selectWrapper {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 9px 20px;
+  padding: var(--select-wrapper-padding);
+}
+
+.option {
+  padding: var(--option-padding);
+  cursor: pointer;
+  border-radius: 0.6rem;
+  transition: background-color 0.2s, color 0.2s;
+  color: var(--grayscale-800);
+  font-weight: var(--medium);
+}
+
+/* --- 나머지 변경되지 않는 스타일들 --- */
+.container:focus-within,
+.container[data-is-open='true'] {
+  border-color: var(--primary-purple-10);
+  outline: none;
 }
 
 .selectedValue {
@@ -46,8 +70,8 @@
 }
 
 .dropdownIcon {
-  width: 20px;
-  height: 20px;
+  width: 2rem;
+  height: 2rem;
   transition: transform 0.2s;
 }
 
@@ -62,20 +86,11 @@
   right: 0;
   background-color: var(--white);
   border: 1px solid var(--grayscale-300);
-  border-radius: 16px;
+  border-radius: 1.6rem;
   list-style: none;
   margin: 0;
-  padding: 6px;
+  padding: 0.6rem;
   z-index: 10;
-}
-
-.option {
-  padding: 11px 22px;
-  cursor: pointer;
-  border-radius: 6px;
-  transition: background-color 0.2s, color 0.2s;
-  color: var(--grayscale-800);
-  font-weight: 500;
 }
 
 .option:hover {
@@ -86,24 +101,4 @@
 .selected {
   background-color: var(--white);
   color: var(--primary-purple-100);
-}
-
-/* Desktop */
-@media (min-width: 768px) {
-  .fieldLabel {
-    font-size: 16px;
-  }
-
-  .container {
-    width: 400px;
-    font-size: 16px;
-  }
-
-  .selectWrapper {
-    padding: 11px 20px;
-  }
-
-  .option {
-  padding: 13px 22px;
-}
 }
