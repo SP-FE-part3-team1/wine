@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import CardMonthly from "@/app/wines/CardMonthly";
+import "@/app/reset.css";
 
 const meta: Meta<typeof CardMonthly> = {
   title: "Wines/CardMonthly",
@@ -45,7 +46,7 @@ export const Default: Story = {
   args: {
     imageUrl: "/assets/images/wine/wine1.png",
     rating: 4.8,
-    description: "Ciel du Cheval Vineyard Collaboration Series II 2012",
+    description: "Sentinel Carbernet Sauvignon 2016",
   },
 };
 

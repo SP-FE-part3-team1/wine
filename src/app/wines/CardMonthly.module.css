@@ -20,6 +20,13 @@
   width: 100%;
   height: 100%;
 }
+.content {
+  display: flex;
+  flex-direction: column;
+  width: 8rem;
+  height: auto;
+  gap: 0.5rem;
+}
 
 .imageWrapper {
   display: flex;
@@ -33,19 +40,25 @@
 }
 
 .ratingWrapper {
+  gap: 0.5rem;
   display: flex;
   flex-direction: column;
 }
 
 .ratingValue {
-  font-size: 3.6rem;
+  font-size: 2.8rem;
   font-weight: 800;
+  line-height: 3.3rem;
 }
 
 .description {
   color: var(--grayscale-500);
-  width: 10rem;
+  font-size: 1rem;
   height: auto;
+  line-height: 140%;
+  white-space: normal;
+  word-break: keep-all;
+  overflow-wrap: break-word;
 }
 
 /* 태블릿 + 브라우저 공통 (37.6rem 이상) */

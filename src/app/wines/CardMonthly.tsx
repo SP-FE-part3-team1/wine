@@ -26,7 +26,7 @@ const CardMonthly = ({
         <div className={styles.content}>
           <div className={styles.ratingWrapper}>
             <span className={styles.ratingValue}>{rating.toFixed(1)}</span>
-            <StarRating value={rating} />
+            <StarRating size="small" value={rating} />
           </div>
           {description && <p className={styles.description}>{description}</p>}
         </div>
