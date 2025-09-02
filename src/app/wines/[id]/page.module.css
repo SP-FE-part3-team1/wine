@@ -8,7 +8,7 @@
 
 .reviewSection {
   width: 100%;
-  max-width: 50rem; /* WineSummaryCard와 너비를 맞추기 위해 조정 */
+  max-width: 80rem; /* WineSummaryCard와 너비를 맞추기 위해 조정 */
   margin-top: 4rem;
 }
 

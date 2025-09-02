@@ -81,8 +81,8 @@ function ReviewCard({ review, onLikeClick, onMoreClick }: ReviewCardProps) {
             <Image
               src={liked ? "/assets/images/icon/liked.svg" : "/assets/images/icon/like.svg"}
               alt="좋아요 아이콘"
-              width={24}
-              height={24}
+              width={32}
+              height={32}
             />
           </Button>
           <Button variant="icon" ariaLabel="더보기" onClick={() => onMoreClick?.(id)}>
@@ -95,8 +95,9 @@ function ReviewCard({ review, onLikeClick, onMoreClick }: ReviewCardProps) {
       <div className={styles.tagsWrapper}>
         <Chip
           options={chipOptions}
-          selectedValues={aroma}
+          selectedValues={[]}
           onSelectionChange={() => {}}
+          readonly={true}
           disabled={false}
         />
         <div className={styles.ratingTag}>

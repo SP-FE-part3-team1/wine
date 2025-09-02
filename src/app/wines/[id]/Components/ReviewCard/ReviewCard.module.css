@@ -17,7 +17,7 @@
 .userInfo {
   display: flex;
   align-items: center;
-  gap: 1.2rem;
+  gap: 1.6rem;
 }
 
 .userMeta {
@@ -29,18 +29,19 @@
   font-size: var(--lg-size);
   font-weight: var(--semibold);
   color: var(--grayscale-800);
-  margin-bottom: 0.4rem;
+  margin-bottom: 1rem;
 }
 
 .timeAgo {
-  font-size: var(--xm-size);
+  font-size: var(--md-size);
+  font-weight: var(--regular);
   color: var(--grayscale-500);
 }
 
 .actions {
   display: flex;
   align-items: center;
-  gap: 0.8rem;
+  gap: 1.8rem;
 }
 
 /* --- 아로마 & 별점 --- */
@@ -51,27 +52,24 @@
   align-items: center;
   gap: 0.8rem;
   margin-bottom: 1.6rem;
-  border-bottom: 1px solid var(--grayscale-100);
-  padding-bottom: 1.6rem;
 }
 
-/* 2. 별점 태그를 띄웁니다. */
 .ratingTag {
   position: absolute;
   top: 0;
   right: 0;
-  z-index: 2; /* 칩 위에 오도록 설정 */
+  z-index: 2;
 }
 
-/* 3. 별점 태그 뒤에 뿌연 배경(backdrop)을 만듭니다. */
+/* 3. 별점 태그 뒤에 뿌연 배경(backdrop) */
 .ratingTag::before {
   content: '';
   position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
-  left: -1rem; /* 왼쪽으로 약간 더 넓게 */
-  z-index: -1; /* 태그 뒤에 위치 */
+  left: -1rem; 
+  z-index: -1; 
 
   /* 그라데이션을 이용한 블러 효과 */
   background: linear-gradient(to right, transparent, var(--white) 30%);
@@ -91,7 +89,7 @@
   font-size: var(--md-size);
   line-height: var(--md-li-he);
   color: var(--grayscale-800);
-  margin-bottom: 2.4rem;
+  margin-bottom: 1.6rem;
 }
 
 /* --- 맛 슬라이더 --- */
