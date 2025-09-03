@@ -5,8 +5,8 @@ import { Modal } from '../Modal';
 import { FilterModalProps, FilterState, WINE_TYPE_OPTIONS } from '../../../types/component-types';
 import { FILTER_DEFAULT_VALUES } from '../manager/modalConfigs';
 import { Chip } from '../../Chip/Chip';
-import { RangeSlider } from '../../RangeSlider/RangeSlider';
-import { Button } from '../../Button/Button';
+import RangeSlider from '../../RangeSlider/RangeSlider';
+import Button from '../../Button/Button';
 import styles from './FilterModal.module.css';
 
 export const FilterModal = ({

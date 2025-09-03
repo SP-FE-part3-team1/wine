@@ -151,7 +151,7 @@
 }
 
 /* 반응형 디자인 */
-@media (max-width: 76.8rem) {
+@media (max-width: 768px) {
   .content {
     padding: var(--confirm-spacing-md) 0;
     gap: var(--confirm-spacing-md);

@@ -7,8 +7,8 @@ import { WINE_FORM_CONFIG, transformWineDataForApi } from '../manager/modalConfi
 import CustomInput from '../../Input/CustomInput';
 import Select from '../../Select/Select';
 import { Chip } from '../../Chip/Chip';
-import { RangeSlider } from '../../RangeSlider/RangeSlider';
-import { Button } from '../../Button/Button';
+import RangeSlider from '../../RangeSlider/RangeSlider';
+import Button from '../../Button/Button';
 import styles from './WineFormModal.module.css';
 
 interface StepProps {

@@ -101,7 +101,7 @@
 }
 
 /* 반응형 디자인 */
-@media (max-width: 76.8rem) {
+@media (max-width: 768px) {
   .wineFormModal {
     width: 95vw;
     max-width: none;
@@ -134,7 +134,7 @@
   }
 }
 
-@media (max-width: 48rem) {
+@media (max-width: 480px) {
   .buttonGroup {
     flex-direction: column-reverse;
     gap: 0.8rem;

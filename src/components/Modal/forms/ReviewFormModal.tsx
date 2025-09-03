@@ -7,8 +7,8 @@ import { REVIEW_FORM_CONFIG, TASTE_SLIDERS, transformReviewDataForApi } from '..
 import { StarRating } from '../../StarRating/StarRating';
 import ReviewInput from '../../Input/ReviewInput';
 import { Chip } from '../../Chip/Chip';
-import { RangeSlider } from '../../RangeSlider/RangeSlider';
-import { Button } from '../../Button/Button';
+import RangeSlider from '../../RangeSlider/RangeSlider';
+import Button from '../../Button/Button';
 import styles from './ReviewFormModal.module.css';
 
 export const ReviewFormModal = ({

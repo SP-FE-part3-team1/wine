@@ -161,7 +161,7 @@
 }
 
 /* 반응형 디자인 */
-@media (max-width: 76.8rem) {
+@media (max-width: 768px) {
   .star.small {
     width: 1.4rem;
     height: 1.4rem;
@@ -182,7 +182,7 @@
   }
 }
 
-@media (max-width: 37.5rem) {
+@media (max-width: 375px) {
   .star.small {
     width: 1.2rem;
     height: 1.2rem;

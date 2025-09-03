@@ -160,17 +160,17 @@
 }
 
 /* 반응형 디자인 */
-@media (max-width: 76.8rem) {
+@media (max-width: 768px) {
   .backdrop {
     padding: var(--modal-spacing-sm);
-    align-items: flex-end;
+    align-items: center; /* 중앙 정렬로 변경 */
   }
   
   .modal {
     max-height: 90vh;
     width: 100%;
-    border-radius: var(--modal-radius) var(--modal-radius) 0 0;
-    animation: modalSlideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: var(--modal-radius); /* 모든 모서리 둥글게 */
+    animation: modalSlideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1); /* 중앙에서 나타나는 애니메이션 */
   }
   
   .modal.small,
@@ -193,7 +193,7 @@
   }
 }
 
-@media (max-width: 37.5rem) {
+@media (max-width: 375px) {
   .backdrop {
     padding: var(--modal-spacing-xs);
   }

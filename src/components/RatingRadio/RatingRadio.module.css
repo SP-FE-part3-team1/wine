@@ -145,7 +145,7 @@
 }
 
 /* 반응형 디자인 */
-@media (max-width: 76.8rem) {
+@media (max-width: 768px) {
   .container {
     gap: var(--radio-spacing-xs);
   }
@@ -165,7 +165,7 @@
   }
 }
 
-@media (max-width: 37.5rem) {
+@media (max-width: 375px) {
   .container {
     max-width: 280px;
   }

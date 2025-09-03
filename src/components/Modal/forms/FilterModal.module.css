@@ -144,7 +144,7 @@
 }
 
 /* 반응형 디자인 */
-@media (max-width: 76.8rem) {
+@media (max-width: 768px) {
   .filterModal {
     width: 95vw;
     max-width: none;
@@ -164,7 +164,7 @@
   }
 }
 
-@media (max-width: 48rem) {
+@media (max-width: 480px) {
   .buttonGroup {
     flex-direction: column;
     gap: 1.2rem;

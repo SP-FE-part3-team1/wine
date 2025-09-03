@@ -5,7 +5,7 @@
 import { useState } from 'react';
 import { useWineModal, useReviewModal, useFilterModal } from '../';
 import { FilterState } from '../../../types/component-types';
-import { Button } from '../../Button/Button';
+import Button from '../../Button/Button';
 
 /**
  * Modal 시스템 사용 예제
