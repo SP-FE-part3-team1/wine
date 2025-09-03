@@ -9,9 +9,11 @@
   padding-right: 2rem;
   border-radius: var(--small);
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 .title {
-  margin-bottom: 2rem;
   font-size: 1.8rem;
   font-weight: var(--bold);
   line-height: 2.1rem;
@@ -37,14 +39,38 @@
 }
 
 :global(.swiper-wrapper) {
-  display: flex !important;
-  flex-direction: row !important;
+  display: flex;
+  flex-direction: row;
 }
 
 :global(.swiper-slide) {
-  width: auto !important;
-  flex-shrink: 0 !important;
+  width: auto;
+  flex-shrink: 0;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+@media screen and (min-width: 37.6rem) {
+  .carouselWrapper {
+    max-width: 70.4rem;
+    height: 29.9rem;
+    padding: 3rem;
+  }
+
+  .title {
+    font-size: 2rem;
+  }
+}
+
+@media screen and (min-width: 76.9rem) {
+  .carouselWrapper {
+    max-width: 114rem;
+    height: 29.9rem;
+    padding: 3rem;
+  }
+
+  .title {
+    font-size: 2rem;
+  }
 }
