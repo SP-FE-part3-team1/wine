@@ -12,8 +12,8 @@
   --radio-gray-disabled: var(--grayscale-300);
   
   /* Local Spacing Variables */
-  --radio-spacing-xs: 4px;
-  --radio-spacing-sm: 8px;
+  --radio-spacing-xs: 0.4rem;
+  --radio-spacing-sm: 0.8rem;
   --radio-spacing-md: var(--small);
   
   /* Font Variables from Global */
@@ -61,8 +61,7 @@
 }
 
 .option:focus-within {
-  outline: 2px solid var(--radio-primary);
-  outline-offset: 2px;
+  outline: none;
 }
 
 /* 선택된 상태 */
@@ -91,7 +90,7 @@
   color: var(--radio-gray-darker);
   width: 100%;
   position: relative;
-  padding-left: 32px;
+  padding-left: 3.2rem;
 }
 
 .radioLabel::before {
@@ -100,9 +99,9 @@
   left: 0;
   top: 50%;
   transform: translateY(-50%);
-  width: 20px;
-  height: 20px;
-  border: 2px solid var(--radio-gray-button);
+  width: 2rem;
+  height: 2rem;
+  border: 0.2rem solid var(--radio-gray-button);
   border-radius: 50%;
   background-color: var(--radio-white);
   transition: var(--radio-transition);
@@ -112,7 +111,7 @@
 .option.selected .radioLabel::before {
   border-color: var(--radio-primary);
   background-color: var(--radio-primary);
-  box-shadow: inset 0 0 0 3px var(--radio-white);
+  box-shadow: inset 0 0 0 0.3rem var(--radio-white);
 }
 
 /* 호버 상태 라디오 버튼 */
@@ -120,10 +119,13 @@
   border-color: var(--radio-primary);
 }
 
-/* 라디오 버튼 포커스 상태 */
+/* 라디오 버튼 포커스 상태 - outline 제거 */
 .radioInput:focus + .radioLabel::before {
-  outline: 2px solid var(--radio-primary);
-  outline-offset: 2px;
+  outline: none;
+}
+
+.radioInput:focus {
+  outline: none;
 }
 
 /* 비활성화 상태 */
@@ -143,7 +145,7 @@
 }
 
 /* 반응형 디자인 */
-@media (max-width: 768px) {
+@media (max-width: 76.8rem) {
   .container {
     gap: var(--radio-spacing-xs);
   }
@@ -154,12 +156,32 @@
   
   .radioLabel {
     font-size: var(--radio-font-sm);
-    padding-left: 28px;
+    padding-left: 2.8rem;
   }
   
   .radioLabel::before {
-    width: 18px;
-    height: 18px;
+    width: 1.8rem;
+    height: 1.8rem;
+  }
+}
+
+@media (max-width: 37.5rem) {
+  .container {
+    max-width: 280px;
+  }
+  
+  .option {
+    padding: var(--radio-spacing-xs);
+  }
+  
+  .radioLabel {
+    font-size: var(--sm-size);
+    padding-left: 2.4rem;
+  }
+  
+  .radioLabel::before {
+    width: 1.6rem;
+    height: 1.6rem;
   }
 }
 
@@ -170,7 +192,7 @@
   }
   
   .radioLabel::before {
-    border-width: 3px;
+    border-width: 0.3rem;
   }
 }
 

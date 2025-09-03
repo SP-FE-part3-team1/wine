@@ -10,8 +10,8 @@
   --search-gray-darker: var(--grayscale-800);
   
   /* Local Spacing Variables */
-  --search-spacing-xs: 4px;
-  --search-spacing-sm: 8px;
+  --search-spacing-xs: 0.4rem;
+  --search-spacing-sm: 0.8rem;
   --search-spacing-md: var(--small);
   
   /* Font Variables from Global */
@@ -30,19 +30,20 @@
   position: relative;
   display: flex;
   align-items: center;
-  width: 100%;
-  max-width: 400px;
+  width: 40rem;
+  height: 4.8rem;
   background-color: var(--search-white);
-  border: 1px solid var(--search-gray-medium);
+  border: 0.1rem solid var(--search-gray-medium);
   border-radius: var(--search-radius);
   box-shadow: var(--search-shadow-sm);
   transition: var(--search-transition);
+  flex-shrink: 0;
 }
 
 /* 포커스 상태 */
 .container.focused {
   border-color: var(--search-primary);
-  box-shadow: 0 0 0 3px rgba(106, 67, 219, 0.1), var(--search-shadow-sm);
+  box-shadow: 0 0 0 0.3rem rgba(106, 67, 219, 0.1), var(--search-shadow-sm);
 }
 
 /* 비활성화 상태 */
@@ -79,8 +80,8 @@
 }
 
 .searchIcon:focus-visible {
-  outline: 2px solid var(--search-primary);
-  outline-offset: 2px;
+  outline: 0.2rem solid var(--search-primary);
+  outline-offset: 0.2rem;
 }
 
 /* 입력 필드 */
@@ -110,8 +111,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
+  width: 3.2rem;
+  height: 3.2rem;
   margin: var(--search-spacing-xs);
   padding: 0;
   background: none;
@@ -133,14 +134,15 @@
 }
 
 .clearButton:focus-visible {
-  outline: 2px solid var(--search-primary);
-  outline-offset: 1px;
+  outline: 0.2rem solid var(--search-primary);
+  outline-offset: 0.1rem;
 }
 
 /* 반응형 디자인 */
-@media (max-width: 768px) {
+@media (max-width: 76.8rem) {
   .container {
-    max-width: 100%;
+    width: 21rem;
+    height: 3.8rem;
   }
   
   .input {
@@ -150,6 +152,33 @@
   .searchIcon,
   .clearButton {
     padding: var(--search-spacing-sm);
+  }
+  
+  .clearButton {
+    width: 2.8rem;
+    height: 2.8rem;
+  }
+}
+
+@media (max-width: 37.5rem) {
+  .container {
+    width: 21rem;
+    height: 3.8rem;
+  }
+  
+  .input {
+    font-size: var(--sm-size);
+    padding: var(--search-spacing-sm);
+  }
+  
+  .searchIcon {
+    padding: var(--search-spacing-sm);
+  }
+  
+  .clearButton {
+    width: 2.4rem;
+    height: 2.4rem;
+    margin: var(--search-spacing-xs);
   }
 }
 

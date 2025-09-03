@@ -5,7 +5,7 @@
   color: var(--grayscale-800);
 }
 
-@media screen and (max-width: 37.5rem) {
+@media screen and (max-width: 375px) {
   .label {
     font-size: var(--md-size);
     line-height: var(--md-li-he);

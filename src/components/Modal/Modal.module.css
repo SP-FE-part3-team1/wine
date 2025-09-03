@@ -1,0 +1,254 @@
+/* Modal Design Tokens - Using Global Variables */
+.backdrop {
+  /* Color Variables from Global */
+  --modal-overlay: rgba(0, 0, 0, 0.6);
+  --modal-bg: var(--white);
+  --modal-border: var(--grayscale-200);
+  --modal-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --modal-primary: var(--primary-purple-100);
+  --modal-text: var(--grayscale-800);
+  --modal-text-secondary: var(--grayscale-600);
+  
+  /* Local Spacing Variables */
+  --modal-spacing-xs: 0.8rem;
+  --modal-spacing-sm: 1.2rem;
+  --modal-spacing-md: 1.6rem;
+  --modal-spacing-lg: 2.4rem;
+  --modal-spacing-xl: 3.2rem;
+  
+  /* Border Radius from Global */
+  --modal-radius: var(--middle);
+  
+  /* Local Effect Variables */
+  --modal-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --modal-backdrop-transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  /* Backdrop Styles */
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--modal-overlay);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--modal-spacing-md);
+  z-index: 1000;
+  
+  /* Animation */
+  animation: backdropFadeIn 0.3s ease-out;
+}
+
+/* Modal Container */
+.modal {
+  background-color: var(--modal-bg);
+  border-radius: var(--modal-radius);
+  box-shadow: var(--modal-shadow);
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100vh - 3.2rem);
+  overflow: hidden;
+  position: relative;
+  
+  /* Animation */
+  animation: modalSlideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  /* Focus outline */
+  outline: none;
+}
+
+.modal:focus-visible {
+  outline: 2px solid var(--modal-primary);
+  outline-offset: 2px;
+}
+
+/* Modal Sizes */
+.modal.small {
+  width: 100%;
+  max-width: 400px;
+}
+
+.modal.medium {
+  width: 100%;
+  max-width: 500px;
+}
+
+.modal.large {
+  width: 100%;
+  max-width: 700px;
+}
+
+/* Header */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--modal-spacing-lg);
+  border-bottom: 0.1rem solid var(--modal-border);
+  flex-shrink: 0;
+}
+
+.title {
+  margin: 0;
+  font-size: var(--xl-size);
+  font-weight: var(--semibold);
+  color: var(--modal-text);
+  line-height: 1.4;
+}
+
+/* Close Button - Hidden for consistent design */
+.closeButton {
+  display: none;
+}
+
+/* Content */
+.content {
+  padding: var(--modal-spacing-lg);
+  overflow-y: auto;
+  flex: 1;
+}
+
+/* Animations */
+@keyframes backdropFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Exit animations for when modal closes */
+.backdrop.closing {
+  animation: backdropFadeOut 0.2s ease-in;
+}
+
+.modal.closing {
+  animation: modalSlideOut 0.2s ease-in;
+}
+
+@keyframes backdropFadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes modalSlideOut {
+  from {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.95) translateY(-10px);
+  }
+}
+
+/* 반응형 디자인 */
+@media (max-width: 76.8rem) {
+  .backdrop {
+    padding: var(--modal-spacing-sm);
+    align-items: flex-end;
+  }
+  
+  .modal {
+    max-height: 90vh;
+    width: 100%;
+    border-radius: var(--modal-radius) var(--modal-radius) 0 0;
+    animation: modalSlideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .modal.small,
+  .modal.medium,
+  .modal.large {
+    max-width: none;
+    width: 100%;
+  }
+  
+  .header {
+    padding: var(--modal-spacing-md);
+  }
+  
+  .content {
+    padding: var(--modal-spacing-md);
+  }
+  
+  .title {
+    font-size: var(--lg-size);
+  }
+}
+
+@media (max-width: 37.5rem) {
+  .backdrop {
+    padding: var(--modal-spacing-xs);
+  }
+  
+  .modal {
+    max-height: 95vh;
+  }
+  
+  .header {
+    padding: var(--modal-spacing-sm) var(--modal-spacing-md);
+  }
+  
+  .content {
+    padding: var(--modal-spacing-sm) var(--modal-spacing-md);
+  }
+  
+  .title {
+    font-size: var(--md-size);
+  }
+}
+
+@keyframes modalSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 접근성 및 고대비 모드 */
+@media (prefers-contrast: high) {
+  .modal {
+    border: 2px solid var(--modal-text);
+  }
+  
+  .header {
+    border-bottom: 0.2rem solid var(--modal-border);
+  }
+  
+  /* Close button removed */
+}
+
+/* 동작 줄이기 설정 지원 */
+@media (prefers-reduced-motion: reduce) {
+  .backdrop,
+  .modal,
+  .closeButton {
+    animation: none;
+    transition: none;
+  }
+  
+  .closeButton:active {
+    transform: none;
+  }
+}

@@ -18,7 +18,7 @@
 }
 
 /* 모바일: 0 ~ 37.5rem */
-@media (max-width: 37.5rem) {
+@media (max-width: 375px) {
   .inner {
     height: 5.6rem;
     padding: 1.4rem 2.8rem;
@@ -27,7 +27,7 @@
 }
 
 /* 태블릿: 37.6rem ~ 76.8rem */
-@media (min-width: 37.6rem) and (max-width: 76.8rem) {
+@media (min-width: 376px) and (max-width: 768px) {
   .inner {
     height: 6.4rem;
     padding: 1.2rem 4rem;
@@ -36,7 +36,7 @@
 }
 
 /* 브라우저: 76.9rem ~ */
-@media (min-width: 76.9rem) {
+@media (min-width: 769px) {
   .inner {
     height: 7rem;
     padding: 1.1rem 6rem;

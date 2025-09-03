@@ -1,9 +1,25 @@
 // Wine Platform - 공통 컴포넌트 타입 정의
 
 // API 타입에서 가져온 와인 타입
-export type WineType = 'RED' | 'WHITE' | 'SPARKLING';
+export type WineType = "RED" | "WHITE" | "SPARKLING";
 
-// 와인 타입 칩 컴포넌트
+// 칩 컴포넌트 공통 인터페이스
+export interface ChipOption {
+  value: string;
+  label: string;
+}
+
+export interface ChipProps {
+  options: ChipOption[];
+  selectedValues?: string[];
+  onSelectionChange?: (values: string[]) => void;
+  disabled?: boolean;
+  readonly?: boolean;
+  multiple?: boolean;
+  ariaLabel?: string;
+}
+
+// 와인 타입 칩 컴포넌트 (하위 호환성)
 export interface WineTypeChipProps {
   types: WineType[];
   selectedTypes: WineType[];
@@ -31,7 +47,7 @@ export interface StarRatingProps {
   onChange?: (rating: number) => void;
   maxRating?: number;
   readOnly?: boolean;
-  size?: 'small' | 'medium' | 'large';
+  size?: "small" | "medium" | "large";
   disabled?: boolean;
 }
 
@@ -46,8 +62,29 @@ export interface SearchInputProps {
   maxLength?: number;
 }
 
+// Modal 컴포넌트 타입 정의
+export interface BaseModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  title?: string;
+  size?: 'small' | 'medium' | 'large';
+  className?: string;
+  children: React.ReactNode;
+}
+
+export interface ConfirmationModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  onConfirm: () => void;
+  title: string;
+  message: string;
+  confirmText?: string;
+  cancelText?: string;
+  variant?: 'default' | 'destructive';
+}
+
 // 공통 컴포넌트 기본 props
 export interface BaseComponentProps {
   className?: string;
-  'data-testid'?: string;
+  "data-testid"?: string;
 }

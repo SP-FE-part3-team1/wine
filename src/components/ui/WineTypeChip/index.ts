@@ -1,1 +1,0 @@
-export { WineTypeChip } from './WineTypeChip';

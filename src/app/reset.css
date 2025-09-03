@@ -133,18 +133,5 @@ table {
 
 body {
   line-height: 1;
-  padding-top: 4rem;
   min-height: 100vh;
-}
-
-@media screen and (max-width: 74.4rem) {
-  body {
-    padding: 3rem 2rem 0;
-  }
-}
-
-@media screen and (max-width: 37.5rem) {
-  body {
-    padding: 2rem 1.6rem 0;
-  }
 }
