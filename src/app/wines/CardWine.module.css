@@ -10,12 +10,12 @@
   /* 모바일 기본값 */
   width: 100%;
   max-width: 34.3rem; /* 카드가 너무 커지지 않게 제한 */
-  height: 36rem; /* 내용에 따라 늘어나도록 */
+  height: 39rem;
 }
 
 .body {
   display: flex;
-  padding: 3rem 2rem 0 2rem;
+  padding: 3rem 3rem 0 2rem;
   gap: 3.6rem;
 }
 
@@ -31,6 +31,15 @@
   object-position: center;
 }
 
+.contentBox {
+  display: flex;
+  flex: 1; /* 남는 공간 채우기 */
+  flex-direction: column;
+  justify-content: space-between;
+  padding-right: 2rem; /* 이미지랑 간격 주고 싶으면 */
+  box-sizing: border-box;
+}
+
 .content {
   display: flex;
   flex-direction: column;
@@ -43,7 +52,7 @@
 
 .infoTitle {
   font-size: 2rem;
-  font-weight: 700;
+  font-weight: var(--semibold);
   color: var(--grayscale-900);
   line-height: 3.2rem;
 }
@@ -61,8 +70,6 @@
 
 .wineRating {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
   gap: 1rem;
   margin-bottom: 2.8rem;
 }
@@ -72,6 +79,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  margin-right: 2.6rem;
 }
 
 .ratingValue {
@@ -97,8 +105,6 @@
   display: flex;
   flex-direction: column;
   gap: 0.8rem;
-  width: 30.3rem;
-  height: 10.4rem;
 }
 
 .detailTitle {
@@ -115,11 +121,75 @@
 
 @media screen and (min-width: 37.6rem) {
   .card {
-    width: 70.4rem;
+    max-width: 70.4rem;
     height: 37.5rem;
   }
   .image {
     width: 7rem;
     height: 21.2rem;
+  }
+
+  .infoTitle {
+    font-size: 3rem;
+    width: 30rem;
+    margin-bottom: 2rem;
+    line-height: 3.6rem;
+  }
+
+  .infoDescription {
+    font-size: 1.6rem;
+    margin-bottom: 1.4rem;
+  }
+
+  .contentBox {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .wineRating {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .ratingValue {
+    font-size: 4.8rem;
+    margin-bottom: 1rem;
+  }
+
+  .reviewState {
+    font-size: 1.4rem;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .detailTitle {
+    font-size: 1.6rem;
+    margin-top: 1.9rem;
+    margin-bottom: 1rem;
+  }
+
+  .detailDescription {
+    font-size: 1.6rem;
+  }
+}
+
+@media screen and (min-width: 76.9rem) {
+  .card {
+    max-width: 80rem;
+    height: 37.5rem;
+  }
+
+  .image {
+    width: 6rem;
+    height: 20.8rem;
+  }
+
+  .infoTitle {
+    font-size: 3.2rem;
+    line-height: 4.2rem;
+  }
+
+  .reviewState {
+    margin-bottom: 3rem;
   }
 }
