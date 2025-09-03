@@ -8,6 +8,12 @@
   margin-bottom: 8rem;
 }
 
+@media screen and (max-width: 1140px) {
+  .body {
+    padding: 3rem 2rem 0;
+  }
+}
+
 @media screen and (max-width: 768px) {
   .body {
     padding: 3rem 2rem 0;
