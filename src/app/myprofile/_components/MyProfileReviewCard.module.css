@@ -1,0 +1,19 @@
+.reviewCard {
+  border: 0.1rem solid var(--grayscale-300);
+  padding: 2.4rem 4rem 3rem 4rem;
+  margin: 2rem;
+  border-radius: 1.6rem;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.left {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
