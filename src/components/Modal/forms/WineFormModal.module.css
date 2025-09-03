@@ -1,0 +1,180 @@
+/* WineFormModal 스타일 */
+.wineFormModal {
+  max-width: 60rem;
+  width: 90vw;
+}
+
+.modalContent {
+  display: flex;
+  flex-direction: column;
+  gap: 2.4rem;
+  padding: 0.8rem;
+}
+
+/* 단계 표시기 */
+.stepIndicator {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.2rem;
+  margin-bottom: 2.4rem;
+}
+
+.step {
+  width: 3.2rem;
+  height: 3.2rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--grayscale-300);
+  color: var(--grayscale-600);
+  font-weight: var(--medium);
+  font-size: var(--md-size);
+  transition: all 0.2s ease;
+}
+
+.step.active {
+  background-color: var(--primary-purple-100);
+  color: var(--white);
+  box-shadow: 0 0 0 0.3rem var(--primary-purple-10);
+}
+
+/* 단계 콘텐츠 */
+.stepContent {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  min-height: 40rem;
+  padding: 1.6rem 0;
+}
+
+.stepTitle {
+  font-size: var(--xl-size);
+  font-weight: var(--semibold);
+  color: var(--grayscale-900);
+  margin-bottom: 0.8rem;
+}
+
+.stepDescription {
+  font-size: var(--md-size);
+  color: var(--grayscale-700);
+  margin-bottom: 1.6rem;
+  line-height: 1.5;
+}
+
+/* 가격 섹션 */
+.priceSection {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.sectionLabel {
+  font-size: var(--md-size);
+  font-weight: var(--medium);
+  color: var(--grayscale-900);
+}
+
+.priceDisplay {
+  text-align: center;
+  font-size: var(--lg-size);
+  font-weight: var(--semibold);
+  color: var(--primary-purple-100);
+  padding: 0.8rem;
+  background-color: var(--primary-purple-10);
+  border-radius: var(--small);
+}
+
+/* 버튼 그룹 */
+.buttonGroup {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1.2rem;
+  padding-top: 2.4rem;
+  border-top: 0.1rem solid var(--grayscale-200);
+  margin-top: auto;
+}
+
+.buttonGroup button {
+  min-width: 10rem;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 76.8rem) {
+  .wineFormModal {
+    width: 95vw;
+    max-width: none;
+  }
+
+  .modalContent {
+    padding: 0.4rem;
+    gap: 2rem;
+  }
+
+  .stepContent {
+    min-height: 35rem;
+    padding: 1.2rem 0;
+    gap: 1.6rem;
+  }
+
+  .stepTitle {
+    font-size: var(--lg-size);
+  }
+
+  .stepIndicator {
+    gap: 0.8rem;
+    margin-bottom: 2rem;
+  }
+
+  .step {
+    width: 2.8rem;
+    height: 2.8rem;
+    font-size: var(--sm-size);
+  }
+}
+
+@media (max-width: 48rem) {
+  .buttonGroup {
+    flex-direction: column-reverse;
+    gap: 0.8rem;
+  }
+
+  .buttonGroup button {
+    width: 100%;
+    min-width: auto;
+  }
+
+  .stepContent {
+    min-height: 30rem;
+  }
+
+  .priceDisplay {
+    font-size: var(--md-size);
+  }
+}
+
+/* 에러 상태 스타일 */
+.errorText {
+  color: var(--error-red);
+  font-size: var(--sm-size);
+  margin-top: 0.4rem;
+}
+
+/* 로딩 상태 */
+.loading {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* 접근성 개선 */
+.step:focus {
+  outline: 0.2rem solid var(--primary-purple-100);
+  outline-offset: 0.2rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .step {
+    transition: none;
+  }
+}

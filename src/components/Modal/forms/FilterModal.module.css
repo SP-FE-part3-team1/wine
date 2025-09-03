@@ -1,0 +1,232 @@
+/* FilterModal 스타일 */
+.filterModal {
+  max-width: 50rem;
+  width: 90vw;
+}
+
+.modalContent {
+  display: flex;
+  flex-direction: column;
+  gap: 2.4rem;
+  padding: 0.8rem;
+}
+
+/* 섹션 */
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+}
+
+.sectionTitle {
+  font-size: var(--md-size);
+  font-weight: var(--semibold);
+  color: var(--grayscale-900);
+  margin-bottom: 0.4rem;
+}
+
+/* 범위 컨테이너 */
+.rangeContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.rangeLabels {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--sm-size);
+  color: var(--grayscale-700);
+  font-weight: var(--medium);
+}
+
+/* 가격 입력 */
+.priceInputs {
+  display: flex;
+  gap: 1.6rem;
+  margin-top: 0.8rem;
+}
+
+.inputGroup {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.inputGroup label {
+  font-size: var(--sm-size);
+  font-weight: var(--medium);
+  color: var(--grayscale-700);
+}
+
+.priceInput {
+  padding: 0.8rem 1.2rem;
+  border: 0.1rem solid var(--grayscale-300);
+  border-radius: var(--small);
+  font-size: var(--md-size);
+  background-color: var(--white);
+  transition: border-color 0.2s ease;
+}
+
+.priceInput:focus {
+  outline: none;
+  border-color: var(--primary-purple-100);
+  box-shadow: 0 0 0 0.2rem var(--primary-purple-10);
+}
+
+.priceInput:hover {
+  border-color: var(--grayscale-400);
+}
+
+/* 평점 슬라이더 */
+.ratingSliders {
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+  margin-top: 0.8rem;
+}
+
+.sliderGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.sliderGroup label {
+  font-size: var(--sm-size);
+  font-weight: var(--medium);
+  color: var(--grayscale-700);
+}
+
+/* 필터 정보 */
+.filterInfo {
+  padding: 1.2rem;
+  background-color: var(--grayscale-50);
+  border-radius: var(--small);
+  border: 0.1rem solid var(--grayscale-200);
+  text-align: center;
+}
+
+.activeFilters {
+  font-size: var(--sm-size);
+  font-weight: var(--medium);
+  color: var(--primary-purple-100);
+}
+
+/* 버튼 그룹 */
+.buttonGroup {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 2rem;
+  border-top: 0.1rem solid var(--grayscale-200);
+}
+
+.resetButton {
+  color: var(--grayscale-600);
+  border-color: var(--grayscale-300);
+}
+
+.resetButton:hover {
+  color: var(--grayscale-800);
+  border-color: var(--grayscale-400);
+  background-color: var(--grayscale-50);
+}
+
+.primaryButtons {
+  display: flex;
+  gap: 1.2rem;
+}
+
+.primaryButtons button {
+  min-width: 8rem;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 76.8rem) {
+  .filterModal {
+    width: 95vw;
+    max-width: none;
+  }
+
+  .modalContent {
+    padding: 0.4rem;
+    gap: 2rem;
+  }
+
+  .priceInputs {
+    gap: 1.2rem;
+  }
+
+  .ratingSliders {
+    gap: 1.2rem;
+  }
+}
+
+@media (max-width: 48rem) {
+  .buttonGroup {
+    flex-direction: column;
+    gap: 1.2rem;
+    align-items: stretch;
+  }
+
+  .primaryButtons {
+    justify-content: space-between;
+  }
+
+  .primaryButtons button {
+    flex: 1;
+    min-width: auto;
+  }
+
+  .resetButton {
+    width: 100%;
+  }
+
+  .priceInputs {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .rangeLabels {
+    font-size: var(--xs-size);
+  }
+}
+
+/* 접근성 */
+.priceInput:invalid {
+  border-color: var(--error-red);
+}
+
+.priceInput:invalid:focus {
+  box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+}
+
+/* 애니메이션 */
+.filterInfo {
+  transition: all 0.2s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .priceInput {
+    transition: none;
+  }
+  
+  .filterInfo {
+    transition: none;
+  }
+}
+
+/* 다크 테마 대비 (필요시) */
+@media (prefers-color-scheme: dark) {
+  .priceInput {
+    background-color: var(--grayscale-800);
+    color: var(--white);
+    border-color: var(--grayscale-600);
+  }
+  
+  .priceInput:focus {
+    border-color: var(--primary-purple-100);
+  }
+}

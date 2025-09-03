@@ -1,0 +1,215 @@
+/* ReviewFormModal 스타일 */
+.reviewFormModal {
+  max-width: 55rem;
+  width: 90vw;
+}
+
+.modalContent {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  padding: 0.8rem;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+/* 섹션 */
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+}
+
+.sectionTitle {
+  font-size: var(--lg-size);
+  font-weight: var(--semibold);
+  color: var(--grayscale-900);
+  margin-bottom: 0.4rem;
+}
+
+.sectionDescription {
+  font-size: var(--md-size);
+  color: var(--grayscale-700);
+  line-height: 1.5;
+}
+
+/* 별점 섹션 */
+.ratingContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.2rem;
+  padding: 2.4rem;
+  background-color: var(--grayscale-50);
+  border-radius: var(--medium);
+  border: 0.1rem solid var(--grayscale-200);
+}
+
+.ratingText {
+  font-size: var(--lg-size);
+  font-weight: var(--medium);
+  color: var(--primary-purple-100);
+}
+
+/* 맛 특성 슬라이더 */
+.tasteSliders {
+  display: flex;
+  flex-direction: column;
+  gap: 2.4rem;
+}
+
+.sliderGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.sliderLabel {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: var(--md-size);
+  font-weight: var(--medium);
+}
+
+.leftLabel {
+  color: var(--grayscale-700);
+}
+
+.rightLabel {
+  color: var(--grayscale-700);
+}
+
+.sliderValue {
+  text-align: center;
+  font-size: var(--sm-size);
+  color: var(--primary-purple-100);
+  font-weight: var(--medium);
+  background-color: var(--primary-purple-10);
+  padding: 0.4rem 0.8rem;
+  border-radius: var(--small);
+  width: fit-content;
+  margin: 0 auto;
+}
+
+/* 리뷰 입력 섹션 */
+.reviewInputContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.characterCount {
+  text-align: right;
+  font-size: var(--sm-size);
+  color: var(--grayscale-600);
+}
+
+/* 버튼 그룹 */
+.buttonGroup {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1.2rem;
+  padding-top: 2.4rem;
+  border-top: 0.1rem solid var(--grayscale-200);
+  margin-top: auto;
+}
+
+.buttonGroup button {
+  min-width: 12rem;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 76.8rem) {
+  .reviewFormModal {
+    width: 95vw;
+    max-width: none;
+  }
+
+  .modalContent {
+    padding: 0.4rem;
+    gap: 2.4rem;
+    max-height: 75vh;
+  }
+
+  .ratingContainer {
+    padding: 2rem;
+  }
+
+  .tasteSliders {
+    gap: 2rem;
+  }
+
+  .sectionTitle {
+    font-size: var(--md-size);
+  }
+}
+
+@media (max-width: 48rem) {
+  .buttonGroup {
+    flex-direction: column-reverse;
+    gap: 0.8rem;
+  }
+
+  .buttonGroup button {
+    width: 100%;
+    min-width: auto;
+  }
+
+  .modalContent {
+    gap: 2rem;
+    max-height: 80vh;
+  }
+
+  .ratingContainer {
+    padding: 1.6rem;
+  }
+
+  .sliderLabel {
+    font-size: var(--sm-size);
+  }
+}
+
+/* 스크롤바 스타일링 */
+.modalContent {
+  scrollbar-width: thin;
+  scrollbar-color: var(--grayscale-400) var(--grayscale-100);
+}
+
+.modalContent::-webkit-scrollbar {
+  width: 0.6rem;
+}
+
+.modalContent::-webkit-scrollbar-track {
+  background: var(--grayscale-100);
+  border-radius: var(--small);
+}
+
+.modalContent::-webkit-scrollbar-thumb {
+  background: var(--grayscale-400);
+  border-radius: var(--small);
+}
+
+.modalContent::-webkit-scrollbar-thumb:hover {
+  background: var(--grayscale-500);
+}
+
+/* 로딩 상태 */
+.loading {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* 접근성 */
+@media (prefers-reduced-motion: reduce) {
+  .modalContent {
+    scroll-behavior: auto;
+  }
+}
+
+/* 포커스 상태 */
+.section:focus-within {
+  outline: 0.1rem solid var(--primary-purple-100);
+  outline-offset: 0.2rem;
+  border-radius: var(--small);
+}

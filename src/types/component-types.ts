@@ -83,8 +83,125 @@ export interface ConfirmationModalProps {
   variant?: 'default' | 'destructive';
 }
 
+// Modal Manager 시스템 타입
+export enum ModalType {
+  WINE_REGISTER = 'wine-register',
+  WINE_EDIT = 'wine-edit',
+  REVIEW_CREATE = 'review-create', 
+  REVIEW_EDIT = 'review-edit',
+  FILTER = 'filter'
+}
+
+export interface ModalState {
+  activeModal: ModalType | null;
+  modalData: any;
+  isLoading: boolean;
+}
+
+// 와인 관련 타입
+export interface WineFormData {
+  name: string;
+  type: WineType;
+  region: string;
+  year: number;
+  price: number;
+  alcoholContent: number;
+  volume: number;
+  tasteProfile: string[];
+  image?: string;
+}
+
+export interface WineFormModalProps {
+  mode: 'create' | 'edit';
+  initialData?: WineFormData;
+  wineId?: string;
+  onClose: () => void;
+  onSuccess?: (wine: any) => void;
+}
+
+// 리뷰 관련 타입
+export interface ReviewFormData {
+  rating: number;
+  content: string;
+  tasteProfile: string[];
+  lightBold: number;
+  smoothTannic: number;
+  drySweet: number;
+  softAcidic: number;
+}
+
+export interface ReviewFormModalProps {
+  mode: 'create' | 'edit';
+  wineId: string;
+  reviewId?: string;
+  initialData?: ReviewFormData;
+  onClose: () => void;
+  onSuccess?: (review: any) => void;
+}
+
+// 필터 관련 타입
+export interface FilterState {
+  wineTypes: WineType[];
+  priceRange: [number, number];
+  ratingRange: [number, number];
+}
+
+export interface FilterModalProps {
+  initialData: FilterState;
+  onClose: () => void;
+  onApply: (filters: FilterState) => void;
+}
+
+// Modal Manager Hook 반환 타입
+export interface UseModalManagerReturn {
+  modalState: ModalState;
+  openWineModal: (mode: 'create' | 'edit', wineId?: string) => Promise<void>;
+  openReviewModal: (mode: 'create' | 'edit', wineId: string, reviewId?: string) => Promise<void>;
+  openFilterModal: (currentFilters: FilterState) => void;
+  closeModal: () => void;
+}
+
 // 공통 컴포넌트 기본 props
 export interface BaseComponentProps {
   className?: string;
   "data-testid"?: string;
 }
+
+// API 응답 타입 (기본 구조)
+export interface ApiResponse<T> {
+  success: boolean;
+  data: T;
+  message?: string;
+}
+
+// 와인 맛 프로필 상수
+export const TASTE_PROFILE_OPTIONS: ChipOption[] = [
+  { value: 'fruity', label: '과일향' },
+  { value: 'woody', label: '우디' },
+  { value: 'sweet', label: '달콤함' },
+  { value: 'dry', label: '드라이' },
+  { value: 'spicy', label: '스파이시' },
+  { value: 'floral', label: '꽃향' },
+  { value: 'citrus', label: '시트러스' },
+  { value: 'mineral', label: '미네랄' },
+  { value: 'herbal', label: '허브' },
+  { value: 'earthy', label: '흙내음' },
+  { value: 'nutty', label: '견과류' },
+  { value: 'vanilla', label: '바닐라' },
+  { value: 'oak', label: '오크' },
+  { value: 'butter', label: '버터' },
+  { value: 'tobacco', label: '담배' },
+  { value: 'leather', label: '가죽' },
+  { value: 'chocolate', label: '초콜릿' },
+  { value: 'coffee', label: '커피' },
+  { value: 'caramel', label: '카라멜' },
+  { value: 'honey', label: '꿀' },
+  { value: 'pepper', label: '후추' }
+];
+
+// 와인 타입 옵션
+export const WINE_TYPE_OPTIONS: ChipOption[] = [
+  { value: 'RED', label: 'Red' },
+  { value: 'WHITE', label: 'White' },
+  { value: 'SPARKLING', label: 'Sparkling' }
+];
