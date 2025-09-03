@@ -117,6 +117,8 @@
   font-size: 1.2rem;
   color: var(--grayscale-500);
   line-height: 2.4rem;
+  height: 7.2rem;
+  overflow: hidden;
 }
 
 @media screen and (min-width: 37.6rem) {
@@ -170,6 +172,7 @@
 
   .detailDescription {
     font-size: 1.6rem;
+    height: 5.2rem;
   }
 }
 
