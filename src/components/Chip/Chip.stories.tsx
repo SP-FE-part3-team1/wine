@@ -54,6 +54,10 @@ const meta: Meta<typeof Chip> = {
     ariaLabel: {
       description: '접근성을 위한 레이블',
       control: { type: 'text' }
+    },
+    readonly: {
+      description: '읽기 전용 상태 (클릭 비활성화, 기본 스타일 유지)',
+      control: { type: 'boolean' }
     }
   }
 };
@@ -240,5 +244,82 @@ export const ManyOptions: Story = {
     disabled: false,
     multiple: true,
     ariaLabel: '태그 선택'
+  }
+};
+
+// 읽기 전용 모드 (와인 상세페이지 카드용)
+export const ReadonlyMode: Story = {
+  args: {
+    options: [
+      { value: 'fruity', label: '과일향' },
+      { value: 'woody', label: '우디' },
+      { value: 'dry', label: '드라이' },
+      { value: 'sweet', label: '달콤함' }
+    ],
+    selectedValues: ['fruity', 'dry'], // 미리 선택된 상태
+    readonly: true, // 클릭 비활성화
+    ariaLabel: '와인 특성'
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: `
+**읽기 전용 모드** - 와인 상세페이지 카드에서 사용
+
+- 클릭해도 상태가 변경되지 않음
+- 기본 스타일 유지 (disabled와 다름)
+- 호버 효과 제거
+- 와인의 실제 특성을 표시하는 용도
+        `
+      }
+    }
+  }
+};
+
+// 읽기 전용 vs 비활성화 비교
+export const ReadonlyVsDisabled: Story = {
+  render: () => {
+    return (
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+        <div>
+          <h3 style={{ marginBottom: '10px' }}>읽기 전용 모드 (readonly)</h3>
+          <Chip
+            options={[
+              { value: 'fruity', label: '과일향' },
+              { value: 'woody', label: '우디' },
+              { value: 'dry', label: '드라이' }
+            ]}
+            selectedValues={['fruity', 'dry']}
+            readonly={true}
+            ariaLabel='와인 특성'
+          />
+        </div>
+        <div>
+          <h3 style={{ marginBottom: '10px' }}>비활성화 모드 (disabled)</h3>
+          <Chip
+            options={[
+              { value: 'fruity', label: '과일향' },
+              { value: 'woody', label: '우디' },
+              { value: 'dry', label: '드라이' }
+            ]}
+            selectedValues={['fruity', 'dry']}
+            disabled={true}
+            ariaLabel='와인 특성'
+          />
+        </div>
+      </div>
+    );
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: `
+**readonly vs disabled 비교**
+
+- **readonly**: 기본 스타일 유지, 클릭만 비활성화
+- **disabled**: opacity 0.5, 회색톤으로 변경
+        `
+      }
+    }
   }
 };

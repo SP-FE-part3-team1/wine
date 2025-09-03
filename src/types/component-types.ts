@@ -11,9 +11,10 @@ export interface ChipOption {
 
 export interface ChipProps {
   options: ChipOption[];
-  selectedValues: string[];
-  onSelectionChange: (values: string[]) => void;
+  selectedValues?: string[];
+  onSelectionChange?: (values: string[]) => void;
   disabled?: boolean;
+  readonly?: boolean;
   multiple?: boolean;
   ariaLabel?: string;
 }

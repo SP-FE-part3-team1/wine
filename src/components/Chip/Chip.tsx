@@ -5,14 +5,15 @@ import styles from './Chip.module.css';
 
 export const Chip = ({ 
   options, 
-  selectedValues, 
-  onSelectionChange, 
+  selectedValues = [], 
+  onSelectionChange = () => {}, 
   disabled = false,
+  readonly = false,
   multiple = true,
   ariaLabel = '옵션 선택'
 }: ChipProps) => {
   const handleOptionToggle = (value: string) => {
-    if (disabled) return;
+    if (disabled || readonly) return;
     
     const isSelected = selectedValues.includes(value);
     let newSelectedValues: string[];
@@ -42,11 +43,11 @@ export const Chip = ({
           <button
             key={option.value}
             type="button"
-            className={`${styles.chip} ${isSelected ? styles.selected : ''} ${disabled ? styles.disabled : ''}`}
+            className={`${styles.chip} ${isSelected ? styles.selected : ''} ${disabled ? styles.disabled : ''} ${readonly ? styles.readonly : ''}`}
             onClick={() => handleOptionToggle(option.value)}
             disabled={disabled}
             aria-pressed={isSelected}
-            aria-label={`${option.label} ${isSelected ? '선택됨' : '선택하기'}`}
+            aria-label={readonly ? option.label : `${option.label} ${isSelected ? '선택됨' : '선택하기'}`}
           >
             {option.label}
           </button>

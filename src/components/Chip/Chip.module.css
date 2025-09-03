@@ -125,6 +125,33 @@
   color: var(--chip-white);
 }
 
+/* 읽기 전용 상태 */
+.chip.readonly {
+  cursor: default;
+}
+
+.chip.readonly:hover {
+  transform: none;
+  box-shadow: none;
+  border-color: var(--chip-gray-light);
+  background-color: var(--chip-white);
+  color: var(--chip-gray-dark);
+}
+
+.chip.selected.readonly {
+  border-color: var(--chip-primary);
+  background-color: var(--chip-primary);
+  color: var(--chip-white);
+}
+
+.chip.selected.readonly:hover {
+  transform: none;
+  box-shadow: none;
+  background-color: var(--chip-primary);
+  border-color: var(--chip-primary);
+  color: var(--chip-white);
+}
+
 /* 반응형 디자인 */
 @media (max-width: 76.8rem) {
   .chip {

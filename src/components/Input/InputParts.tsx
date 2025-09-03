@@ -59,6 +59,7 @@ const InputParts = ({
           name={name}
           placeholder={placeholder}
           maxLength={inputMaxLength(type)}
+          autoComplete="off"
           accept={
             type === "file" ? ".jpg, .png, .jpeg, .svg, .webp" : undefined
           }
