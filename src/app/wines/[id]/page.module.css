@@ -1,31 +1,51 @@
-.main {
+.wineSummaryContainer {
   display: flex;
   flex-direction: column;
   align-items: stretch;
   justify-content: center;
-  padding: 4rem 2rem;
   background-color: var(--grayscale-50);
 }
 
-.summarySection {
-  align-items: center;
+.RatingSummaryAndReview {
+  display: flex;
+  flex-direction: column;
+}
+
+.wineRatingSummaryContainer {
+  display:flex;
+  width: 100%;
   justify-content: center;
 }
 
-.reviewSection {
+.reviewContainer {
   width: 100%;
-  max-width: 80rem; /* WineSummaryCard와 너비를 맞추기 위해 조정 */
+  max-width: 80rem; 
   margin-top: 4rem;
-}
-
-.reviewTitle {
-  font-size: var(--xl-size);
-  font-weight: var(--bold);
-  margin-bottom: 2rem;
 }
 
 .reviewList {
   display: flex;
   flex-direction: column;
   gap: 2rem;
+}
+
+
+/* desktop */
+@media screen and (min-width:1024px) {
+  .RatingSummaryAndReview {
+  display: flex;
+  flex-direction:row-reverse;
+  gap: 6rem;
+}
+
+.wineRatingSummaryContainer {
+  flex: 7;
+  min-width: 0;
+}
+
+.reviewContainer {
+  flex: 20;
+  min-width: 0;
+}
+
 }

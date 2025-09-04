@@ -79,7 +79,7 @@ export default async function WineDetailPage({ params }: {
   // };
 
   return (
-    <main className={styles.main}>
+    <div className={styles.wineSummaryContainer}>
       <WineSummaryCard
         imageUrl={wine.image}
         name={wine.name}
@@ -87,7 +87,8 @@ export default async function WineDetailPage({ params }: {
         price={`₩ ${wine.price.toLocaleString()}`}
       />
 
-      <div className={styles.summarySection}>
+      <div className={styles.RatingSummaryAndReview}>
+      <div className={styles.wineRatingSummaryContainer}>
         <WineRatingSummary
           avgRating={wine.avgRating}
           reviewCount={wine.reviewCount}
@@ -96,7 +97,7 @@ export default async function WineDetailPage({ params }: {
         />
       </div>
       
-      <div className={styles.reviewSection}>
+      <div className={styles.reviewContainer}>
         <div className={styles.reviewList}>
           {reviews.map((review) => (
             <ReviewCard
@@ -108,7 +109,8 @@ export default async function WineDetailPage({ params }: {
           ))}
         </div>
       </div>
-    </main>
+      </div>
+    </div>
   );
 }
 
