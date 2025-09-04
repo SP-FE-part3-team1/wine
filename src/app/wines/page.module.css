@@ -1,5 +1,4 @@
 .main {
-  padding: 2rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -12,5 +11,140 @@
   place-items: center;
   gap: 6.2rem;
   width: 100%;
+  max-width: 80rem;
   grid-template-columns: 1fr;
+}
+
+.topBar {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 16px; /* 요소 간 간격 */
+  margin-bottom: 24px;
+}
+
+.searchInput {
+  width: 39.6rem;
+}
+
+.registerButton {
+  width: 22rem;
+  height: 4.8rem;
+  background-color: var(--primary-purple-100);
+  border-radius: var(--middle);
+  display: none;
+  font-size: 1.6rem;
+  font-weight: var(--bold);
+}
+
+.desktopChip {
+  display: none;
+}
+
+/* 메인 콘텐츠: 필터 + 리스트 */
+.contentLayout {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  max-width: 114.4rem;
+  margin: 0 auto;
+  gap: 6rem;
+}
+
+/* 필터 패널 (세로 정렬) */
+.filterPanel {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: 28.4rem;
+  display: none;
+}
+
+.registerButtonSide {
+  border-radius: var(--middle);
+  width: 28.4rem;
+  height: 5rem;
+  background-color: var(--primary-purple-100);
+  display: none;
+  font-size: 1.6rem;
+  font-weight: var(--bold);
+}
+
+@media screen and (min-width: 37.6rem) {
+  .registerButton {
+    display: block;
+  }
+
+  .topBar {
+    margin-bottom: 5.1rem;
+  }
+}
+
+@media screen and (min-width: 76.9rem) {
+  .filterWrapper {
+    display: none;
+  }
+
+  .registerButton {
+    display: none;
+  }
+
+  .desktopChip {
+    display: block;
+    gap: 1.457rem;
+  }
+
+  .desktopChip h3 {
+    font-family: "Pretendard";
+    font-weight: var(--bold);
+    font-size: 2rem;
+    line-height: 3.2rem;
+    color: #2d3034;
+    margin-bottom: 2rem;
+  }
+
+  .filterPanel {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0;
+    gap: 5.3rem;
+    width: 28.4rem;
+    position: relative;
+    background: #fff;
+  }
+
+  .desktopRangeSlider {
+    width: 28.4rem;
+  }
+
+  .desktopRangeSlider h3 {
+    font-family: "Pretendard";
+    font-weight: var(--bold);
+    font-size: 2rem;
+    line-height: 3.2rem;
+    color: #2d3034;
+    margin-bottom: 5.8rem;
+  }
+
+  .desktopRating h3 {
+    font-family: "Pretendard";
+    font-weight: var(--bold);
+    font-size: 2rem;
+    line-height: 3.2rem;
+    color: #2d3034;
+    margin-bottom: 1rem;
+  }
+
+  .registerButtonSide {
+    display: block;
+  }
+
+  .topBar {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+  }
 }

@@ -10,6 +10,7 @@
   /* 모바일 기본값 */
   width: 100%;
   height: 39rem;
+  min-width: 34.3rem;
 }
 
 .body {
