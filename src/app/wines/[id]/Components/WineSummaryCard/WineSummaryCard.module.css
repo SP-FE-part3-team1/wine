@@ -45,6 +45,61 @@
 
 
 /* Tablet */
+@media screen and (min-width: 768px) {
+  
 .card {
     padding: 5.2rem 6rem 4rem;
+}
+.wineImage {
+  width: 8.4rem;
+  height: 30.2rem;
+  padding-top: 2rem;
+}
+
+
+.cardContent {
+  margin-left: 12rem;
+  margin-bottom: 1.3rem;
+}
+
+.name {
+  font-size: 3rem; 
+  font-weight: var(--semibold); 
+  color: var(--black);
+  margin-bottom: 2rem; 
+}
+
+.origin {
+  font-size: var(--lg-size);
+  color: var(--grayscale-500);
+  margin-bottom: 1rem; 
+}
+
+@media screen and (min-width: 1024px) {
+.card {
+    padding: 5.2rem 10rem 4rem;
+    max-width: 114rem;
+}
+.wineImage {
+  width: 5.8rem;
+  height: auto;
+}
+
+
+.cardContent {
+  margin-left: 12rem;
+  margin-bottom: 2rem;
+}
+
+.name {
+  margin-bottom: 2rem; 
+}
+
+.origin {
+  font-size: var(--lg-size);
+  color: var(--grayscale-500);
+  margin-bottom: 2rem; 
+}
+
+}
 }

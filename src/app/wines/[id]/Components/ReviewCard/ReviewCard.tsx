@@ -101,7 +101,7 @@ function ReviewCard({ review, onLikeClick, onMoreClick }: ReviewCardProps) {
           disabled={false}
         />
         <div className={styles.ratingTag}>
-        <Tag icon={starIcon} size="S">
+        <Tag icon={starIcon}>
           {rating.toFixed(1)}
         </Tag>
         </div>
