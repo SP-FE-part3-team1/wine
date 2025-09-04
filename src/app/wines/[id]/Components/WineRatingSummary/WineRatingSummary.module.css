@@ -84,6 +84,8 @@ display: grid;
 .reviewButton {
     width: 10rem;
     height: 4rem;
+    font-size: var(--md-size);
+    font-weight: var(--bold);
 }
 
 /* 태블릿 */
@@ -97,10 +99,34 @@ display: grid;
      gap: 2rem 8rem;
   }
 
+  .avgRating {
+  font-size: 5.4rem;
+}
+
   .buttonWrapper {
   justify-content: flex-start;
 }
+
+.reviewButton {
+    width: 11.3rem;
+    height: 4.2rem;
+    font-size: var(--lg-size);
 }
+
+/* desktop */
+@media screen and (min-width: 1024px) {
+  .container {
+    display: flex;
+    flex-direction: column;
+  }
+
+    .buttonWrapper {
+  margin-top: 1rem;
+}
+
+}
+}
+
   
 
 
