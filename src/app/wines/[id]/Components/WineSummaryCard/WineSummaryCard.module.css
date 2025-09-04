@@ -1,23 +1,23 @@
 /* mobile */
 .card {
-  position: relative; /* 자식 요소(이미지)의 absolute 위치 기준점 */
+  position: relative; 
   display: flex;
   align-items: center;
-  background-color: var(--white); /* 흰색 배경 */
+  background-color: var(--white);
   border: 1px solid var(--grayscale-300);
   border-radius: 1.2rem;
   padding: 3.3rem 2rem 3rem;
-  min-width: 34.3rem; /* 카드 최대 너비 (조정 가능) */
-  /* 이미지가 위로 튀어나갈 공간을 만들기 위해 마진 추가 */
-  margin-top: 4rem; /* 이미지가 위로 3rem 나가므로, 카드 자체도 아래로 3rem + 여유 공간만큼 내려야 합니다. */
+  min-width: 34.3rem;
+  margin-top: 4rem;
+  width: 100%;
 }
 
 .wineImage {
-  position: absolute; /* 부모(.card)를 기준으로 위치를 잡음 */
-  bottom: 0; /* 카드 상단보다 3rem 위로 이동 */
-  width: 5.8rem; /* 이미지 너비 */
-  height: auto; /* 비율 유지 */
-  z-index: 1; /* 이미지가 다른 요소 위에 보이도록 */
+  position: absolute;
+  bottom: 0; 
+  width: 5.8rem; 
+  height: auto; 
+  z-index: 1; 
   object-fit: contain;
 }
 
@@ -31,16 +31,16 @@
 }
 
 .name {
-  font-size: var(--xl-size); /* 2.4rem */
-  font-weight: var(--semibold); /* Bold */
+  font-size: var(--xl-size); 
+  font-weight: var(--semibold); 
   color: var(--black);
-  margin-bottom: 1.5rem; /* 기본 마진 제거 */
+  margin-bottom: 1.5rem; 
 }
 
 .origin {
   font-size: 0.9rem; /* 1.4rem */
   color: var(--grayscale-500);
-  margin-bottom: 1rem; /* 기본 마진 제거 */
+  margin-bottom: 1rem; 
 }
 
 
