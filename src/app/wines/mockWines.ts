@@ -1,7 +1,7 @@
 // app/wines/mockWines.ts
 import { components } from "@/types/types";
 
-type WineListType = components["schemas"]["WineListType"];
+export type WineListType = components["schemas"]["WineListType"];
 
 export const mockWines: WineListType[] = [
   {
