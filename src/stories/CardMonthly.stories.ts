@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import CardMonthly from "@/app/wines/CardMonthly";
 import "@/app/reset.css";
 
