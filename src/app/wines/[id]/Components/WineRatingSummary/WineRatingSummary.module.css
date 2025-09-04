@@ -124,6 +124,11 @@ display: grid;
   margin-top: 1rem;
 }
 
+.distributionSection {
+  display: flex;
+  flex-grow: 0; /* 남은 공간을 모두 차지 */
+}
+
 }
 }
 
