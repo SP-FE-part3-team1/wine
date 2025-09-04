@@ -38,12 +38,12 @@
   z-index: 10;
 }
 
-:global(.swiper-wrapper) {
+.carouselWrapper :global(.swiper-wrapper) {
   display: flex;
   flex-direction: row;
 }
 
-:global(.swiper-slide) {
+.carouselWrapper :global(.swiper-slide) {
   width: auto;
   flex-shrink: 0;
   display: flex;

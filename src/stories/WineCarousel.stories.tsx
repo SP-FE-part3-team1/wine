@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import WineCarousel from "@/app/wines/wineCarousel";
+import WineCarousel from "@/app/wines/WineCarousel";
 import { components } from "@/types/types";
 
 type WineListType = components["schemas"]["WineListType"];
