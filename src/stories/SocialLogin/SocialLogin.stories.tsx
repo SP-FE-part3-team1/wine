@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import SocialLogin from "@/components/SocialLogin/SocialLogin";
 import "@/app/globals.css";
 import "@/app/fonts.module.css";
