@@ -1,0 +1,17 @@
+.main {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.wineList {
+  display: grid;
+  gap: 6.2rem;
+  justify-content: center;
+}
+
+.wineList {
+  grid-template-columns: 1fr;
+}
