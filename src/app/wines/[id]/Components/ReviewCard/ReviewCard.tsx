@@ -77,16 +77,21 @@ function ReviewCard({ review, onLikeClick, onMoreClick }: ReviewCardProps) {
           </div>
         </div>
         <div className={styles.actions}>
-          <Button variant="icon" ariaLabel="좋아요" onClick={() => onLikeClick?.(id)}>
+          <Button variant="icon" ariaLabel="좋아요" onClick={() => onLikeClick?.(id)} className={styles.iconButton}>
             <Image
               src={liked ? "/assets/images/icon/liked.svg" : "/assets/images/icon/like.svg"}
               alt="좋아요 아이콘"
-              width={32}
-              height={32}
+              fill={true}
+              style={{ objectFit: 'cover' }} 
             />
           </Button>
-          <Button variant="icon" ariaLabel="더보기" onClick={() => onMoreClick?.(id)}>
-            <Image src="/assets/images/icon/menu.svg" alt="더보기 아이콘" width={24} height={24} />
+          <Button variant="icon" ariaLabel="더보기" onClick={() => onMoreClick?.(id)} className={styles.iconButton}>
+            <Image 
+            src="/assets/images/icon/menu.svg" 
+            alt="더보기 아이콘"
+            fill={true}
+            style={{ objectFit: 'cover' }}
+            />
           </Button>
         </div>
       </div>
