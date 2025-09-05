@@ -1,16 +1,48 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Tag from "@/components/Tag/Tag";
 import styles from "./MyProfileReviewCard.module.css";
 import Button from "@/components/Button/Button";
 import font from "@/app/fonts.module.css";
 
-function MyProfileReviewCard() {
+export type Review = {
+  id: string;
+  rating: number; // 별점
+  time: string;
+  wine: string; //와인 이름
+  note: string; // tasting note
+};
+
+type Props = {
+  review: Review;
+  onMenuSelect?: (action: "edit" | "delete", id: string) => void;
+};
+
+function MyProfileReviewCard({ review, onMenuSelect }: Props) {
+  const [open, setOpen] = useState(false);
+  const rootRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const onDown = (e: MouseEvent) => {
+      if (!rootRef.current?.contains(e.target as Node)) setOpen(false);
+    };
+    if (open) document.addEventListener("mousedown", onDown);
+    return () => document.removeEventListener("mousedown", onDown);
+  }, [open]);
+
+  const handleSelect = (action: "edit" | "delete") => {
+    onMenuSelect?.(action, review.id);
+    setOpen(false);
+  };
+
   return (
-    <div className={styles.reviewCard}>
+    <div ref={rootRef} className={styles.reviewCard}>
       <div className={styles.header}>
         <div className={styles.left}>
           <Tag
-            size="M"
+            size="S"
             icon={
               <svg
                 width="1.6rem"
@@ -23,9 +55,11 @@ function MyProfileReviewCard() {
               </svg>
             }
           >
-            5.0
+            {review.rating.toFixed(1)}
           </Tag>
-          <p className={`${styles.time} ${font["text-md-regular"]}`}>Time</p>
+          <p className={`${styles.time} ${font["text-md-regular"]}`}>
+            {review.time}
+          </p>
         </div>
         <div className={styles.right}>
           <Button
@@ -33,23 +67,42 @@ function MyProfileReviewCard() {
             ariaLabel="Kebab menu"
             radius={16}
             style={{ width: "2.6rem", height: "2.6rem" }}
+            onClick={() => setOpen((o) => !o)}
           >
             <Image
               src="/assets/images/icon/menu.svg"
               alt=""
-              width={26} // 여기만 px 유지 가능 (Next/Image 필수 prop)
+              width={26}
               height={26}
             />
           </Button>
+
+          {open && (
+            <div className={styles.menu} role="menu">
+              <button
+                className={styles.menuItem}
+                role="menuitem"
+                onClick={() => handleSelect("edit")}
+              >
+                수정하기
+              </button>
+              <button
+                className={styles.menuItem}
+                role="menuitem"
+                onClick={() => handleSelect("delete")}
+              >
+                삭제하기
+              </button>
+            </div>
+          )}
         </div>
       </div>
       <div className={styles.review}>
         <div className={`${styles.wine} ${font["text-md-regular"]}`}>
-          Sentinal Carbernet Sauvignon 2016
+          {review.wine}
         </div>
         <div className={`${styles.textReview} ${font["text-md-regular"]}`}>
-          Plum and peppery on the nose. Black cherry and blackberry on the
-          palate. Supple tannins, medium body.
+          {review.note}
         </div>
       </div>
     </div>

@@ -1,0 +1,92 @@
+.container {
+  width: 100%;
+  max-width: 114rem;
+  margin: 2.4rem auto;
+
+  display: grid;
+  gap: 2.4rem;
+
+  /* 기본(모바일/태블릿): 1열 */
+  grid-template-columns: 1fr;
+  align-items: start;
+}
+
+/* 데스크탑에서 2열 */
+@media (min-width: 768px) {
+  .container {
+    grid-template-columns: minmax(25rem, 35rem) 1fr; /* 왼 320px, 오른쪽 유동 */
+  }
+  .sidebar {
+    position: sticky;
+    top: 8rem; /* 헤더 높이에 맞춰 조정 */
+    align-self: start;
+  }
+
+  .profileBox {
+    width: 28rem; /* 고정 폭 */
+    height: 53rem; /* 고정 높이 */
+  }
+  /* 안의 카드가 래퍼 높이를 채우도록 */
+  .profileBox > :global(*) {
+    height: 100%;
+  }
+}
+
+/* 좌측 프로필(스크롤 고정) */
+.sidebar {
+  position: sticky; /* 상위에 overflow:hidden이 있으면 sticky가 안 먹음*/
+  align-self: start;
+}
+
+/* 우측 컨텐츠 */
+.content {
+  min-width: 0;
+}
+.section {
+  display: grid;
+  gap: 1.6rem;
+}
+
+/* 탭 헤더 */
+.tabsRow {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+}
+.tabs {
+  display: inline-flex;
+  gap: 2rem;
+}
+.tab {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  padding: 0.8rem 0;
+  margin: 0 0 0 0.5rem;
+  color: var(--grayscale-500);
+  border-bottom: 0.2rem solid transparent;
+}
+.tab:hover {
+  color: var(--grayscale-700);
+}
+.tabActive {
+  color: var(--grayscale-900);
+}
+.count {
+  color: var(--primary-purple-100);
+}
+
+/* 리스트 카드 간격 */
+.list {
+  display: grid;
+  gap: 1.2rem;
+}
+@media (min-width: 768px) {
+  .container {
+    padding: 0 2.4rem;
+  }
+  .list {
+    gap: 1.6rem;
+  }
+}

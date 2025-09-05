@@ -1,0 +1,92 @@
+/* 카드 외곽 래퍼(여백/정렬용) */
+.cardWrap {
+  width: 100%;
+  padding-top: 6rem;
+}
+
+/* 카드 본체 */
+.wineCard {
+  position: relative;
+  width: 100%;
+  max-width: 114rem;
+  min-width: 34.3rem;
+
+  /* 이미지 영역 계산용 변수 */
+  --imgW: 7.6rem; /* 병 너비 */
+  --imgLeft: 2rem; /* 카드 왼쪽에서 이미지까지 여백 */
+  --gap: 2rem; /* 이미지와 본문 사이 간격 */
+
+  border: 0.1rem solid var(--grayscale-300);
+  border-radius: 1.6rem;
+  background: #fff;
+  overflow: visible;
+
+  /* 좌측 패딩 = 여백 + 이미지너비 + 간격, 하단은 0 (본문으로 이동) */
+  padding: 6rem 3.2rem 0 calc(var(--imgLeft) + var(--imgW) + var(--gap));
+}
+
+/* 왼쪽 병 이미지: 카드 하단과 정확히 맞춤 */
+.wineImgWrapper {
+  position: absolute;
+  left: var(--imgLeft);
+  bottom: 0; /* ★ 하단 고정 */
+  z-index: 2;
+  width: var(--imgW);
+}
+
+/* 인라인 간격 제거 + 하단 기준 정렬 */
+.wineImg {
+  display: block; /* inline gap 제거 */
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  object-position: bottom; /* 시각적으로도 하단 기준 */
+}
+
+/* 본문 */
+.body {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4rem;
+
+  /* 카드의 bottom padding을 여기로 이동 */
+  padding: 5rem 5rem 3.2rem 5rem;
+  min-height: 16rem;
+}
+
+.wine {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.title {
+  color: var(--grayscale-800);
+}
+
+.region {
+  color: var(--grayscale-500);
+  font-size: 1.4rem;
+}
+
+.tag {
+  margin-top: 0.8rem;
+}
+
+.moreArea {
+  position: absolute;
+  top: 1.2rem;
+  right: 1.2rem;
+  padding: 0.5rem;
+}
+
+/* 반응형: 병 크기만 키우고 bottom:0은 유지 */
+@media (min-width: 768px) {
+  .wineCard {
+    --imgW: 8.8rem;
+    --gap: 2.4rem;
+    padding-left: calc(var(--imgLeft) + var(--imgW) + var(--gap));
+  }
+}

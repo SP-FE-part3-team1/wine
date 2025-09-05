@@ -1,0 +1,73 @@
+.myprofilecard {
+  width: 100%;
+  max-width: 114rem;
+  min-width: 34.3rem;
+  margin: 0;
+  padding: 2rem;
+  border: 0.1rem solid var(--grayscale-300);
+  border-radius: 1.6rem;
+  background-color: var(--white);
+  box-shadow: 0rem 0.2rem 2rem 0rem rgba(0, 0, 0, 0.04);
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+  gap: 1.6rem;
+  padding-bottom: 1rem;
+}
+
+.profile p {
+  color: var(--grayscale-800);
+}
+
+.nickname {
+  width: 100%;
+  padding: 1rem 0 0.8rem 0.2rem;
+}
+
+.nickname label {
+  color: var(--grayscale-900);
+}
+
+.fieldRow {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  width: 100%;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* 태블릿: 37.6rem ~ 76.8rem */
+@media (min-width: 37.6rem) and (max-width: 76.8rem) {
+  .fieldRow {
+    flex-direction: row;
+    align-items: center;
+    gap: 1.2rem;
+    width: 100%;
+    flex-wrap: nowrap; /* 줄바꿈 방지 */
+  }
+  .actions {
+    margin-left: auto; /* 버튼을 오른쪽 끝으로 밀기 */
+    justify-content: flex-end;
+    flex: 0 0 auto;
+  }
+  .actions button {
+    width: 11.6rem;
+    height: 4.8rem;
+  }
+}
+/* 브라우저: 76.9rem ~ */
+@media (min-width: 76.9rem) {
+  .myprofilecard {
+    width: 28rem;
+    height: 53rem;
+  }
+  .fieldRow {
+    flex-direction: column;
+  }
+}
