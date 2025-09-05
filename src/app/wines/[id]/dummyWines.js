@@ -10,7 +10,7 @@ export const wineDetailData = [
     "price": 64990,
     "type": "RED",
     "avgRating": 4.5,
-    "reviewCount": 128,
+    "reviewCount": 1900,
     "recentReview": {
       "id": 101,
       "user": {
@@ -63,12 +63,13 @@ export const wineDetailData = [
         "isLiked": false
       }
     ],
-    "avgRatings": {
-      "lightBold": 4.5,
-      "smoothTannic": 3.5,
-      "drySweet": 1.5,
-      "softAcidic": 3.5
-    }
+      "avgRatings": {
+    "1": 100,
+    "2": 400,
+    "3": 700,
+    "4": 500,
+    "5": 200,
+  }
   },
   {
     "id": 2,
@@ -78,7 +79,7 @@ export const wineDetailData = [
     "price": 48000,
     "type": "WHITE",
     "avgRating": 4.8,
-    "reviewCount": 256,
+    "reviewCount": 1900,
     "recentReview": {
       "id": 201,
       "user": {
@@ -113,11 +114,12 @@ export const wineDetailData = [
         "isLiked": true
       }
     ],
-    "avgRatings": {
-      "lightBold": 2.0,
-      "smoothTannic": 1.0,
-      "drySweet": 1.0,
-      "softAcidic": 5.0
-    }
+  "avgRatings": {
+    "1": 100,
+    "2": 400,
+    "3": 700,
+    "4": 500,
+    "5": 200,
+  }
   }
 ];

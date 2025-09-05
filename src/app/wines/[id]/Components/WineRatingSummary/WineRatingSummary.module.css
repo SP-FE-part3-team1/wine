@@ -1,0 +1,140 @@
+.container {
+display: grid;
+  width: 100%;
+  gap: 2.4rem 2.4rem;
+  grid-template-columns: 1fr 1fr; /* 2개의 열 (같은 너비) */
+  margin-top: 4rem;
+  
+  /* 모바일 레이아웃 그리기 */
+  grid-template-areas:
+    "info   button"
+      "dist   dist";;
+}
+
+/* 왼쪽: 평균 점수 */
+.summarySection {
+  display: flex;
+  align-items: center;
+  gap: 1.8rem;
+  grid-area: info;
+}
+
+.avgRating {
+  font-size: 3.26em;
+  font-weight: 800;
+  color: var(--grayscale-800);
+}
+
+.starAndCountWrapper {
+  flex-direction: column;
+}
+
+.reviewCount {
+  font-size: var(--md-size);
+  color: var(--grayscale-500);
+  margin-top: 0.5em;
+}
+
+/* 오른쪽: 분포 그래프 및 버튼 */
+.distributionSection {
+  display: flex;
+  flex-grow: 1; /* 남은 공간을 모두 차지 */
+  align-items: strech;
+  flex-direction: column;
+  gap: 0.8rem;
+  grid-area: dist;
+}
+
+.barItem {
+  display: flex;
+  align-items: center;
+  justify-content: stretch;
+  gap: 1.6rem;
+}
+
+.barLabel {
+  font-size: var(--lg-size);
+  font-weight: var(--medium);
+  color: var(--grayscale-500);
+}
+
+/* --- ProgressBar 스타일 --- */
+.progressBarContainer {
+  flex-grow: 1;
+  height: 0.6rem;
+  background-color: var(--grayscale-100);
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.progressBarFiller {
+  height: 100%;
+  background-color: var(--primary-purple-100);
+  border-radius: 0.5rem;
+  transition: width 0.3s ease-in-out;
+}
+
+/* button */
+.buttonWrapper {
+  grid-area: button;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.reviewButton {
+    width: 10rem;
+    height: 4rem;
+    font-size: var(--md-size);
+    font-weight: var(--bold);
+}
+
+/* 태블릿 */
+@media screen and (min-width: 768px) {
+  .container {
+     grid-template-areas:
+      "info   dist"
+      "button   dist";
+
+     max-width: 57.8rem;
+     gap: 2rem 8rem;
+  }
+
+  .avgRating {
+  font-size: 5.4rem;
+}
+
+  .buttonWrapper {
+  justify-content: flex-start;
+}
+
+.reviewButton {
+    width: 11.3rem;
+    height: 4.2rem;
+    font-size: var(--lg-size);
+}
+
+/* desktop */
+@media screen and (min-width: 1024px) {
+  .container {
+    display: flex;
+    flex-direction: column;
+  }
+
+    .buttonWrapper {
+  margin-top: 1rem;
+}
+
+.distributionSection {
+  display: flex;
+  flex-grow: 0; /* 남은 공간을 모두 차지 */
+}
+
+}
+}
+
+  
+
+
+
+
+

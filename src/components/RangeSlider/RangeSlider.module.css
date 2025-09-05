@@ -1,7 +1,6 @@
 .track {
   position: relative;
   width: 100%;
-  max-width: 26rem;
   height: 0.6rem;
   background: #ddd;
   border-radius: 0.6rem;

@@ -1,0 +1,198 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--white);
+  border-radius: var(--small);
+  box-shadow: 0px 2px 20px rgba(0, 0, 0, 0.04);
+  overflow: hidden;
+  cursor: pointer;
+
+  /* 모바일 기본값 */
+  width: 100%;
+  height: 39rem;
+  min-width: 34.3rem;
+}
+
+.body {
+  display: flex;
+  padding: 3rem 3rem 0 2rem;
+  gap: 3.6rem;
+}
+
+.imageWrapper {
+  display: flex;
+  align-items: flex-end;
+}
+
+.image {
+  object-fit: cover;
+  width: 7rem;
+  height: 21.2rem;
+  object-position: center;
+}
+
+.contentBox {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-right: 2rem;
+  box-sizing: border-box;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  flex: 1;
+  margin-bottom: 2.2rem;
+  width: 18.7rem;
+  height: auto;
+}
+
+.infoTitle {
+  font-size: 2rem;
+  font-weight: var(--semibold);
+  color: var(--grayscale-900);
+  line-height: 3.2rem;
+}
+
+.infoDescription {
+  font-size: 1.4rem;
+  color: var(--grayscale-500);
+  margin-bottom: 0.8rem;
+  line-height: 2.4rem;
+}
+
+.tagLabel {
+  margin-bottom: 2.2rem;
+}
+
+.wineRating {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2.8rem;
+}
+
+.ratingBox {
+  gap: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-right: 1.5rem;
+}
+
+.ratingValue {
+  font-size: 2.8rem;
+  font-weight: 800;
+}
+
+.reviewState {
+  font-size: 1.2rem;
+  color: var(--grayscale-500);
+  line-height: 1.8rem;
+}
+
+.divider {
+  border: none;
+  border-top: 1px solid var(--grayscale-300);
+  margin: 0;
+}
+
+.detailContent {
+  border-top: 1px solid var(--grayscale-200);
+  padding: 0.7rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.detailTitle {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--grayscale-900);
+}
+
+.detailDescription {
+  font-size: 1.2rem;
+  color: var(--grayscale-500);
+  line-height: 2.4rem;
+  height: 7.2rem;
+  overflow: hidden;
+}
+
+@media screen and (min-width: 37.6rem) {
+  .card {
+    max-width: 70.4rem;
+    height: 37.5rem;
+  }
+  .image {
+    width: 7rem;
+    height: 21.2rem;
+  }
+
+  .infoTitle {
+    font-size: 3rem;
+    width: 30rem;
+    margin-bottom: 2rem;
+    line-height: 3.6rem;
+  }
+
+  .infoDescription {
+    font-size: 1.6rem;
+    margin-bottom: 1.4rem;
+  }
+
+  .contentBox {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .wineRating {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .ratingValue {
+    font-size: 4.8rem;
+    margin-bottom: 1rem;
+  }
+
+  .reviewState {
+    font-size: 1.4rem;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .detailTitle {
+    font-size: 1.6rem;
+    margin-top: 1.9rem;
+    margin-bottom: 1rem;
+  }
+
+  .detailDescription {
+    font-size: 1.6rem;
+    height: 5.2rem;
+  }
+}
+
+@media screen and (min-width: 76.9rem) {
+  .card {
+    max-width: 80rem;
+    height: 37.5rem;
+  }
+
+  .image {
+    width: 6rem;
+    height: 20.8rem;
+  }
+
+  .infoTitle {
+    font-size: 3.2rem;
+    line-height: 4.2rem;
+  }
+
+  .reviewState {
+    margin-bottom: 3rem;
+  }
+}
