@@ -11,19 +11,38 @@ import Button from "@/components/Button/Button";
 import { Chip } from "@/components/Chip";
 import RangeSlider from "@/components/RangeSlider/RangeSlider";
 import { RatingRadio } from "@/components/RatingRadio";
+import { useRouter } from "next/navigation";
 
 export default function Page() {
+  const router = useRouter();
   const [search, setSearch] = useState("");
   const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 74000]);
   const [rating, setRating] = useState<string>("");
 
   // 검색어 기준 필터링
-  const filteredWines: WineListType[] = mockWines.filter(
-    (wine) =>
+  const filteredWines: WineListType[] = mockWines.filter((wine) => {
+    const matchesSearch =
       wine.name.toLowerCase().includes(search.toLowerCase()) ||
-      wine.region.toLowerCase().includes(search.toLowerCase())
-  );
+      wine.region.toLowerCase().includes(search.toLowerCase());
+    const matchesType =
+      selectedTypes.length === 0 || selectedTypes.includes(wine.type);
+    const matchesPrice =
+      wine.price >= priceRange[0] && wine.price <= priceRange[1];
+    const matchesRating =
+      rating === "" || rating === "all"
+        ? true
+        : rating === "4"
+        ? wine.avgRating >= 4.5 && wine.avgRating <= 5.0
+        : rating === "3"
+        ? wine.avgRating >= 4.0 && wine.avgRating < 4.5
+        : rating === "2"
+        ? wine.avgRating >= 3.5 && wine.avgRating < 4.0
+        : rating === "1"
+        ? wine.avgRating >= 3.0 && wine.avgRating < 3.5
+        : true;
+    return matchesSearch && matchesType && matchesPrice && matchesRating;
+  });
 
   return (
     <main className={styles.main}>
@@ -96,7 +115,7 @@ export default function Page() {
               value={rating}
               onChange={setRating}
               options={[
-                { value: "5", label: "전체" },
+                { value: "all", label: "전체" },
                 { value: "4", label: "4.5 - 5.0" },
                 { value: "3", label: "4.0 - 4.5" },
                 { value: "2", label: "3.5 - 4.0" },
@@ -128,7 +147,7 @@ export default function Page() {
               detailDescription={
                 wine.recentReview?.content ?? "아직 리뷰가 없습니다"
               }
-              onClick={() => console.log(`${wine.name} 클릭됨`)}
+              onClick={() => router.push(`/wines/${wine.id}`)}
             />
           ))}
         </div>
