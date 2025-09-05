@@ -10,6 +10,7 @@ import styles from './page.module.css'
 
 import WineSummaryCard from './Components/WineSummaryCard/WineSummaryCard';
 import ReviewCard from './Components/ReviewCard/ReviewCard';
+import ReviewList from './Components/ReviewList/ReviewList';
 import WineRatingSummary from './Components/WineRatingSummary/WineRatingSummary';
 
 // --- 데이터 로직 ---
@@ -68,10 +69,6 @@ export default async function WineDetailPage({ params }: {
 
   // 서버 컴포넌트이므로 실제 동작은 클라이언트 컴포넌트에서 구현해야 합니다.
   // 여기서는 콘솔 로그만 남기는 예시 함수입니다.
-  // const handleLike = (reviewId: number) => {
-  //   'use server';
-  //   console.log(`${reviewId}번 리뷰에 좋아요 클릭!`);
-  // };
 
   // const handleMore = (reviewId: number) => {
   //   'use server';
@@ -99,17 +96,7 @@ export default async function WineDetailPage({ params }: {
       </div>
       
       <div className={styles.reviewContainer}>
-        <div className={styles.reviewList}>
-          <h3 className={styles.listTitle}>리뷰 목록</h3>
-          {reviews.map((review) => (
-            <ReviewCard
-              key={review.id}
-              review={review}
-              // onLikeClick={() => handleLike(review.id)}
-              // onMoreClick={() => handleMore(review.id)}
-            />
-          ))}
-        </div>
+          <ReviewList initialReviews={reviews} />
       </div>
       </div>
      </div> 

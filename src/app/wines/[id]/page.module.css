@@ -28,17 +28,9 @@
   justify-content: center;
 }
 
-.listTitle {
-  font-size: 2rem;
-  font-weight: var(--bold);
-  margin-bottom: 1rem;
-  display: none;
-}
-
 .reviewContainer {
   width: 100%;
   max-width: 80rem; 
-  margin-top: 4rem;
 }
 
 .reviewList {
@@ -84,9 +76,5 @@
   .reviewList {
   gap: 2rem;
   }
-
-.listTitle {
-  display: block;
-}
 
 }
