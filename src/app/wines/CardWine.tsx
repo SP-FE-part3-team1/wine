@@ -42,9 +42,7 @@ const CardWine = ({
             {infoDescription && (
               <div className={styles.infoDescription}>{infoDescription}</div>
             )}
-            <div className={tagLabel}>
-              {tagLabel && <Tag size="S">{tagLabel}</Tag>}
-            </div>
+            <div className={tagLabel}>{tagLabel && <Tag>{tagLabel}</Tag>}</div>
           </div>
           <div className={styles.wineRating}>
             {rating !== undefined && (
