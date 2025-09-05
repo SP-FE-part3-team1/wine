@@ -1,9 +1,21 @@
+.pageContainer {
+  max-width: 114rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: space-between;
+  gap: 4rem;
+  margin: 0 auto;
+}
+
 .wineSummaryContainer {
   display: flex;
   flex-direction: column;
   align-items: stretch;
   justify-content: center;
   background-color: var(--grayscale-50);
+
 }
 
 .RatingSummaryAndReview {
@@ -20,7 +32,6 @@
 .reviewContainer {
   width: 100%;
   max-width: 80rem; 
-  margin-top: 4rem;
 }
 
 .reviewList {
@@ -29,9 +40,24 @@
   gap: 2rem;
 }
 
+/* tablet */
+@media screen and (min-width: 768px) {
+  .pageContainer {
+    gap: 6.5rem;
+  }
+
+  .reviewList {
+  gap: 2.4rem;
+}
+}
+
 
 /* desktop */
 @media screen and (min-width:1024px) {
+  .pageContainer {
+    gap: 6rem;
+  }
+
   .RatingSummaryAndReview {
   display: flex;
   flex-direction:row-reverse;
@@ -47,5 +73,9 @@
   flex: 20;
   min-width: 0;
 }
+
+  .reviewList {
+  gap: 2rem;
+  }
 
 }

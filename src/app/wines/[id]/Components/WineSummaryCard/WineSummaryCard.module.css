@@ -79,10 +79,12 @@
 .card {
     padding: 5.2rem 10rem 4rem;
     max-width: 114rem;
+    margin-top: 0;
 }
 .wineImage {
   width: 5.8rem;
   height: auto;
+  padding-top: 0;
 }
 
 
