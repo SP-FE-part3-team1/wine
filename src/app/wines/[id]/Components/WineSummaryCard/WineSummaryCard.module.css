@@ -1,0 +1,107 @@
+/* mobile */
+.card {
+  position: relative; 
+  display: flex;
+  align-items: center;
+  background-color: var(--white);
+  border: 1px solid var(--grayscale-300);
+  border-radius: 1.2rem;
+  padding: 3.3rem 2rem 3rem;
+  min-width: 34.3rem;
+  margin-top: 4rem;
+  width: 100%;
+}
+
+.wineImage {
+  position: absolute;
+  bottom: 0; 
+  width: 5.8rem; 
+  height: auto; 
+  z-index: 1; 
+  object-fit: contain;
+}
+
+.cardContent {
+  /* 이미지가 absolute로 빠져나가면서 공간을 차지하지 않으므로,
+     텍스트가 이미지와 겹치지 않도록 왼쪽 여백을 줌 */
+  margin-left: 8rem; /* 이미지 너비(12rem)와 좌측 여백(-2rem)을 고려한 값 */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.name {
+  font-size: var(--xl-size); 
+  font-weight: var(--semibold); 
+  color: var(--black);
+  margin-bottom: 1.5rem; 
+}
+
+.origin {
+  font-size: 0.9rem; /* 1.4rem */
+  color: var(--grayscale-500);
+  margin-bottom: 1rem; 
+}
+
+
+/* Tablet */
+@media screen and (min-width: 768px) {
+  
+.card {
+    padding: 5.2rem 6rem 4rem;
+}
+.wineImage {
+  width: 8.4rem;
+  height: 30.2rem;
+  padding-top: 2rem;
+}
+
+
+.cardContent {
+  margin-left: 12rem;
+  margin-bottom: 1.3rem;
+}
+
+.name {
+  font-size: 3rem; 
+  font-weight: var(--semibold); 
+  color: var(--black);
+  margin-bottom: 2rem; 
+}
+
+.origin {
+  font-size: var(--lg-size);
+  color: var(--grayscale-500);
+  margin-bottom: 1rem; 
+}
+
+@media screen and (min-width: 1024px) {
+.card {
+    padding: 5.2rem 10rem 4rem;
+    max-width: 114rem;
+    margin-top: 0;
+}
+.wineImage {
+  width: 5.8rem;
+  height: auto;
+  padding-top: 0;
+}
+
+
+.cardContent {
+  margin-left: 12rem;
+  margin-bottom: 2rem;
+}
+
+.name {
+  margin-bottom: 2rem; 
+}
+
+.origin {
+  font-size: var(--lg-size);
+  color: var(--grayscale-500);
+  margin-bottom: 2rem; 
+}
+
+}
+}

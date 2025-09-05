@@ -20,6 +20,8 @@
   margin: 0;
   padding: 0.3rem 0.4rem;
   z-index: 20;
+  width: 10.1rem;
+  font-size: 1.4rem;
 }
 
 .menuItem {
@@ -29,6 +31,7 @@
   color: var(--black);
   font-weight: var(--medium);
   text-align: center;
+  padding: 0.8rem 1.6rem;
 }
 
 .menuItem:hover {
@@ -36,24 +39,14 @@
   color: var(--primary-purple-100);
 }
 
-
-/* --- S 사이즈 스타일 (S Size Styles) --- */
-.menuS {
-  width: 10.1rem;
-  font-size: 1.4rem;
-}
-
-.menuItemS {
-  padding: 0.8rem 1.6rem;
-}
-
-
-/* --- M 사이즈 스타일 (M Size Styles) --- */
-.menuM {
+/* tablet & destop */
+@media screen and (min-width: 768px) {
+  .menu {
   width: 12.6rem;
   font-size: 1.6rem;
 }
 
-.menuItemM {
+.menuItem {
   padding: 1.3rem 2.8rem;
+}
 }

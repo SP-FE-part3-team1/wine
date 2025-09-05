@@ -5,5 +5,4 @@ export interface TagProps {
   icon?: ReactNode; // 태그
   /** 태그에 표시될 내용 */
   children: ReactNode;
-  size: 'S' | 'M';
 }
