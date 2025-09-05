@@ -1,0 +1,54 @@
+.reviewSection {
+  width: 100%;
+  max-width: 80rem; /* 페이지의 다른 컨텐츠와 너비를 맞춥니다. */
+  margin-top: 4rem;
+}
+
+.reviewTitle {
+  font-size: var(--xl-size);
+  font-weight: var(--bold);
+  margin-bottom: 2rem;
+}
+
+.listTitle {
+  font-size: 2rem;
+  font-weight: var(--bold);
+  margin-bottom: 3rem;
+  display: none;
+}
+
+.reviewList {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.noReviews {
+  padding: 4rem;
+  text-align: center;
+  font-size: var(--lg-size);
+  color: var(--grayscale-500);
+  background-color: var(--white);
+  border-radius: 1.6rem;
+  border: 1px solid var(--grayscale-300);
+}
+
+/* tablet */
+@media screen and (min-width: 768px) {
+    .reviewList {
+        gap: 2.4rem;
+    }
+}
+
+
+
+/* desktop */
+@media screen and (min-width:1024px) {
+    .listTitle {
+  display: block;
+}
+
+  .reviewList {
+    gap: 2rem
+  }
+}

@@ -1,0 +1,15 @@
+.filterButton {
+  position: relative;
+  width: 3.8rem;
+  height: 3.8rem;
+  background: var(--white);
+  opacity: 0.8;
+  border: 0.1rem solid var(--grayscale-300);
+  border-radius: 0.8rem;
+  cursor: pointer;
+}
+
+.icon {
+  width: 2.2rem;
+  height: 2.2rem;
+}

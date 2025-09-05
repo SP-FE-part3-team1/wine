@@ -1,0 +1,23 @@
+.container {
+  display: flex;
+  gap: 4rem;
+}
+
+.login,
+.signup {
+  font-size: var(--lg-size);
+  font-weight: var(--medium);
+  color: var(--white);
+  text-decoration: none;
+}
+
+@media screen and (max-width: 375px) {
+  .container {
+    gap: 2rem;
+  }
+
+  .login,
+  .signup {
+    font-size: var(--md-size);
+  }
+}

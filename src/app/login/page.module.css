@@ -1,0 +1,139 @@
+.body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 49.6rem;
+  min-width: 30.3rem;
+  padding: 8rem 4.8rem;
+  gap: 6.4rem;
+  border-radius: 1.6rem;
+  box-shadow: 0rem 0.2rem 2rem var(--grayscale-300);
+}
+
+.image_container {
+  width: 100%;
+  text-align: center;
+}
+
+.form_container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 5.6rem;
+}
+
+.form_input_container {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.pwd_container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.span {
+  font-size: var(--md-size);
+  font-weight: var(--regular);
+  line-height: var(--md-li-he);
+  color: var(--primary-purple-100);
+  cursor: pointer;
+}
+
+.btn_move_signup_container {
+  display: flex;
+  flex-direction: column;
+  gap: 3.2rem;
+}
+
+.btn_container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.login_btn {
+  width: 100%;
+  height: 4.8rem;
+
+  font-size: var(--lg-size);
+  font-weight: var(--bold);
+  line-height: var(--lg-li-he);
+}
+
+.move_signup_container {
+  display: flex;
+  justify-content: center;
+  gap: 1.4rem;
+}
+
+.move_signup_container > span:first-child,
+.move_signup_container > span:last-child,
+.do_signup {
+  font-size: var(--lg-size);
+  font-weight: var(--regular);
+  line-height: var(--lg-li-he);
+  color: var(--grayscale-500);
+}
+
+.move_signup_container > span:last-child,
+.do_signup {
+  color: var(--primary-purple-100);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 768px) {
+  .container {
+    padding: 5.6rem 4.8rem;
+  }
+}
+
+@media screen and (max-width: 520px) {
+  .body {
+    padding: 0rem 1.2rem;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .container {
+    padding: 5.6rem 2rem;
+    gap: 4rem;
+  }
+
+  .form {
+    gap: 4rem;
+  }
+
+  .form_input_container {
+    gap: 1.6rem;
+  }
+
+  .login_btn {
+    height: 4.2rem;
+    font-size: var(--md-size);
+    font-weight: var(--bold);
+    line-height: var(--md-li-he);
+  }
+
+  .move_signup_container > span:first-child,
+  .move_signup_container > span:last-child,
+  .do_signup {
+    font-size: var(--md-size);
+  }
+}

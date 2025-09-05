@@ -1,0 +1,76 @@
+.carouselWrapper {
+  width: 100%;
+  padding: 20px 0;
+  background-color: var(--grayscale-100);
+  max-width: 34.3rem;
+  height: 24.1rem;
+  position: relative;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  border-radius: var(--small);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.title {
+  font-size: 1.8rem;
+  font-weight: var(--bold);
+  line-height: 2.1rem;
+}
+
+.swiper {
+  width: 100%;
+  height: 100%;
+}
+
+.swiper-slide {
+  display: flex;
+  justify-content: center;
+}
+
+/* 👉 커스텀 next 버튼 위치 Swiper 기본 next 버튼과 동일하게 */
+.nextButton {
+  position: absolute;
+  right: 0.5rem;
+  top: 60%;
+  transform: translateY(-50%);
+  z-index: 10;
+}
+
+.carouselWrapper :global(.swiper-wrapper) {
+  display: flex;
+  flex-direction: row;
+}
+
+.carouselWrapper :global(.swiper-slide) {
+  width: auto;
+  flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media screen and (min-width: 37.6rem) {
+  .carouselWrapper {
+    max-width: 70.4rem;
+    height: 29.9rem;
+    padding: 3rem;
+  }
+
+  .title {
+    font-size: 2rem;
+  }
+}
+
+@media screen and (min-width: 76.9rem) {
+  .carouselWrapper {
+    max-width: 114rem;
+    height: 29.9rem;
+    padding: 3rem;
+  }
+
+  .title {
+    font-size: 2rem;
+  }
+}

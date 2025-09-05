@@ -5,17 +5,18 @@
   border: 0.1rem solid transparent;
   cursor: pointer;
   user-select: none;
+  border-radius: var(--btn-radius, 1.6rem);
 }
 
 /* radius */
 .r12 {
-  border-radius: 1.2rem;
+  --btn-radius: 1.2rem;
 }
 .r16 {
-  border-radius: 1.6rem;
+  --btn-radius: 1.6rem;
 }
 .r100 {
-  border-radius: 10rem;
+  --btn-radius: 10rem;
 }
 
 /* primary */
