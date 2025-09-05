@@ -23,14 +23,14 @@ export default function ReviewList({ initialReviews }: ReviewListProps) {
           : review
       )
     );
-    // TODO: 서버 API로 '좋아요' 상태를 업데이트하는 로직을 여기에 추가할 수 있습니다.
+    // @TODO: 서버 API로 '좋아요' 상태를 업데이트하는 로직.
     console.log(`Review ID ${reviewId}의 좋아요 상태가 변경되었습니다.`);
   };
 
   // '더보기' 메뉴 클릭 핸들러 (현재는 콘솔 로그만)
   const handleMore = (reviewId: number) => {
     console.log(`Review ID ${reviewId}의 '더보기'가 클릭되었습니다.`);
-    // TODO: 여기에 수정/삭제 메뉴를 보여주는 로직을 구현할 수 있습니다.
+    // @TODO: 수정/삭제 메뉴를 보여주는 로직을 구현
   };
 
   return (

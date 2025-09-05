@@ -1,5 +1,6 @@
 'use client';
 
+import { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import type { ReviewCardProps } from './types';
 import styles from './ReviewCard.module.css';
@@ -11,6 +12,8 @@ import Tag from '../../../../../components/Tag/Tag';
 import { Chip } from '../../../../../components/Chip/Chip';
 import RangeSlider from '../../../../../components/RangeSlider/RangeSlider';
 import StarIcon from '../StarIcon';
+import DropdownMenu from '../../../../../components/DropdownMenu/DropdownMenu';
+
 
 // Aroma enum 타입에 맞춰 모든 아로마 키와 한글 이름을 매핑
 const AROMA_MAP: { [key: string]: string } = {
@@ -51,6 +54,9 @@ function ReviewCard({ review, onLikeClick, onMoreClick }: ReviewCardProps) {
     isLiked,
   } = review;
 
+  // 드롭다운 열림/ 닫힘 관리
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
   // Chip 컴포넌트에 맞는 형태로 props를 변환
   const chipOptions = aroma.map((aromaKey) => ({
     value: aromaKey,
@@ -61,9 +67,25 @@ function ReviewCard({ review, onLikeClick, onMoreClick }: ReviewCardProps) {
   const starIcon = <StarIcon className={styles.starIcon} />;
 
 
-  
-  // isLiked가 빈 객체 {} 인지 아닌지로 좋아요 여부를 판단
-  const liked = isLiked && Object.keys(isLiked).length > 0;
+  //드롭다운 메뉴에 표시될 옵션 정의
+  const dropdownOptions = [
+    {
+      label: '수정하기',
+      onClick: () => {
+        console.log(`리뷰 ${id} 수정`);
+        onMoreClick?.(id); 
+        setIsDropdownOpen(false);
+      },
+    },
+    {
+      label: '삭제하기',
+      onClick: () => {
+        console.log(`리뷰 ${id} 삭제`);
+        // @TODO: 삭제 확인 모달을 띄우는 로직 추가.
+        setIsDropdownOpen(false);
+      },
+    },
+  ];
 
   return (
     <div className={styles.card}>
@@ -79,20 +101,22 @@ function ReviewCard({ review, onLikeClick, onMoreClick }: ReviewCardProps) {
         <div className={styles.actions}>
           <Button variant="icon" ariaLabel="좋아요" onClick={() => onLikeClick?.(id)} className={styles.iconButton}>
             <Image
-              src={liked ? "/assets/images/icon/liked.svg" : "/assets/images/icon/like.svg"}
+              src={review.isLiked ? "/assets/images/icon/liked.svg" : "/assets/images/icon/like.svg"}
               alt="좋아요 아이콘"
               fill={true}
               style={{ objectFit: 'cover' }} 
             />
           </Button>
-          <Button variant="icon" ariaLabel="더보기" onClick={() => onMoreClick?.(id)} className={styles.iconButton}>
-            <Image 
-            src="/assets/images/icon/menu.svg" 
-            alt="더보기 아이콘"
-            fill={true}
-            style={{ objectFit: 'cover' }}
-            />
-          </Button>
+              <DropdownMenu items={dropdownOptions} size='M'>
+            <Button variant="icon" ariaLabel="더보기" className={styles.iconButton}>
+              <Image
+                src="/assets/images/icon/menu.svg"
+                alt="더보기 아이콘"
+                fill={true}
+                style={{ objectFit: 'cover' }}
+              />
+            </Button>
+          </DropdownMenu>
         </div>
       </div>
 
