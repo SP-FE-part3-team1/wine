@@ -21,6 +21,7 @@
   width: 100%;
   gap: 16px; /* 요소 간 간격 */
   margin-bottom: 24px;
+  justify-content: center;
 }
 
 .searchInput {
