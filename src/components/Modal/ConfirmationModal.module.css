@@ -1,6 +1,9 @@
 /* ConfirmationModal Design Tokens */
 .confirmationModal {
   /* Inherits styles from base Modal */
+  max-width: 353px;
+  width: 353px;
+  height: 182px;
 }
 
 .content {
@@ -67,8 +70,12 @@
   margin: 0;
   font-size: var(--md-size);
   color: var(--confirm-gray-dark);
-  line-height: 1.5;
+  line-height: 3.2rem;
+  height: 3.2rem;
   max-width: 320px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* Actions */
@@ -94,7 +101,8 @@
   cursor: pointer;
   transition: var(--confirm-transition);
   outline: none;
-  min-height: 4.4rem;
+  min-height: 5.4rem;
+  height: 5.4rem;
 }
 
 /* Cancel Button */
@@ -152,9 +160,24 @@
 
 /* 반응형 디자인 */
 @media (max-width: 768px) {
+  .confirmationModal {
+    height: 172px;
+  }
+  
   .content {
     padding: var(--confirm-spacing-md) 0;
     gap: var(--confirm-spacing-md);
+  }
+  
+  .message {
+    line-height: 2.6rem;
+    height: 2.6rem;
+  }
+  
+  .cancelButton,
+  .confirmButton {
+    min-height: 5rem;
+    height: 5rem;
   }
   
   .iconContainer {

@@ -1,19 +1,100 @@
-/* ReviewFormModal 스타일 */
-.reviewFormModal {
-  max-width: 55rem;
-  width: 90vw;
-}
+/* ReviewFormModal - 리뷰등록.png Figma 디자인 정확히 구현 */
 
 .modalContent {
   display: flex;
   flex-direction: column;
-  gap: 3rem;
-  padding: 0.8rem;
-  max-height: 70vh;
-  overflow-y: auto;
+  gap: 2.4rem;
+  padding: 0;
+  font-size: 1.4rem;
 }
 
-/* 섹션 */
+/* Wine Header - 리뷰등록.png 정확히 구현 */
+.wineHeader {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.2rem;
+  margin-bottom: 1.2rem;
+}
+
+.wineIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 4.8rem;
+  height: 4.8rem;
+  color: #6C5CE7;
+  flex-shrink: 0;
+}
+
+.wineInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  flex: 1;
+}
+
+.wineName {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #212529;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.wineRating {
+  display: flex;
+  align-items: center;
+}
+
+/* 리뷰 텍스트영역 - 리뷰등록.png 정확히 구현 */
+.reviewTextarea {
+  width: 100%;
+  min-height: 12rem;
+  padding: 1.2rem;
+  border: 0.1rem solid #E9ECEF;
+  border-radius: 0.8rem;
+  font-size: 1.4rem;
+  font-family: inherit;
+  color: #212529;
+  resize: vertical;
+  /* 모든 브라우저에서 기본 outline 완전 제거 */
+  outline: none !important;
+  outline-width: 0 !important;
+  outline-style: none !important;
+  outline-color: transparent !important;
+  /* 브라우저별 기본 포커스 스타일 제거 */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  /* 부드러운 전환 */
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* 통합된 포커스 스타일 - 하나의 아웃라인만 */
+.reviewTextarea:focus {
+  border-color: #6C5CE7 !important;
+  box-shadow: 0 0 0 0.2rem rgba(108, 92, 231, 0.15) !important;
+  outline: none !important;
+  outline-width: 0 !important;
+  outline-style: none !important;
+  outline-color: transparent !important;
+}
+
+/* 키보드 네비게이션을 위한 접근성 스타일 (선택사항) */
+.reviewTextarea:focus-visible {
+  border-color: #6C5CE7 !important;
+  box-shadow: 0 0 0 0.2rem rgba(108, 92, 231, 0.2) !important;
+  outline: none !important;
+  outline-width: 0 !important;
+  outline-style: none !important;
+  outline-color: transparent !important;
+}
+
+.reviewTextarea::placeholder {
+  color: #ADB5BD;
+}
+
+/* 섹션 - 리뷰등록.png 정확히 구현 */
 .section {
   display: flex;
   flex-direction: column;
@@ -21,37 +102,14 @@
 }
 
 .sectionTitle {
-  font-size: var(--lg-size);
-  font-weight: var(--semibold);
-  color: var(--grayscale-900);
-  margin-bottom: 0.4rem;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #212529;
+  margin: 0;
+  line-height: 1.4;
 }
 
-.sectionDescription {
-  font-size: var(--md-size);
-  color: var(--grayscale-700);
-  line-height: 1.5;
-}
-
-/* 별점 섹션 */
-.ratingContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1.2rem;
-  padding: 2.4rem;
-  background-color: var(--grayscale-50);
-  border-radius: var(--medium);
-  border: 0.1rem solid var(--grayscale-200);
-}
-
-.ratingText {
-  font-size: var(--lg-size);
-  font-weight: var(--medium);
-  color: var(--primary-purple-100);
-}
-
-/* 맛 특성 슬라이더 */
+/* 맛 특성 슬라이더 - 리뷰등록.png 정확히 구현 */
 .tasteSliders {
   display: flex;
   flex-direction: column;
@@ -61,155 +119,198 @@
 .sliderGroup {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.2rem;
 }
 
 .sliderLabel {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: var(--md-size);
-  font-weight: var(--medium);
+  font-size: 1.2rem;
+  font-weight: 400;
 }
 
-.leftLabel {
-  color: var(--grayscale-700);
-}
-
+.leftLabel,
 .rightLabel {
-  color: var(--grayscale-700);
+  color: #6C757D;
+  font-weight: 400;
 }
 
-.sliderValue {
-  text-align: center;
-  font-size: var(--sm-size);
-  color: var(--primary-purple-100);
-  font-weight: var(--medium);
-  background-color: var(--primary-purple-10);
-  padding: 0.4rem 0.8rem;
-  border-radius: var(--small);
-  width: fit-content;
-  margin: 0 auto;
+/* 슬라이더 스타일 - 리뷰등록.png 정확히 구현 */
+.tasteSlider {
+  width: 100%;
+  height: 0.6rem;
+  border-radius: 0.3rem;
+  background: #E9ECEF;
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+  cursor: pointer;
 }
 
-/* 리뷰 입력 섹션 */
-.reviewInputContainer {
+.tasteSlider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background: #6C5CE7;
+  cursor: pointer;
+  border: none;
+}
+
+.tasteSlider::-moz-range-thumb {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background: #6C5CE7;
+  cursor: pointer;
+  border: none;
+}
+
+/* 맛 칩 섹션 - 리뷰등록.png 정확히 구현 */
+.tasteChips {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
   gap: 0.8rem;
+  justify-content: flex-start;
 }
 
-.characterCount {
-  text-align: right;
-  font-size: var(--sm-size);
-  color: var(--grayscale-600);
+/* 제출 버튼 - 리뷰등록.png 정확히 구현 */
+.submitButton {
+  width: 100%;
+  height: 4.8rem;
+  padding: 1.2rem 2.4rem;
+  background-color: #6C5CE7 !important;
+  color: #FFFFFF !important;
+  border: none !important;
+  border-radius: 0.8rem !important;
+  font-size: 1.4rem !important;
+  font-weight: 500 !important;
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
 
-/* 버튼 그룹 */
-.buttonGroup {
-  display: flex;
-  justify-content: flex-end;
-  gap: 1.2rem;
-  padding-top: 2.4rem;
-  border-top: 0.1rem solid var(--grayscale-200);
-  margin-top: auto;
+.submitButton:hover {
+  background-color: #5A4FCF !important;
 }
 
-.buttonGroup button {
-  min-width: 12rem;
+.submitButton:disabled {
+  background-color: #ADB5BD !important;
+  cursor: not-allowed;
 }
 
-/* 반응형 디자인 */
+/* 모바일 반응형 - 리뷰등록.png 모바일 디자인 기준 */
 @media (max-width: 768px) {
-  .reviewFormModal {
-    width: 95vw;
-    max-width: none;
-  }
-
   .modalContent {
-    padding: 0.4rem;
-    gap: 2.4rem;
-    max-height: 75vh;
+    gap: 2rem;
   }
-
-  .ratingContainer {
-    padding: 2rem;
+  
+  .wineHeader {
+    margin-bottom: 1rem;
   }
-
+  
+  .reviewTextarea {
+    min-height: 10rem;
+  }
+  
   .tasteSliders {
     gap: 2rem;
   }
-
+  
   .sectionTitle {
-    font-size: var(--md-size);
+    font-size: 1.3rem;
   }
 }
 
-@media (max-width: 480px) {
-  .buttonGroup {
-    flex-direction: column-reverse;
-    gap: 0.8rem;
-  }
-
-  .buttonGroup button {
-    width: 100%;
-    min-width: auto;
-  }
-
+/* 더 작은 화면 (375px 기준) */
+@media (max-width: 375px) {
   .modalContent {
-    gap: 2rem;
-    max-height: 80vh;
+    gap: 1.6rem;
   }
-
-  .ratingContainer {
-    padding: 1.6rem;
+  
+  .wineHeader {
+    gap: 1rem;
   }
-
-  .sliderLabel {
-    font-size: var(--sm-size);
+  
+  .wineIcon {
+    width: 4rem;
+    height: 4rem;
+  }
+  
+  .reviewTextarea {
+    min-height: 8rem;
+  }
+  
+  .tasteSliders {
+    gap: 1.6rem;
   }
 }
 
-/* 스크롤바 스타일링 */
-.modalContent {
-  scrollbar-width: thin;
-  scrollbar-color: var(--grayscale-400) var(--grayscale-100);
+/* Input과 Select 컴포넌트 통합 스타일 */
+.modalContent :global(.customInput),
+.modalContent :global(.select) {
+  font-size: 1.4rem !important;
 }
 
-.modalContent::-webkit-scrollbar {
-  width: 0.6rem;
+.modalContent :global(.customInput input) {
+  font-size: 1.4rem !important;
+  padding: 1.2rem 1.4rem !important;
+  height: 4.8rem !important;
+  border-radius: 0.8rem !important;
+  border: 0.1rem solid #E9ECEF !important;
 }
 
-.modalContent::-webkit-scrollbar-track {
-  background: var(--grayscale-100);
-  border-radius: var(--small);
-}
-
-.modalContent::-webkit-scrollbar-thumb {
-  background: var(--grayscale-400);
-  border-radius: var(--small);
-}
-
-.modalContent::-webkit-scrollbar-thumb:hover {
-  background: var(--grayscale-500);
-}
-
-/* 로딩 상태 */
-.loading {
-  opacity: 0.6;
-  pointer-events: none;
+.modalContent :global(.customInput input:focus) {
+  border-color: #6C5CE7 !important;
+  box-shadow: 0 0 0 0.2rem rgba(108, 92, 231, 0.1) !important;
 }
 
 /* 접근성 */
-@media (prefers-reduced-motion: reduce) {
-  .modalContent {
-    scroll-behavior: auto;
-  }
+.tasteSlider:focus-visible {
+  outline: 0.2rem solid #6C5CE7;
+  outline-offset: 0.2rem;
 }
 
-/* 포커스 상태 */
-.section:focus-within {
-  outline: 0.1rem solid var(--primary-purple-100);
+.submitButton:focus-visible {
+  outline: 0.2rem solid #6C5CE7;
   outline-offset: 0.2rem;
-  border-radius: var(--small);
+}
+
+/* 추가적인 outline 제거 보장 */
+.reviewTextarea,
+.reviewTextarea:active,
+.reviewTextarea:focus,
+.reviewTextarea:focus-visible,
+.reviewTextarea:focus-within {
+  outline: none !important;
+  outline-width: 0 !important;
+  outline-style: none !important;
+  outline-color: transparent !important;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  appearance: none !important;
+}
+
+/* 웹킷 브라우저 특수 처리 */
+.reviewTextarea::-webkit-input-placeholder {
+  color: #ADB5BD;
+}
+
+.reviewTextarea::-moz-placeholder {
+  color: #ADB5BD;
+  opacity: 1;
+}
+
+.reviewTextarea::placeholder {
+  color: #ADB5BD;
+}
+
+/* 애니메이션 */
+@media (prefers-reduced-motion: reduce) {
+  .reviewTextarea,
+  .tasteSlider,
+  .submitButton {
+    transition: none;
+  }
 }

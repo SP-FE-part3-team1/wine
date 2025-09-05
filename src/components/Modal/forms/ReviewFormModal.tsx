@@ -3,11 +3,9 @@
 import { useState, useCallback } from 'react';
 import { Modal } from '../Modal';
 import { ReviewFormModalProps, ReviewFormData, TASTE_PROFILE_OPTIONS } from '../../../types/component-types';
-import { REVIEW_FORM_CONFIG, TASTE_SLIDERS, transformReviewDataForApi } from '../manager/modalConfigs';
+import { REVIEW_FORM_CONFIG, transformReviewDataForApi } from '../manager/modalConfigs';
 import { StarRating } from '../../StarRating/StarRating';
-import ReviewInput from '../../Input/ReviewInput';
 import { Chip } from '../../Chip/Chip';
-import RangeSlider from '../../RangeSlider/RangeSlider';
 import Button from '../../Button/Button';
 import styles from './ReviewFormModal.module.css';
 
@@ -26,16 +24,14 @@ export const ReviewFormModal = ({
       : REVIEW_FORM_CONFIG.create.initialValues
   );
 
-  const config = REVIEW_FORM_CONFIG[mode];
-
   // 폼 데이터 업데이트
-  const updateFormData = useCallback((field: keyof ReviewFormData, value: any) => {
+  const updateFormData = useCallback((field: keyof ReviewFormData, value: string | number | string[]) => {
     setFormData(prev => ({ ...prev, [field]: value }));
   }, []);
 
   // 폼 검증
   const validateForm = (): boolean => {
-    return formData.rating > 0 && formData.content.trim().length > 0;
+    return formData.content.trim().length > 0;
   };
 
   // 폼 제출
@@ -84,107 +80,148 @@ export const ReviewFormModal = ({
     <Modal
       isOpen={true}
       onClose={onClose}
-      title={config.title}
-      size="large"
-      className={styles.reviewFormModal}
+      title="리뷰 등록"
+      size="medium"
     >
       <div className={styles.modalContent}>
-        {/* 별점 섹션 */}
+        {/* Wine Icon and Title - Matching Figma Design */}
+        <div className={styles.wineHeader}>
+          <div className={styles.wineIcon}>
+            <svg
+              width="24"
+              height="32"
+              viewBox="0 0 24 32"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M8 2h8v6l-2 18H10L8 8V2z"
+                fill="currentColor"
+                opacity="0.8"
+              />
+              <path
+                d="M8 2h8v2H8V2z"
+                fill="currentColor"
+              />
+            </svg>
+          </div>
+          <div className={styles.wineInfo}>
+            <h3 className={styles.wineName}>Sentinel Carbernet Sauvignon 2016</h3>
+            <div className={styles.wineRating}>
+              <StarRating
+                value={4}
+                readOnly={true}
+                size="small"
+                maxRating={5}
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* 리뷰 내용 입력 - 리뷰등록.png 정확히 구현 */}
+        <textarea
+          className={styles.reviewTextarea}
+          placeholder="후기를 작성해 주세요"
+          value={formData.content}
+          onChange={(e) => updateFormData('content', e.target.value)}
+          disabled={isSubmitting}
+        />
+
+        {/* 맛 특성 슬라이더 - 리뷰등록.png 정확히 구현 */}
         <div className={styles.section}>
-          <h3 className={styles.sectionTitle}>전체 평가</h3>
-          <div className={styles.ratingContainer}>
-            <StarRating
-              value={formData.rating}
-              onChange={(rating) => updateFormData('rating', rating)}
-              maxRating={5}
-              size="large"
+          <h3 className={styles.sectionTitle}>와인의 맛은 어떤가요?</h3>
+          <div className={styles.tasteSliders}>
+            <div className={styles.sliderGroup}>
+              <div className={styles.sliderLabel}>
+                <span className={styles.leftLabel}>가벼워요</span>
+                <span className={styles.rightLabel}>진해요</span>
+              </div>
+              <input
+                type="range"
+                min="0"
+                max="5"
+                step="1"
+                value={formData.body || 3}
+                onChange={(e) => updateFormData('body', parseInt(e.target.value))}
+                className={styles.tasteSlider}
+                disabled={isSubmitting}
+              />
+            </div>
+            <div className={styles.sliderGroup}>
+              <div className={styles.sliderLabel}>
+                <span className={styles.leftLabel}>부드러워요</span>
+                <span className={styles.rightLabel}>떫어요</span>
+              </div>
+              <input
+                type="range"
+                min="0"
+                max="5"
+                step="1"
+                value={formData.tannin || 3}
+                onChange={(e) => updateFormData('tannin', parseInt(e.target.value))}
+                className={styles.tasteSlider}
+                disabled={isSubmitting}
+              />
+            </div>
+            <div className={styles.sliderGroup}>
+              <div className={styles.sliderLabel}>
+                <span className={styles.leftLabel}>드라이해요</span>
+                <span className={styles.rightLabel}>달아요</span>
+              </div>
+              <input
+                type="range"
+                min="0"
+                max="5"
+                step="1"
+                value={formData.sweetness || 3}
+                onChange={(e) => updateFormData('sweetness', parseInt(e.target.value))}
+                className={styles.tasteSlider}
+                disabled={isSubmitting}
+              />
+            </div>
+            <div className={styles.sliderGroup}>
+              <div className={styles.sliderLabel}>
+                <span className={styles.leftLabel}>안셔요</span>
+                <span className={styles.rightLabel}>많이셔요</span>
+              </div>
+              <input
+                type="range"
+                min="0"
+                max="5"
+                step="1"
+                value={formData.acidity || 3}
+                onChange={(e) => updateFormData('acidity', parseInt(e.target.value))}
+                className={styles.tasteSlider}
+                disabled={isSubmitting}
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* 기억에 남는 향 - 리뷰등록.png 정확히 구현 */}
+        <div className={styles.section}>
+          <h3 className={styles.sectionTitle}>기억에 남는 향이 있나요?</h3>
+          <div className={styles.tasteChips}>
+            <Chip
+              options={TASTE_PROFILE_OPTIONS}
+              selectedValues={formData.tasteProfile}
+              onSelectionChange={(values) => updateFormData('tasteProfile', values)}
+              multiple
+              ariaLabel="기억에 남는 향 선택"
               disabled={isSubmitting}
             />
-            <div className={styles.ratingText}>
-              {formData.rating > 0 ? `${formData.rating}점` : '별점을 선택해주세요'}
-            </div>
           </div>
         </div>
 
-        {/* 맛 특성 슬라이더 */}
-        <div className={styles.section}>
-          <h3 className={styles.sectionTitle}>이 와인은 어떤 맛인가요?</h3>
-          <div className={styles.tasteSliders}>
-            {TASTE_SLIDERS.map((slider) => (
-              <div key={slider.key} className={styles.sliderGroup}>
-                <div className={styles.sliderLabel}>
-                  <span className={styles.leftLabel}>{slider.leftLabel}</span>
-                  <span className={styles.rightLabel}>{slider.rightLabel}</span>
-                </div>
-                <RangeSlider
-                  value={formData[slider.key]}
-                  min={slider.min}
-                  max={slider.max}
-                  step={slider.step}
-                  onChange={(value) => updateFormData(slider.key, value)}
-                  disabled={isSubmitting}
-                />
-                <div className={styles.sliderValue}>
-                  {formData[slider.key]}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* 맛 프로필 태그 */}
-        <div className={styles.section}>
-          <h3 className={styles.sectionTitle}>맛 프로필</h3>
-          <p className={styles.sectionDescription}>
-            이 와인에서 느껴지는 맛을 선택해주세요. (선택사항)
-          </p>
-          <Chip
-            options={TASTE_PROFILE_OPTIONS}
-            selectedValues={formData.tasteProfile}
-            onSelectionChange={(values) => updateFormData('tasteProfile', values)}
-            multiple
-            ariaLabel="와인 맛 프로필 선택"
-            disabled={isSubmitting}
-          />
-        </div>
-
-        {/* 리뷰 텍스트 */}
-        <div className={styles.section}>
-          <h3 className={styles.sectionTitle}>리뷰 작성</h3>
-          <div className={styles.reviewInputContainer}>
-            <ReviewInput
-              id="review-content"
-              name="content"
-              placeholder="이 와인에 대한 솔직한 후기를 남겨주세요. 어떤 상황에서 마셨는지, 어떤 맛이었는지, 추천하고 싶은지 등을 자유롭게 작성해주세요."
-              value={formData.content}
-              handleChange={(e) => updateFormData('content', e.target.value)}
-              error={formData.content.trim().length === 0}
-              errorText="리뷰 내용을 입력해주세요"
-            />
-            <div className={styles.characterCount}>
-              {formData.content.length} / 500자
-            </div>
-          </div>
-        </div>
-
-        {/* 버튼 그룹 */}
-        <div className={styles.buttonGroup}>
-          <Button
-            variant="outline"
-            onClick={onClose}
-            disabled={isSubmitting}
-          >
-            취소
-          </Button>
-          
-          <Button
-            variant="primary"
-            onClick={handleSubmit}
-            disabled={!validateForm() || isSubmitting}
-          >
-            {isSubmitting ? '저장 중...' : mode === 'edit' ? '리뷰 수정' : '리뷰 등록'}
-          </Button>
-        </div>
+        {/* 버튼 - 리뷰등록.png 정확히 구현 */}
+        <Button
+          variant="primary"
+          onClick={handleSubmit}
+          disabled={!validateForm() || isSubmitting}
+          className={styles.submitButton}
+        >
+          {isSubmitting ? '저장 중...' : '리뷰 남기기'}
+        </Button>
       </div>
     </Modal>
   );

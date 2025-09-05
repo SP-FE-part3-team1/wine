@@ -94,7 +94,7 @@ export enum ModalType {
 
 export interface ModalState {
   activeModal: ModalType | null;
-  modalData: any;
+  modalData: Record<string, unknown> | null;
   isLoading: boolean;
 }
 
@@ -116,7 +116,7 @@ export interface WineFormModalProps {
   initialData?: WineFormData;
   wineId?: string;
   onClose: () => void;
-  onSuccess?: (wine: any) => void;
+  onSuccess?: (wine: Record<string, unknown>) => void;
 }
 
 // 리뷰 관련 타입
@@ -124,10 +124,14 @@ export interface ReviewFormData {
   rating: number;
   content: string;
   tasteProfile: string[];
-  lightBold: number;
-  smoothTannic: number;
-  drySweet: number;
-  softAcidic: number;
+  body?: number;
+  tannin?: number;
+  sweetness?: number;
+  acidity?: number;
+  lightBold?: number;
+  smoothTannic?: number;
+  drySweet?: number;
+  softAcidic?: number;
 }
 
 export interface ReviewFormModalProps {
@@ -136,14 +140,15 @@ export interface ReviewFormModalProps {
   reviewId?: string;
   initialData?: ReviewFormData;
   onClose: () => void;
-  onSuccess?: (review: any) => void;
+  onSuccess?: (review: Record<string, unknown>) => void;
 }
 
 // 필터 관련 타입
 export interface FilterState {
-  wineTypes: WineType[];
+  wineTypes: string[];
   priceRange: [number, number];
   ratingRange: [number, number];
+  selectedRating?: string;
 }
 
 export interface FilterModalProps {

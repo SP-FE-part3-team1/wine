@@ -1,4 +1,4 @@
-import { WineFormData, ReviewFormData, FilterState, ChipOption } from '../../../types/component-types';
+import { WineFormData, ReviewFormData, FilterState, WineType } from '../../../types/component-types';
 
 /**
  * 와인 폼 설정
@@ -18,22 +18,22 @@ export const WINE_FORM_CONFIG = {
     } as WineFormData,
     title: '와인 등록하기'
   },
-  
+
   edit: {
     /**
      * API 데이터를 폼 데이터로 변환
      * @param apiData - API에서 받은 와인 데이터
      */
-    dataMapper: (apiData: any): WineFormData => ({
-      name: apiData.name || '',
-      type: apiData.type || 'RED',
-      region: apiData.region || '',
-      year: apiData.year || new Date().getFullYear(),
-      price: apiData.price || 0,
-      alcoholContent: apiData.alcoholContent || apiData.alcohol_content || 0, // snake_case 대응
-      volume: apiData.volume || 750,
-      tasteProfile: apiData.tasteProfile || apiData.taste_tags || [],
-      image: apiData.image || apiData.imageUrl || ''
+    dataMapper: (apiData: Record<string, unknown>): WineFormData => ({
+      name: (typeof apiData.name === 'string') ? apiData.name : '',
+      type: (apiData.type === 'RED' || apiData.type === 'WHITE' || apiData.type === 'SPARKLING') ? apiData.type as WineType : 'RED',
+      region: (typeof apiData.region === 'string') ? apiData.region : '',
+      year: (typeof apiData.year === 'number') ? apiData.year : new Date().getFullYear(),
+      price: (typeof apiData.price === 'number') ? apiData.price : 0,
+      alcoholContent: (typeof apiData.alcoholContent === 'number') ? apiData.alcoholContent : ((typeof apiData.alcohol_content === 'number') ? apiData.alcohol_content : 0),
+      volume: (typeof apiData.volume === 'number') ? apiData.volume : 750,
+      tasteProfile: Array.isArray(apiData.tasteProfile) ? apiData.tasteProfile as string[] : (Array.isArray(apiData.taste_tags) ? apiData.taste_tags as string[] : []),
+      image: (typeof apiData.image === 'string') ? apiData.image : ((typeof apiData.imageUrl === 'string') ? apiData.imageUrl : '')
     }),
     title: '와인 수정하기'
   }
@@ -48,6 +48,10 @@ export const REVIEW_FORM_CONFIG = {
       rating: 0,
       content: '',
       tasteProfile: [],
+      body: 3,
+      tannin: 3,
+      sweetness: 3,
+      acidity: 3,
       lightBold: 0,
       smoothTannic: 0, 
       drySweet: 0,
@@ -55,20 +59,24 @@ export const REVIEW_FORM_CONFIG = {
     } as ReviewFormData,
     title: '리뷰 남기기'
   },
-  
+
   edit: {
     /**
      * API 데이터를 폼 데이터로 변환
      * @param apiData - API에서 받은 리뷰 데이터
      */
-    dataMapper: (apiData: any): ReviewFormData => ({
-      rating: apiData.rating || 0,
-      content: apiData.content || '',
-      tasteProfile: apiData.tasteProfile || apiData.taste_tags || [],
-      lightBold: apiData.lightBold || apiData.light_bold || 0,
-      smoothTannic: apiData.smoothTannic || apiData.smooth_tannic || 0,
-      drySweet: apiData.drySweet || apiData.dry_sweet || 0,
-      softAcidic: apiData.softAcidic || apiData.soft_acidic || 0
+    dataMapper: (apiData: Record<string, unknown>): ReviewFormData => ({
+      rating: (typeof apiData.rating === 'number') ? apiData.rating : 0,
+      content: (typeof apiData.content === 'string') ? apiData.content : '',
+      tasteProfile: Array.isArray(apiData.tasteProfile) ? apiData.tasteProfile as string[] : (Array.isArray(apiData.taste_tags) ? apiData.taste_tags as string[] : []),
+      body: (typeof apiData.body === 'number') ? apiData.body : 3,
+      tannin: (typeof apiData.tannin === 'number') ? apiData.tannin : 3,
+      sweetness: (typeof apiData.sweetness === 'number') ? apiData.sweetness : 3,
+      acidity: (typeof apiData.acidity === 'number') ? apiData.acidity : 3,
+      lightBold: (typeof apiData.lightBold === 'number') ? apiData.lightBold : ((typeof apiData.light_bold === 'number') ? apiData.light_bold : 0),
+      smoothTannic: (typeof apiData.smoothTannic === 'number') ? apiData.smoothTannic : ((typeof apiData.smooth_tannic === 'number') ? apiData.smooth_tannic : 0),
+      drySweet: (typeof apiData.drySweet === 'number') ? apiData.drySweet : ((typeof apiData.dry_sweet === 'number') ? apiData.dry_sweet : 0),
+      softAcidic: (typeof apiData.softAcidic === 'number') ? apiData.softAcidic : ((typeof apiData.soft_acidic === 'number') ? apiData.soft_acidic : 0)
     }),
     title: '리뷰 수정하기'
   }
@@ -80,7 +88,8 @@ export const REVIEW_FORM_CONFIG = {
 export const FILTER_DEFAULT_VALUES: FilterState = {
   wineTypes: [],
   priceRange: [0, 1000000],
-  ratingRange: [0, 5]
+  ratingRange: [0, 5],
+  selectedRating: 'all'
 };
 
 /**
@@ -141,12 +150,16 @@ export const transformWineDataForApi = (formData: WineFormData) => ({
 });
 
 export const transformReviewDataForApi = (formData: ReviewFormData, wineId: string) => ({
-  wineId,
+  wineId: parseInt(wineId),
   rating: formData.rating,
   content: formData.content,
   tasteProfile: formData.tasteProfile,
-  lightBold: formData.lightBold,
-  smoothTannic: formData.smoothTannic,
-  drySweet: formData.drySweet,
-  softAcidic: formData.softAcidic
+  body: formData.body || formData.lightBold || 3,
+  tannin: formData.tannin || formData.smoothTannic || 3,
+  sweetness: formData.sweetness || formData.drySweet || 3,
+  acidity: formData.acidity || formData.softAcidic || 3,
+  lightBold: formData.lightBold || 0,
+  smoothTannic: formData.smoothTannic || 0,
+  drySweet: formData.drySweet || 0,
+  softAcidic: formData.softAcidic || 0
 });

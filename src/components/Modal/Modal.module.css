@@ -1,27 +1,27 @@
-/* Modal Design Tokens - Using Global Variables */
+/* Modal Design Tokens - Figma Design Aligned */
 .backdrop {
-  /* Color Variables from Global */
-  --modal-overlay: rgba(0, 0, 0, 0.6);
+  /* Color Variables - Using only existing globals */
+  --modal-overlay: rgba(0, 0, 0, 0.4);
   --modal-bg: var(--white);
-  --modal-border: var(--grayscale-200);
-  --modal-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --modal-border: var(--grayscale-300);
+  --modal-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
   --modal-primary: var(--primary-purple-100);
   --modal-text: var(--grayscale-800);
-  --modal-text-secondary: var(--grayscale-600);
+  --modal-text-secondary: var(--grayscale-500);
   
-  /* Local Spacing Variables */
+  /* Figma-based Spacing Variables */
   --modal-spacing-xs: 0.8rem;
   --modal-spacing-sm: 1.2rem;
   --modal-spacing-md: 1.6rem;
-  --modal-spacing-lg: 2.4rem;
-  --modal-spacing-xl: 3.2rem;
+  --modal-spacing-lg: 2.0rem;
+  --modal-spacing-xl: 2.4rem;
   
-  /* Border Radius from Global */
+  /* Border Radius from Figma */
   --modal-radius: var(--middle);
   
-  /* Local Effect Variables */
-  --modal-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  --modal-backdrop-transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  /* Figma-based Effect Variables */
+  --modal-transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --modal-backdrop-transition: opacity 0.2s ease;
   
   /* Backdrop Styles */
   position: fixed;
@@ -33,11 +33,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: var(--modal-spacing-md);
+  padding: var(--modal-spacing-lg);
   z-index: 1000;
   
   /* Animation */
-  animation: backdropFadeIn 0.3s ease-out;
+  animation: backdropFadeIn 0.2s ease-out;
 }
 
 /* Modal Container */
@@ -63,38 +63,41 @@
   outline-offset: 2px;
 }
 
-/* Modal Sizes */
+/* Modal Sizes - Figma Aligned */
 .modal.small {
   width: 100%;
   max-width: 400px;
+  min-height: auto;
 }
 
 .modal.medium {
   width: 100%;
-  max-width: 500px;
+  max-width: 480px;
+  min-height: auto;
 }
 
 .modal.large {
   width: 100%;
-  max-width: 700px;
+  max-width: 600px;
+  min-height: auto;
 }
 
-/* Header */
+/* Header - Figma Aligned */
 .header {
   display: flex;
   align-items: center;
-  justify-content: center;
-  padding: var(--modal-spacing-lg);
-  border-bottom: 0.1rem solid var(--modal-border);
+  justify-content: flex-start;
+  padding: var(--modal-spacing-xl) var(--modal-spacing-lg) var(--modal-spacing-md);
   flex-shrink: 0;
 }
 
 .title {
   margin: 0;
-  font-size: var(--xl-size);
+  font-size: 1.6rem;
   font-weight: var(--semibold);
   color: var(--modal-text);
-  line-height: 1.4;
+  line-height: 1.5;
+  text-align: left;
 }
 
 /* Close Button - Hidden for consistent design */
@@ -102,11 +105,12 @@
   display: none;
 }
 
-/* Content */
+/* Content - Figma Aligned */
 .content {
   padding: var(--modal-spacing-lg);
   overflow-y: auto;
   flex: 1;
+  min-height: 0; /* Allows flex child to shrink */
 }
 
 /* Animations */

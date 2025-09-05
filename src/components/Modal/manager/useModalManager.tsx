@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useCallback } from 'react';
+
 import { ModalType, ModalState, UseModalManagerReturn, FilterState } from '../../../types/component-types';
 
 // API 호출을 위한 임시 함수들 (실제 API 클라이언트로 교체 예정)
@@ -42,6 +43,17 @@ export const useModalManager = (): UseModalManagerReturn => {
   });
 
   /**
+   * 모달 닫기
+   */
+  const closeModal = useCallback(() => {
+    setModalState({
+      activeModal: null,
+      modalData: null,
+      isLoading: false
+    });
+  }, []);
+
+  /**
    * 와인 등록/수정 모달 열기
    * @param mode - 'create' | 'edit'
    * @param wineId - 수정 시 필요한 와인 ID
@@ -50,6 +62,7 @@ export const useModalManager = (): UseModalManagerReturn => {
     mode: 'create' | 'edit',
     wineId?: string
   ) => {
+    console.log(`openWineModal 호출됨 - mode: ${mode}, wineId: ${wineId}`);
     let initialData = null;
     
     // 수정 모드인 경우 기존 데이터 로드
@@ -77,7 +90,8 @@ export const useModalManager = (): UseModalManagerReturn => {
       }
     }
     
-    setModalState({
+    console.log('모달 상태 업데이트 중...');
+    const newModalState = {
       activeModal: ModalType.WINE_REGISTER,
       modalData: { 
         mode, 
@@ -86,8 +100,10 @@ export const useModalManager = (): UseModalManagerReturn => {
         onClose: closeModal
       },
       isLoading: false
-    });
-  }, []);
+    };
+    console.log('새 모달 상태:', newModalState);
+    setModalState(newModalState);
+  }, [closeModal]);
 
   /**
    * 리뷰 등록/수정 모달 열기
@@ -113,6 +129,10 @@ export const useModalManager = (): UseModalManagerReturn => {
           rating: reviewData.rating || 0,
           content: reviewData.content || '',
           tasteProfile: reviewData.tasteProfile || [],
+          body: reviewData.body || 3,
+          tannin: reviewData.tannin || 3,
+          sweetness: reviewData.sweetness || 3,
+          acidity: reviewData.acidity || 3,
           lightBold: reviewData.lightBold || 0,
           smoothTannic: reviewData.smoothTannic || 0,
           drySweet: reviewData.drySweet || 0,
@@ -136,7 +156,7 @@ export const useModalManager = (): UseModalManagerReturn => {
       },
       isLoading: false
     });
-  }, []);
+  }, [closeModal]);
 
   /**
    * 필터 모달 열기
@@ -151,18 +171,7 @@ export const useModalManager = (): UseModalManagerReturn => {
       },
       isLoading: false
     });
-  }, []);
-
-  /**
-   * 모달 닫기
-   */
-  const closeModal = useCallback(() => {
-    setModalState({
-      activeModal: null,
-      modalData: null,
-      isLoading: false
-    });
-  }, []);
+  }, [closeModal]);
 
   return {
     modalState,
