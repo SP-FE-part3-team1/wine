@@ -43,26 +43,42 @@
 }
 
 /* 태블릿: 37.6rem ~ 76.8rem */
-@media (min-width: 37.6rem) and (max-width: 76.8rem) {
+@media (min-width: 376px) and (max-width: 768px) {
   .fieldRow {
     flex-direction: row;
-    align-items: center;
-    gap: 1.2rem;
+    align-items: center; /* 버튼과 세로 중앙 정렬 */
+    gap: 1rem;
     width: 100%;
     flex-wrap: nowrap; /* 줄바꿈 방지 */
   }
+
+  /* 입력 래퍼는 가로로 쭉 성장 */
+  .inputCol {
+    flex: 1 1 auto; /* 핵심: 공간을 먹고 자라게 */
+    min-width: 0; /* 핵심: 플렉스 컨테이너에서 오버플로 방지 */
+  }
+
+  /* CustomInput 내부 input이 100% 차도록 (CSS Modules에서 :global 사용) */
+  .inputCol :global(input) {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
   .actions {
     margin-left: auto; /* 버튼을 오른쪽 끝으로 밀기 */
     justify-content: flex-end;
-    flex: 0 0 auto;
+    flex: 0 0 auto; /* 버튼 영역은 줄어들지 않게 */
+    margin-top: 1rem;
   }
+
   .actions button {
     width: 11.6rem;
     height: 4.8rem;
+    flex: 0 0 11.6rem; /* 버튼 고정 너비(축소 방지) */
   }
 }
 /* 브라우저: 76.9rem ~ */
-@media (min-width: 76.9rem) {
+@media (min-width: 769px) {
   .myprofilecard {
     width: 28rem;
     height: 53rem;

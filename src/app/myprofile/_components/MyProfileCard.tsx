@@ -44,17 +44,19 @@ function MyProfileCard({ user }: Props) {
           닉네임
         </label>
         <div className={styles.fieldRow}>
-          <CustomInput
-            id="nickname"
-            name="nickname"
-            type="text"
-            placeholder={user.nickname}
-            labelText=""
-            src=""
-            error={false}
-            value={name}
-            handleChange={handleChange}
-          />
+          <div className={styles.inputCol}>
+            <CustomInput
+              id="nickname"
+              name="nickname"
+              type="text"
+              placeholder={user.nickname}
+              labelText=""
+              src=""
+              error={false}
+              value={name}
+              handleChange={handleChange}
+            />
+          </div>
 
           <div className={styles.actions}>
             <Button
