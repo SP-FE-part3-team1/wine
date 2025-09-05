@@ -152,35 +152,54 @@
   color: var(--chip-white);
 }
 
-/* 반응형 디자인 */
-@media (max-width: 768px) {
+/* 반응형 디자인 - Mobile First */
+
+/* 테블릿 (768px ~ 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
   .chip {
-    min-height: 3.2rem;
-    padding: var(--chip-spacing-xs) var(--chip-spacing-md);
-    font-size: var(--sm-size);
+    min-height: 4rem;
+    padding: 1rem 1.8rem;
+    font-size: 1.5rem;
   }
   
   .container {
-    gap: var(--chip-spacing-xs);
+    gap: 1rem;
   }
   
   .chip:hover:not(:disabled) {
-    transform: translateY(-0.1rem);
+    transform: translateY(-0.15rem);
+    box-shadow: var(--chip-shadow-md);
   }
   
   .chip.selected:hover:not(:disabled) {
-    transform: translateY(-0.1rem);
+    transform: translateY(-0.15rem);
   }
 }
 
-@media (max-width: 375px) {
+/* 데스크탑 (1024px ~) */
+@media (min-width: 1024px) {
   .chip {
-    min-height: 2.8rem;
-    padding: var(--chip-spacing-xs) var(--chip-spacing-sm);
-    font-size: var(--xm-size);
+    min-height: 4.4rem;
+    padding: 1.2rem 2rem;
+    font-size: 1.6rem;
+    border-width: 0.15rem;
   }
   
   .container {
-    gap: var(--chip-spacing-xs);
+    gap: 1.2rem;
+  }
+  
+  .chip:hover:not(:disabled) {
+    transform: translateY(-0.2rem);
+    box-shadow: var(--chip-shadow-md);
+  }
+  
+  .chip.selected:hover:not(:disabled) {
+    transform: translateY(-0.2rem);
+  }
+  
+  .chip:focus-visible {
+    outline-width: 0.3rem;
+    outline-offset: 0.3rem;
   }
 }

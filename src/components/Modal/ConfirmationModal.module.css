@@ -1,9 +1,10 @@
 /* ConfirmationModal Design Tokens */
 .confirmationModal {
   /* Inherits styles from base Modal */
-  max-width: 353px;
-  width: 353px;
-  height: 182px;
+  max-width: 353px !important;
+  width: 353px !important;
+  height: 172px !important;
+  min-height: 172px !important;
 }
 
 .content {
@@ -31,38 +32,23 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
-  gap: var(--confirm-spacing-md);
-  padding: var(--confirm-spacing-sm) 0;
-}
-
-/* Icon Container */
-.iconContainer {
-  display: flex;
-  align-items: center;
+  gap: 2.4rem;
+  padding: 2.4rem 1.6rem 2rem;
+  height: 100%;
   justify-content: center;
-  width: 4.8rem;
-  height: 4.8rem;
-  border-radius: 50%;
-  margin-bottom: var(--confirm-spacing-sm);
-}
-
-.iconContainer.default {
-  background-color: var(--primary-purple-10);
-  color: var(--confirm-primary);
-}
-
-.iconContainer.destructive {
-  background-color: var(--confirm-destructive-light);
-  color: var(--confirm-destructive);
 }
 
 /* Title */
 .title {
   margin: 0;
-  font-size: var(--lg-size);
-  font-weight: var(--semibold);
+  font-size: 1.8rem;
+  font-weight: 600;
   color: var(--confirm-gray-darker);
-  line-height: 1.4;
+  line-height: 1.78; /* 32px / 18px = 1.78 */
+  height: 3.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* Message */
@@ -81,9 +67,9 @@
 /* Actions */
 .actions {
   display: flex;
-  gap: var(--confirm-spacing-md);
+  gap: 1.6rem;
   width: 100%;
-  margin-top: var(--confirm-spacing-sm);
+  height: 5.4rem;
 }
 
 /* Buttons */
@@ -158,49 +144,66 @@
   transform: translateY(1px);
 }
 
-/* 반응형 디자인 */
-@media (max-width: 768px) {
+/* 반응형 디자인 - Mobile First */
+
+/* 테블릿 (768px ~ 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
   .confirmationModal {
-    height: 172px;
+    max-width: 353px !important;
+    width: 353px !important;
+    height: 182px !important;
+    min-height: 182px !important;
   }
   
   .content {
-    padding: var(--confirm-spacing-md) 0;
-    gap: var(--confirm-spacing-md);
-  }
-  
-  .message {
-    line-height: 2.6rem;
-    height: 2.6rem;
-  }
-  
-  .cancelButton,
-  .confirmButton {
-    min-height: 5rem;
-    height: 5rem;
-  }
-  
-  .iconContainer {
-    width: 4rem;
-    height: 4rem;
+    padding: 2.5rem 1.6rem 2rem;
+    gap: 2.5rem;
+    height: 100%;
+    justify-content: center;
   }
   
   .title {
-    font-size: var(--md-size);
-  }
-  
-  .message {
-    font-size: var(--sm-size);
-  }
-  
-  .actions {
-    flex-direction: column;
-    gap: var(--confirm-spacing-sm);
+    font-size: 2rem;
   }
   
   .cancelButton,
   .confirmButton {
-    width: 100%;
+    min-height: 5.2rem;
+    height: 5.2rem;
+    font-size: 1.5rem;
+  }
+}
+
+/* 데스크탑 (1024px ~) */
+@media (min-width: 1024px) {
+  .confirmationModal {
+    max-width: 353px !important;
+    width: 353px !important;
+    height: 182px !important;
+    min-height: 182px !important;
+  }
+  
+  .content {
+    padding: 2.5rem 1.6rem 2rem;
+    gap: 2.5rem;
+    height: 100%;
+    justify-content: center;
+  }
+  
+  .title {
+    font-size: 2.2rem;
+  }
+  
+  .actions {
+    gap: 2.4rem;
+  }
+  
+  .cancelButton,
+  .confirmButton {
+    min-height: 5.6rem;
+    height: 5.6rem;
+    font-size: 1.6rem;
+    padding: 1.6rem 2.4rem;
   }
 }
 

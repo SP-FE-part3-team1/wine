@@ -4,48 +4,81 @@ import { useState } from 'react';
 import { WineFormModal } from '../../components/Modal/forms/WineFormModal';
 import { ReviewFormModal } from '../../components/Modal/forms/ReviewFormModal';
 import { FilterModal } from '../../components/Modal/forms/FilterModal';
+import { ConfirmationModal } from '../../components/Modal/ConfirmationModal';
 import { TestLayout } from '../../components/TestLayout/TestLayout';
 import Button from '../../components/Button/Button';
 import { FILTER_DEFAULT_VALUES } from '../../components/Modal/manager/modalConfigs';
 
 export default function ModalTestPage() {
-  const [activeModal, setActiveModal] = useState<'wine' | 'review' | 'filter' | null>(null);
+  const [activeModal, setActiveModal] = useState<'wine' | 'review' | 'filter' | 'confirmation' | null>(null);
   const [testResults, setTestResults] = useState<{[key: string]: any}>({});
+  const [lastAction, setLastAction] = useState<string | null>(null);
 
   // Wine Modal handlers
   const handleWineSuccess = (result: any) => {
     console.log('Wine saved:', result);
-    setTestResults(prev => ({ ...prev, wine: result }));
-    alert('✅ 와인 등록 성공! 콘솔을 확인하세요.');
+    setTestResults(prev => ({ ...prev, wine: { ...result, timestamp: new Date().toLocaleString('ko-KR') } }));
+    setLastAction('와인 등록이 성공적으로 완료되었습니다! 🍷');
   };
 
   // Review Modal handlers  
   const handleReviewSuccess = (result: any) => {
     console.log('Review saved:', result);
-    setTestResults(prev => ({ ...prev, review: result }));
-    alert('✅ 리뷰 등록 성공! 콘솔을 확인하세요.');
+    setTestResults(prev => ({ ...prev, review: { ...result, timestamp: new Date().toLocaleString('ko-KR') } }));
+    setLastAction('리뷰 등록이 성공적으로 완료되었습니다! ⭐');
   };
 
   // Filter Modal handlers
   const handleFilterApply = (filterData: any) => {
     console.log('Filter applied:', filterData);
-    setTestResults(prev => ({ ...prev, filter: filterData }));
-    alert('✅ 필터 적용 성공! 콘솔을 확인하세요.');
+    setTestResults(prev => ({ ...prev, filter: { ...filterData, timestamp: new Date().toLocaleString('ko-KR') } }));
+    setLastAction('필터가 성공적으로 적용되었습니다! 🔍');
+  };
+
+  // Confirmation Modal handlers
+  const handleConfirm = () => {
+    console.log('Deletion confirmed!');
+    setTestResults(prev => ({ ...prev, confirmation: { action: 'confirmed', timestamp: new Date().toLocaleString('ko-KR') } }));
+    setLastAction('삭제가 확인되었습니다! 🗑️');
+    setActiveModal(null);
+  };
+
+  const handleCancel = () => {
+    console.log('Deletion cancelled!');
+    setTestResults(prev => ({ ...prev, confirmation: { action: 'cancelled', timestamp: new Date().toLocaleString('ko-KR') } }));
+    setLastAction('삭제가 취소되었습니다! ❌');
   };
 
   const closeModal = () => {
+    // 삭제 모달이 열려있을 때 X나 취소 버튼으로 닫으면 취소로 처리
+    if (activeModal === 'confirmation') {
+      handleCancel();
+    }
     setActiveModal(null);
   };
 
   return (
-    <TestLayout title="🍷 Modal Test Page - Figma 디자인 검증">
+    <>
+      <style jsx>{`
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+            transform: translateY(-1rem);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+      `}</style>
+      <TestLayout title="🍷 Modal Test Page - Figma 디자인 검증">
 
-      <div style={{ 
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-        gap: '1.6rem',
-        marginBottom: '3rem'
-      }}>
+        <div style={{ 
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+          gap: '1.6rem',
+          marginBottom: '3rem'
+        }}>
         <div style={{
           backgroundColor: '#ffffff',
           border: '0.1rem solid #e9ecef',
@@ -118,6 +151,32 @@ export default function ModalTestPage() {
           <Button
             variant="primary"
             onClick={() => setActiveModal('filter')}
+            style={{ width: '100%', padding: '1.2rem 2.4rem' }}
+          >
+            테스트 시작
+          </Button>
+        </div>
+
+        <div style={{
+          backgroundColor: '#ffffff',
+          border: '0.1rem solid #e9ecef',
+          borderRadius: '1.2rem',
+          padding: '2.4rem',
+          textAlign: 'center',
+          boxShadow: '0 0.4rem 0.6rem rgba(0, 0, 0, 0.1)',
+          transition: 'transform 0.2s ease, box-shadow 0.2s ease'
+        }}>
+          <div style={{ fontSize: '4rem', marginBottom: '1.6rem' }}>🗑️</div>
+          <h3 style={{ fontSize: '1.8rem', fontWeight: '600', color: '#212529', marginBottom: '1rem' }}>
+            삭제 확인 모달
+          </h3>
+          <p style={{ fontSize: '1.4rem', color: '#6c757d', marginBottom: '2rem', lineHeight: '1.5' }}>
+            ConfirmationModal<br/>
+            좌우 16px, 상 32px, 하 24px 패딩
+          </p>
+          <Button
+            variant="destructive"
+            onClick={() => setActiveModal('confirmation')}
             style={{ width: '100%', padding: '1.2rem 2.4rem' }}
           >
             테스트 시작
@@ -227,31 +286,220 @@ export default function ModalTestPage() {
               <li>✅ Small 모달 크기</li>
             </ul>
           </div>
+
+          <div style={{
+            padding: '2rem',
+            backgroundColor: '#f8f9fa',
+            borderRadius: '0.8rem',
+            border: '0.1rem solid #e9ecef'
+          }}>
+            <h3 style={{ 
+              fontSize: '1.6rem', 
+              fontWeight: '600', 
+              color: '#495057', 
+              marginBottom: '1.4rem',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.8rem'
+            }}>
+              🗑️ 삭제 확인 모달
+            </h3>
+            <ul style={{ fontSize: '1.3rem', lineHeight: '1.6', color: '#6c757d', paddingLeft: '1.6rem', margin: 0 }}>
+              <li style={{ marginBottom: '0.8rem' }}>✅ 경고 아이콘 (빨간색 배경)</li>
+              <li style={{ marginBottom: '0.8rem' }}>✅ 삭제 확인 제목 텍스트</li>
+              <li style={{ marginBottom: '0.8rem' }}>✅ 삭제 설명 메시지</li>
+              <li style={{ marginBottom: '0.8rem' }}>✅ 취소/삭제 버튼 (1:1 비율)</li>
+              <li style={{ marginBottom: '0.8rem' }}>✅ 전용 패딩 (좌우 16px, 상 32px, 하 24px)</li>
+              <li>✅ ConfirmationModal 크기</li>
+            </ul>
+          </div>
         </div>
       </div>
 
+      {/* 최근 작업 결과 */}
+      {lastAction && (
+        <div style={{
+          backgroundColor: '#d4edda',
+          border: '0.1rem solid #c3e6cb',
+          borderRadius: '1.2rem',
+          padding: '2rem',
+          marginBottom: '2rem',
+          textAlign: 'center',
+          animation: 'fadeIn 0.5s ease-out'
+        }}>
+          <div style={{
+            fontSize: '2.4rem',
+            marginBottom: '1rem'
+          }}>
+            ✅
+          </div>
+          <h3 style={{ 
+            fontSize: '1.8rem', 
+            fontWeight: '600', 
+            color: '#155724', 
+            marginBottom: '0.8rem' 
+          }}>
+            테스트 완료!
+          </h3>
+          <p style={{ 
+            fontSize: '1.5rem', 
+            color: '#155724', 
+            margin: 0,
+            lineHeight: '1.5'
+          }}>
+            {lastAction}
+          </p>
+          <Button
+            variant="secondary"
+            onClick={() => setLastAction(null)}
+            style={{ 
+              marginTop: '1.2rem',
+              padding: '0.8rem 1.6rem',
+              fontSize: '1.3rem'
+            }}
+          >
+            확인
+          </Button>
+        </div>
+      )}
+
       {Object.keys(testResults).length > 0 && (
         <div style={{
-          backgroundColor: '#d1ecf1',
-          border: '0.1rem solid #b6d7ff',
-          borderRadius: '0.8rem',
-          padding: '2rem',
-          marginBottom: '2rem'
+          backgroundColor: '#ffffff',
+          border: '0.1rem solid #e9ecef',
+          borderRadius: '1.2rem',
+          padding: '2.4rem',
+          marginBottom: '2rem',
+          boxShadow: '0 0.4rem 0.6rem rgba(0, 0, 0, 0.1)'
         }}>
-          <h3 style={{ fontSize: '1.6rem', fontWeight: '600', color: '#0c5460', marginBottom: '1.2rem' }}>
-            🧪 테스트 결과
-          </h3>
-          <pre style={{ 
-            fontSize: '1.2rem', 
-            color: '#0c5460', 
-            backgroundColor: '#ffffff', 
-            padding: '1.2rem', 
-            borderRadius: '0.4rem',
-            overflow: 'auto',
-            border: '0.1rem solid #b6d7ff'
+          <h3 style={{ 
+            fontSize: '2rem', 
+            fontWeight: '700', 
+            color: '#212529', 
+            marginBottom: '2rem',
+            borderBottom: '0.2rem solid #6C5CE7',
+            paddingBottom: '1rem',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.8rem'
           }}>
-            {JSON.stringify(testResults, null, 2)}
-          </pre>
+            🧪 테스트 결과 히스토리
+          </h3>
+
+          <div style={{
+            display: 'grid',
+            gap: '1.6rem'
+          }}>
+            {Object.entries(testResults).map(([key, value]) => (
+              <div key={key} style={{
+                backgroundColor: '#f8f9fa',
+                border: '0.1rem solid #e9ecef',
+                borderRadius: '0.8rem',
+                padding: '1.6rem'
+              }}>
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  marginBottom: '1.2rem'
+                }}>
+                  <h4 style={{
+                    fontSize: '1.6rem',
+                    fontWeight: '600',
+                    color: '#495057',
+                    margin: 0,
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.8rem'
+                  }}>
+                    {key === 'wine' && '🍷 와인 등록'}
+                    {key === 'review' && '⭐ 리뷰 등록'}
+                    {key === 'filter' && '🔍 필터 적용'}
+                    {key === 'confirmation' && '🗑️ 삭제 확인'}
+                  </h4>
+                  <span style={{
+                    fontSize: '1.2rem',
+                    color: '#6c757d',
+                    backgroundColor: '#ffffff',
+                    padding: '0.4rem 0.8rem',
+                    borderRadius: '1rem',
+                    border: '0.1rem solid #dee2e6'
+                  }}>
+                    {value.timestamp}
+                  </span>
+                </div>
+                
+                {key === 'confirmation' ? (
+                  <div style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.8rem',
+                    padding: '1rem',
+                    backgroundColor: value.action === 'confirmed' ? '#d4edda' : '#f8d7da',
+                    borderRadius: '0.6rem',
+                    border: `0.1rem solid ${value.action === 'confirmed' ? '#c3e6cb' : '#f5c6cb'}`
+                  }}>
+                    <span style={{ fontSize: '1.8rem' }}>
+                      {value.action === 'confirmed' ? '✅' : '❌'}
+                    </span>
+                    <span style={{
+                      fontSize: '1.4rem',
+                      fontWeight: '500',
+                      color: value.action === 'confirmed' ? '#155724' : '#721c24'
+                    }}>
+                      {value.action === 'confirmed' ? '삭제 확인됨' : '삭제 취소됨'}
+                    </span>
+                  </div>
+                ) : (
+                  <div style={{
+                    backgroundColor: '#ffffff',
+                    border: '0.1rem solid #dee2e6',
+                    borderRadius: '0.6rem',
+                    padding: '1.2rem',
+                    fontSize: '1.3rem',
+                    color: '#495057'
+                  }}>
+                    <details>
+                      <summary style={{ 
+                        cursor: 'pointer', 
+                        fontWeight: '500',
+                        marginBottom: '0.8rem'
+                      }}>
+                        데이터 상세보기
+                      </summary>
+                      <pre style={{ 
+                        fontSize: '1.1rem',
+                        color: '#6c757d',
+                        margin: 0,
+                        whiteSpace: 'pre-wrap',
+                        wordBreak: 'break-all'
+                      }}>
+                        {JSON.stringify(value, null, 2)}
+                      </pre>
+                    </details>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+
+          <div style={{
+            textAlign: 'center',
+            marginTop: '2rem',
+            paddingTop: '2rem',
+            borderTop: '0.1rem solid #dee2e6'
+          }}>
+            <Button
+              variant="secondary"
+              onClick={() => setTestResults({})}
+              style={{ 
+                padding: '0.8rem 1.6rem',
+                fontSize: '1.3rem'
+              }}
+            >
+              히스토리 지우기
+            </Button>
+          </div>
         </div>
       )}
 
@@ -299,6 +547,20 @@ export default function ModalTestPage() {
           onApply={handleFilterApply}
         />
       )}
-    </TestLayout>
+
+      {/* Confirmation Modal */}
+      {activeModal === 'confirmation' && (
+        <ConfirmationModal
+          isOpen={true}
+          onClose={closeModal}
+          onConfirm={handleConfirm}
+          title="정말 삭제하시겠습니까?"
+          confirmText="삭제하기"
+          cancelText="취소"
+          variant="destructive"
+        />
+      )}
+      </TestLayout>
+    </>
   );
 }

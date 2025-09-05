@@ -200,50 +200,74 @@
   cursor: not-allowed;
 }
 
-/* 모바일 반응형 - 리뷰등록.png 모바일 디자인 기준 */
-@media (max-width: 768px) {
+/* 반응형 디자인 - Mobile First */
+
+/* 테블릿 (768px ~ 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
   .modalContent {
-    gap: 2rem;
+    gap: 2.8rem;
+    padding: 2.4rem;
   }
   
   .wineHeader {
-    margin-bottom: 1rem;
+    margin-bottom: 1.6rem;
   }
   
   .reviewTextarea {
-    min-height: 10rem;
+    min-height: 14rem;
+    font-size: 1.5rem;
   }
   
   .tasteSliders {
-    gap: 2rem;
+    gap: 2.8rem;
   }
   
   .sectionTitle {
+    font-size: 1.5rem;
+  }
+  
+  .sliderLabel {
     font-size: 1.3rem;
   }
 }
 
-/* 더 작은 화면 (375px 기준) */
-@media (max-width: 375px) {
+/* 데스크탑 (1024px ~) */
+@media (min-width: 1024px) {
   .modalContent {
-    gap: 1.6rem;
+    gap: 3.2rem;
+    padding: 3.2rem;
   }
   
   .wineHeader {
-    gap: 1rem;
+    margin-bottom: 2rem;
   }
   
   .wineIcon {
-    width: 4rem;
-    height: 4rem;
+    width: 5.6rem;
+    height: 5.6rem;
   }
   
   .reviewTextarea {
-    min-height: 8rem;
+    min-height: 16rem;
+    font-size: 1.6rem;
+    padding: 1.6rem;
   }
   
   .tasteSliders {
-    gap: 1.6rem;
+    gap: 3.2rem;
+  }
+  
+  .sectionTitle {
+    font-size: 1.6rem;
+  }
+  
+  .sliderLabel {
+    font-size: 1.4rem;
+  }
+  
+  .submitButton {
+    height: 5.2rem !important;
+    font-size: 1.5rem !important;
   }
 }
 

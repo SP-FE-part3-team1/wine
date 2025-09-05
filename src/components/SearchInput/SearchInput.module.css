@@ -138,47 +138,65 @@
   outline-offset: 0.1rem;
 }
 
-/* 반응형 디자인 */
-@media (max-width: 768px) {
-  .container {
-    width: 21rem;
-    height: 3.8rem;
-  }
-  
-  .input {
-    font-size: var(--search-font-sm);
-  }
-  
-  .searchIcon,
-  .clearButton {
-    padding: var(--search-spacing-sm);
-  }
-  
-  .clearButton {
-    width: 2.8rem;
-    height: 2.8rem;
-  }
-}
+/* 반응형 디자인 - Mobile First */
 
-@media (max-width: 375px) {
+/* 테블릿 (768px ~ 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
   .container {
-    width: 21rem;
-    height: 3.8rem;
+    width: 32rem;
+    height: 5.2rem;
   }
   
   .input {
-    font-size: var(--sm-size);
-    padding: var(--search-spacing-sm);
+    font-size: 1.5rem;
+    padding: 1.2rem 1rem;
   }
   
   .searchIcon {
-    padding: var(--search-spacing-sm);
+    padding: 1.2rem;
   }
   
   .clearButton {
-    width: 2.4rem;
-    height: 2.4rem;
-    margin: var(--search-spacing-xs);
+    width: 3.6rem;
+    height: 3.6rem;
+    margin: 0.8rem;
+  }
+  
+  .container.focused {
+    box-shadow: 0 0 0 0.4rem rgba(106, 67, 219, 0.1), var(--search-shadow-sm);
+  }
+}
+
+/* 데스크탑 (1024px ~) */
+@media (min-width: 1024px) {
+  .container {
+    width: 44rem;
+    height: 5.6rem;
+  }
+  
+  .input {
+    font-size: 1.6rem;
+    padding: 1.6rem 1.2rem;
+  }
+  
+  .searchIcon {
+    padding: 1.6rem;
+  }
+  
+  .clearButton {
+    width: 4rem;
+    height: 4rem;
+    margin: 1rem;
+  }
+  
+  .container.focused {
+    box-shadow: 0 0 0 0.4rem rgba(106, 67, 219, 0.12), var(--search-shadow-sm);
+  }
+  
+  .searchIcon:focus-visible,
+  .clearButton:focus-visible {
+    outline-width: 0.3rem;
+    outline-offset: 0.3rem;
   }
 }
 

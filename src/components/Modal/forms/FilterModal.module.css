@@ -128,41 +128,84 @@
   cursor: not-allowed;
 }
 
-/* 모바일 반응형 - sm.png 모바일 디자인 기준 */
-@media (max-width: 768px) {
+/* 반응형 디자인 - Mobile First */
+
+/* 테블릿 (768px ~ 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
   .modalContent {
-    gap: 2rem;
+    gap: 2.8rem;
+    padding: 2.4rem;
   }
   
   .section {
-    gap: 1.4rem;
+    gap: 1.8rem;
+  }
+  
+  .sectionTitle {
+    font-size: 1.5rem;
+  }
+  
+  .priceLabels {
+    font-size: 1.5rem;
   }
   
   .buttonGroup {
-    flex-direction: column;
-    gap: 0.8rem;
-    margin-top: 2rem;
+    gap: 1.6rem;
+    margin-top: 2.8rem;
   }
   
   .resetButton,
   .applyButton {
-    width: 100% !important;
-    flex: none;
+    height: 5rem !important;
+    font-size: 1.5rem !important;
   }
 }
 
-/* 더 작은 화면 (375px 기준) */
-@media (max-width: 375px) {
+/* 데스크탑 (1024px ~) */
+@media (min-width: 1024px) {
   .modalContent {
-    gap: 1.6rem;
+    gap: 3.2rem;
+    padding: 3.2rem;
   }
   
   .section {
-    gap: 1.2rem;
+    gap: 2rem;
   }
   
   .sectionTitle {
-    font-size: 1.3rem;
+    font-size: 1.6rem;
+  }
+  
+  .priceLabels {
+    font-size: 1.6rem;
+  }
+  
+  .slider {
+    height: 1rem;
+  }
+  
+  .slider::-webkit-slider-thumb {
+    width: 2.8rem;
+    height: 2.8rem;
+    border: 0.4rem solid #6C5CE7;
+  }
+  
+  .slider::-moz-range-thumb {
+    width: 2.8rem;
+    height: 2.8rem;
+    border: 0.4rem solid #6C5CE7;
+  }
+  
+  .buttonGroup {
+    gap: 2rem;
+    margin-top: 3.2rem;
+  }
+  
+  .resetButton,
+  .applyButton {
+    height: 5.2rem !important;
+    font-size: 1.6rem !important;
+    padding: 1.6rem 3.2rem !important;
   }
 }
 
