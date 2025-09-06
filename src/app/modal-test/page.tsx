@@ -8,28 +8,29 @@ import { ConfirmationModal } from '../../components/Modal/ConfirmationModal';
 import { TestLayout } from '../../components/TestLayout/TestLayout';
 import Button from '../../components/Button/Button';
 import { FILTER_DEFAULT_VALUES } from '../../components/Modal/manager/modalConfigs';
+import { FilterState } from '../../types/component-types';
 
 export default function ModalTestPage() {
   const [activeModal, setActiveModal] = useState<'wine' | 'review' | 'filter' | 'confirmation' | null>(null);
-  const [testResults, setTestResults] = useState<{[key: string]: any}>({});
+  const [testResults, setTestResults] = useState<{[key: string]: Record<string, unknown> & { timestamp: string }}>({});
   const [lastAction, setLastAction] = useState<string | null>(null);
 
   // Wine Modal handlers
-  const handleWineSuccess = (result: any) => {
+  const handleWineSuccess = (result: Record<string, unknown>) => {
     console.log('Wine saved:', result);
     setTestResults(prev => ({ ...prev, wine: { ...result, timestamp: new Date().toLocaleString('ko-KR') } }));
     setLastAction('와인 등록이 성공적으로 완료되었습니다! 🍷');
   };
 
   // Review Modal handlers  
-  const handleReviewSuccess = (result: any) => {
+  const handleReviewSuccess = (result: Record<string, unknown>) => {
     console.log('Review saved:', result);
     setTestResults(prev => ({ ...prev, review: { ...result, timestamp: new Date().toLocaleString('ko-KR') } }));
     setLastAction('리뷰 등록이 성공적으로 완료되었습니다! ⭐');
   };
 
   // Filter Modal handlers
-  const handleFilterApply = (filterData: any) => {
+  const handleFilterApply = (filterData: FilterState) => {
     console.log('Filter applied:', filterData);
     setTestResults(prev => ({ ...prev, filter: { ...filterData, timestamp: new Date().toLocaleString('ko-KR') } }));
     setLastAction('필터가 성공적으로 적용되었습니다! 🔍');
@@ -175,7 +176,7 @@ export default function ModalTestPage() {
             좌우 16px, 상 32px, 하 24px 패딩
           </p>
           <Button
-            variant="destructive"
+            variant="secondary"
             onClick={() => setActiveModal('confirmation')}
             style={{ width: '100%', padding: '1.2rem 2.4rem' }}
           >
