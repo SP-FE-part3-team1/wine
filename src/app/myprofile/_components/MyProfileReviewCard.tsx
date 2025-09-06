@@ -1,11 +1,12 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Tag from "@/components/Tag/Tag";
 import styles from "./MyProfileReviewCard.module.css";
 import Button from "@/components/Button/Button";
 import font from "@/app/fonts.module.css";
+import DropdownMenu from "@/components/DropdownMenu/DropdownMenu";
+import { DropdownMenuItem } from "@/components/DropdownMenu/types";
 
 export type Review = {
   id: string;
@@ -21,28 +22,16 @@ type Props = {
 };
 
 function MyProfileReviewCard({ review, onMenuSelect }: Props) {
-  const [open, setOpen] = useState(false);
-  const rootRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const onDown = (e: MouseEvent) => {
-      if (!rootRef.current?.contains(e.target as Node)) setOpen(false);
-    };
-    if (open) document.addEventListener("mousedown", onDown);
-    return () => document.removeEventListener("mousedown", onDown);
-  }, [open]);
-
-  const handleSelect = (action: "edit" | "delete") => {
-    onMenuSelect?.(action, review.id);
-    setOpen(false);
-  };
+  const menuItems: DropdownMenuItem[] = [
+    { label: "수정하기", onClick: () => onMenuSelect?.("edit", review.id) },
+    { label: "삭제하기", onClick: () => onMenuSelect?.("delete", review.id) },
+  ];
 
   return (
-    <div ref={rootRef} className={styles.reviewCard}>
+    <div className={styles.reviewCard}>
       <div className={styles.header}>
         <div className={styles.left}>
           <Tag
-            size="S"
             icon={
               <svg
                 width="1.6rem"
@@ -62,39 +51,21 @@ function MyProfileReviewCard({ review, onMenuSelect }: Props) {
           </p>
         </div>
         <div className={styles.right}>
-          <Button
-            variant="icon"
-            ariaLabel="Kebab menu"
-            radius={16}
-            style={{ width: "2.6rem", height: "2.6rem" }}
-            onClick={() => setOpen((o) => !o)}
-          >
-            <Image
-              src="/assets/images/icon/menu.svg"
-              alt=""
-              width={26}
-              height={26}
-            />
-          </Button>
-
-          {open && (
-            <div className={styles.menu} role="menu">
-              <button
-                className={styles.menuItem}
-                role="menuitem"
-                onClick={() => handleSelect("edit")}
-              >
-                수정하기
-              </button>
-              <button
-                className={styles.menuItem}
-                role="menuitem"
-                onClick={() => handleSelect("delete")}
-              >
-                삭제하기
-              </button>
-            </div>
-          )}
+          <DropdownMenu items={menuItems} size="S">
+            <Button
+              variant="icon"
+              ariaLabel="Kebab menu"
+              radius={16}
+              style={{ width: "2.6rem", height: "2.6rem" }}
+            >
+              <Image
+                src="/assets/images/icon/menu.svg"
+                alt=""
+                width={26}
+                height={26}
+              />
+            </Button>
+          </DropdownMenu>
         </div>
       </div>
       <div className={styles.review}>

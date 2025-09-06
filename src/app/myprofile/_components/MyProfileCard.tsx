@@ -22,7 +22,7 @@ type Props = {
 function MyProfileCard({ user }: Props) {
   const [name, setName] = useState("");
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
   };
 

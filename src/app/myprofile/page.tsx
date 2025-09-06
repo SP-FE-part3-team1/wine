@@ -63,8 +63,8 @@ export default function MyProfilePage() {
               ? mockReviews.map((review) => (
                   <MyProfileReviewCard key={review.id} review={review} />
                 ))
-              : mockWines.map(({ id, ...props }) => (
-                  <MyWineCard key={id} {...props} />
+              : mockWines.map((mywine) => (
+                  <MyWineCard key={mywine.id} mywine={mywine} />
                 ))}
           </div>
         </section>
