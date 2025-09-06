@@ -44,7 +44,7 @@
 }
 .section {
   display: grid;
-  gap: 1.6rem;
+  gap: 3rem;
 }
 
 /* 탭 헤더 */

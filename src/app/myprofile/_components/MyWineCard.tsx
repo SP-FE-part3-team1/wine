@@ -39,7 +39,7 @@ function MyWineCard({ mywine, onMenuSelect }: Props) {
             src={mywine.imageSrc}
             alt={mywine.title}
             width={52}
-            height={120}
+            height={100}
             className={styles.wineImg}
             priority={false}
           />
@@ -48,7 +48,7 @@ function MyWineCard({ mywine, onMenuSelect }: Props) {
         <div className={styles.body}>
           <div className={styles.wine}>
             <div>
-              <div className={`${styles.title} ${font["text-3xl-semibold"]}`}>
+              <div className={`${styles.title} ${font["text-2xl-semibold"]}`}>
                 {mywine.title}
               </div>
               <div className={`${styles.region} ${font["text-lg-regular"]}`}>
