@@ -41,6 +41,10 @@
   font-size: var(--lg-size);
   font-weight: var(--bold);
   line-height: var(--lg-li-he);
+  border: none;
+  border-radius: var(--middle);
+  background-color: var(--primary-purple-100);
+  color: var(--white);
 }
 
 .move_login_container {
@@ -102,6 +106,7 @@
     font-size: var(--md-size);
     font-weight: var(--bold);
     line-height: var(--md-li-he);
+    border-radius: var(--small);
   }
 
   .move_login_container > span:first-child,
