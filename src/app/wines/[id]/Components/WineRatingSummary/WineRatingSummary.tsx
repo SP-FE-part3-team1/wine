@@ -26,7 +26,7 @@ function WineRatingSummary({
         <div className={styles.starAndCountWrapper}>
         <StarRating 
         value={avgRating} onChange={() => {}} readOnly={true} size='small' />
-        <div className={styles.reviewCount}>{reviewCount}개의 후기</div>
+        <div className={styles.reviewCount}>{reviewCount.toLocaleString()}개의 후기</div>
         </div>
       </div>
 
