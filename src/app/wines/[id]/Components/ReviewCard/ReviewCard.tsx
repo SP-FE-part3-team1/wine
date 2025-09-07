@@ -14,6 +14,8 @@ import RangeSlider from '../../../../../components/RangeSlider/RangeSlider';
 import StarIcon from '../StarIcon';
 import DropdownMenu from '../../../../../components/DropdownMenu/DropdownMenu';
 
+import { formatTimeAgo } from '@/utils/formatTime';
+
 
 // Aroma enum 타입에 맞춰 모든 아로마 키와 한글 이름을 매핑
 const AROMA_MAP: { [key: string]: string } = {
@@ -39,7 +41,7 @@ const AROMA_MAP: { [key: string]: string } = {
 };
 
 
-function ReviewCard({ review, onLikeClick, onMoreClick }: ReviewCardProps) {
+function ReviewCard({ review, onLikeClick, onMoreClick, onDelete }: ReviewCardProps) {
   const {
     id,
     rating,
@@ -80,8 +82,8 @@ function ReviewCard({ review, onLikeClick, onMoreClick }: ReviewCardProps) {
     {
       label: '삭제하기',
       onClick: () => {
+        onDelete(id);
         console.log(`리뷰 ${id} 삭제`);
-        // @TODO: 삭제 확인 모달을 띄우는 로직 추가.
         setIsDropdownOpen(false);
       },
     },
@@ -95,7 +97,7 @@ function ReviewCard({ review, onLikeClick, onMoreClick }: ReviewCardProps) {
           <Profile src={user.image || '/assets/images/profile/profile.png'} alt={`${user.nickname}님의 프로필`} size="sm" />
           <div className={styles.userMeta}>
             <span className={styles.nickname}>{user.nickname}</span>
-            <span className={styles.timeAgo}>{createdAt}</span>
+            <span className={styles.timeAgo}>{formatTimeAgo(createdAt)}</span>
           </div>
         </div>
         <div className={styles.actions}>
