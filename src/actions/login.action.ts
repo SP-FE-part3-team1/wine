@@ -57,10 +57,9 @@ export async function loginAction(
 
   try {
     if (email && password) {
-      const response = await loginUser({ email, password });
-      const responseData = await response.json();
+      const responseData = await loginUser({ email, password });
 
-      if (!response.ok) {
+      if (!responseData) {
         throw new Error(responseData.message || "로그인실패");
       }
       const { accessToken, refreshToken } = responseData;

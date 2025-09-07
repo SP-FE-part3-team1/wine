@@ -1,4 +1,3 @@
-"use client";
 import Button from "@/components/Button/Button";
 import style from "./page.module.css";
 import Link from "next/link";
@@ -16,13 +15,6 @@ const Home = () => {
         <Link href={"/wines"}>
           <Button className={style.btn}>와인 보러가기</Button>
         </Link>
-        {/* <button
-          onClick={() => {
-            getUser(getLocalStorage().accessToken);
-          }}
-        >
-          클릭
-        </button> */}
       </div>
     </div>
   );

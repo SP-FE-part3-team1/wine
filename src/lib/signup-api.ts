@@ -4,13 +4,28 @@ export async function registerUser(userData: {
   password: string;
   passwordConfirmation: string;
 }) {
-  const response = await fetch("http://localhost:3000/api/signup", {
-    headers: {
-      "Content-Type": "application/json",
-    },
-    method: "POST",
-    body: JSON.stringify(userData),
-  });
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_SERVER_URL}/auth/signUp`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        method: "POST",
+        body: JSON.stringify(userData),
+      }
+    );
 
-  return response;
+    if (!response.ok) {
+      const errorText = await response.json();
+      console.error(errorText.message);
+      throw new Error(errorText.message || "알 수 없는 오류");
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("데이터 가져오기 중 오류 발생:", error);
+    throw error;
+  }
 }

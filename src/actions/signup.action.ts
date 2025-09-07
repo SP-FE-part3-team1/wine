@@ -86,18 +86,17 @@ export async function signupAction(
 
   try {
     if (email && nickname && password && passwordConfirmation) {
-      const response = await registerUser({
+      const responseData = await registerUser({
         email,
         nickname,
         password,
         passwordConfirmation,
       });
 
-      const responseData = await response.json();
-
-      if (!response.ok) {
+      if (!responseData) {
         throw new Error(responseData.message || "회원가입실패");
       }
+      console.log(responseData);
 
       const { accessToken, refreshToken } = responseData;
       (await cookies()).set("accessToken", accessToken, {
