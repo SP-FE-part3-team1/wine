@@ -87,7 +87,7 @@ export const REVIEW_FORM_CONFIG = {
  */
 export const FILTER_DEFAULT_VALUES: FilterState = {
   wineTypes: [],
-  priceRange: [0, 1000000],
+  priceRange: [0, 400000],
   ratingRange: [0, 5],
   selectedRating: 'all'
 };

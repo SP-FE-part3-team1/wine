@@ -1,9 +1,13 @@
 /* FilterModal - sm.png Figma 디자인 정확히 구현 */
+.filterModal {
+  width: 375px !important;
+  max-width: 375px !important;
+}
 
 .modalContent {
   display: flex;
   flex-direction: column;
-  gap: 2.4rem;
+  gap: 6.4rem;
   padding: 0;
   font-size: 1.4rem;
 }
@@ -32,181 +36,160 @@
   gap: 1.6rem;
 }
 
-.priceLabels {
-  display: flex;
-  justify-content: space-between;
-  font-size: 1.4rem;
-  color: #6C5CE7;
-  font-weight: 600;
-}
-
 .priceSlider {
   width: 100%;
   margin: 0;
 }
 
-.slider {
-  width: 100%;
+/* 듀얼 핸들 슬라이더 컨테이너 */
+.rangeSlider {
+  position: relative;
+  height: 6rem;
+  margin: 0;
+  width: 283px;
+}
+
+/* 슬라이더 트랙 */
+.sliderTrack {
+  position: absolute;
+  top: 50%;
+  left: 1.2rem;
+  width: calc(283px - 2.4rem);
   height: 0.8rem;
+  background: #e9ecef;
   border-radius: 0.4rem;
-  background: #E9ECEF;
+  transform: translateY(-50%);
+}
+
+/* 선택된 범위 (보라색) */
+.sliderRange {
+  position: absolute;
+  height: 100%;
+  background: #6c5ce7;
+  border-radius: 0.4rem;
+  top: 0;
+}
+
+/* Range Input 스타일 */
+.rangeInput {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 283px;
+  height: 0.8rem;
+  background: transparent;
   outline: none;
   -webkit-appearance: none;
   appearance: none;
-  background: linear-gradient(to right, #6C5CE7 0%, #6C5CE7 70%, #E9ECEF 70%, #E9ECEF 100%);
-  cursor: pointer;
+  pointer-events: none;
+  transform: translateY(-50%);
 }
 
-.slider::-webkit-slider-thumb {
+.rangeInput::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
   width: 2.4rem;
   height: 2.4rem;
   border-radius: 50%;
-  background: #FFFFFF;
-  border: 0.3rem solid #6C5CE7;
+  background: #ffffff;
+  border: 0.1rem solid #d1d5db;
   cursor: pointer;
-  box-shadow: 0 0.2rem 0.4rem rgba(0, 0, 0, 0.1);
+  pointer-events: all;
+  position: relative;
+  z-index: 3;
 }
 
-.slider::-moz-range-thumb {
+.rangeInput::-moz-range-thumb {
   width: 2.4rem;
   height: 2.4rem;
   border-radius: 50%;
-  background: #FFFFFF;
-  border: 0.3rem solid #6C5CE7;
+  background: #ffffff;
+  border: 0.1rem solid #d1d5db;
   cursor: pointer;
-  box-shadow: 0 0.2rem 0.4rem rgba(0, 0, 0, 0.1);
+  pointer-events: all;
+  -moz-appearance: none;
+}
+
+.rangeInputMax {
+  z-index: 2;
+}
+
+/* 가격 라벨 (핸들 위에 간단히 표시) */
+.priceLabel {
+  position: absolute;
+  top: -1rem;
+  transform: translateX(-50%);
+  color: #6c5ce7;
+  font-size: 1.3rem;
+  font-weight: 600;
+  white-space: nowrap;
+  z-index: 4;
 }
 
 /* 버튼 그룹 - sm.png 정확히 구현 */
 .buttonGroup {
   display: flex;
-  gap: 1.2rem;
-  margin-top: 2.4rem;
+  justify-content: space-between;
+  margin-top: -2.4rem;
+  height: 5.4rem;
 }
 
 .resetButton {
-  flex: 1;
+  width: 9.6rem !important;
   padding: 1.2rem 2.4rem !important;
-  height: 4.8rem !important;
-  background-color: #F8F9FA !important;
-  color: #6C757D !important;
-  border: 0.1rem solid #E9ECEF !important;
-  border-radius: 0.8rem !important;
-  font-size: 1.4rem !important;
-  font-weight: 500 !important;
+  height: 5.4rem !important;
+  background-color: #f8f9fa !important;
+  color: #6c757d !important;
+  border: 0.1rem solid #e9ecef !important;
+  border-radius: 1.2rem !important;
+  font-family: "Pretendard", sans-serif !important;
+  font-size: 1.6rem !important;
+  font-weight: 700 !important;
   cursor: pointer;
   transition: all 0.2s ease;
+  flex: none !important;
 }
 
 .resetButton:hover {
-  background-color: #E9ECEF !important;
-  border-color: #DEE2E6 !important;
+  background-color: #e9ecef !important;
+  border-color: #dee2e6 !important;
 }
 
 .applyButton {
-  flex: 2;
+  width: 22.3rem !important;
   padding: 1.2rem 2.4rem !important;
-  height: 4.8rem !important;
-  background-color: #6C5CE7 !important;
-  color: #FFFFFF !important;
+  height: 5.4rem !important;
+  background-color: #6c5ce7 !important;
+  color: #ffffff !important;
   border: none !important;
-  border-radius: 0.8rem !important;
-  font-size: 1.4rem !important;
-  font-weight: 500 !important;
+  border-radius: 1.2rem !important;
+  font-family: "Pretendard", sans-serif !important;
+  font-size: 1.6rem !important;
+  font-weight: 700 !important;
   cursor: pointer;
   transition: all 0.2s ease;
+  flex: none !important;
 }
 
 .applyButton:hover {
-  background-color: #5A4FCF !important;
+  background-color: #5a4fcf !important;
 }
 
 .applyButton:disabled {
-  background-color: #ADB5BD !important;
+  background-color: #adb5bd !important;
   cursor: not-allowed;
 }
 
 /* 반응형 디자인 - Mobile First */
 
-/* 테블릿 (768px ~ 1023px) */
+/* 테블릿 (768px ~ 1023px) - 모바일과 동일한 크기 사용 */
 @media (min-width: 768px) and (max-width: 1023px) {
-  .modalContent {
-    gap: 2.8rem;
-    padding: 2.4rem;
-  }
-  
-  .section {
-    gap: 1.8rem;
-  }
-  
-  .sectionTitle {
-    font-size: 1.5rem;
-  }
-  
-  .priceLabels {
-    font-size: 1.5rem;
-  }
-  
-  .buttonGroup {
-    gap: 1.6rem;
-    margin-top: 2.8rem;
-  }
-  
-  .resetButton,
-  .applyButton {
-    height: 5rem !important;
-    font-size: 1.5rem !important;
-  }
+  /* 모바일 스타일을 그대로 사용하므로 별도 스타일 없음 */
 }
 
-/* 데스크탑 (1024px ~) */
+/* 데스크탑 (1024px ~) - 모바일과 동일한 크기 사용 */
 @media (min-width: 1024px) {
-  .modalContent {
-    gap: 3.2rem;
-    padding: 3.2rem;
-  }
-  
-  .section {
-    gap: 2rem;
-  }
-  
-  .sectionTitle {
-    font-size: 1.6rem;
-  }
-  
-  .priceLabels {
-    font-size: 1.6rem;
-  }
-  
-  .slider {
-    height: 1rem;
-  }
-  
-  .slider::-webkit-slider-thumb {
-    width: 2.8rem;
-    height: 2.8rem;
-    border: 0.4rem solid #6C5CE7;
-  }
-  
-  .slider::-moz-range-thumb {
-    width: 2.8rem;
-    height: 2.8rem;
-    border: 0.4rem solid #6C5CE7;
-  }
-  
-  .buttonGroup {
-    gap: 2rem;
-    margin-top: 3.2rem;
-  }
-  
-  .resetButton,
-  .applyButton {
-    height: 5.2rem !important;
-    font-size: 1.6rem !important;
-    padding: 1.6rem 3.2rem !important;
-  }
+  /* 모바일 스타일을 그대로 사용하므로 별도 스타일 없음 */
 }
 
 /* Input과 Select 컴포넌트 통합 스타일 */
@@ -220,24 +203,33 @@
   padding: 1.2rem 1.4rem !important;
   height: 4.8rem !important;
   border-radius: 0.8rem !important;
-  border: 0.1rem solid #E9ECEF !important;
+  border: 0.1rem solid #e9ecef !important;
 }
 
 .modalContent :global(.customInput input:focus) {
-  border-color: #6C5CE7 !important;
+  border-color: #6c5ce7 !important;
   box-shadow: 0 0 0 0.2rem rgba(108, 92, 231, 0.1) !important;
 }
 
 /* 접근성 */
 .slider:focus-visible {
-  outline: 0.2rem solid #6C5CE7;
+  outline: 0.2rem solid #6c5ce7;
   outline-offset: 0.2rem;
 }
 
 .resetButton:focus-visible,
 .applyButton:focus-visible {
-  outline: 0.2rem solid #6C5CE7;
+  outline: 0.2rem solid #6c5ce7;
   outline-offset: 0.2rem;
+}
+
+/* 와인 타입 섹션 너비 조정 */
+.wineTypeSection {
+  width: 269px;
+}
+
+.wineTypeChipContainer {
+  justify-content: space-between !important;
 }
 
 /* 애니메이션 */

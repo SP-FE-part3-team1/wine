@@ -31,7 +31,7 @@
   /* Container Styles */
   display: flex;
   flex-direction: column;
-  gap: var(--radio-spacing-sm);
+  gap: 1.5rem;
   width: 100%;
   max-width: 300px;
 }
@@ -46,18 +46,17 @@
 .option {
   display: flex;
   align-items: center;
-  padding: var(--radio-spacing-md);
-  background-color: var(--radio-white);
-  border: 2px solid var(--radio-gray-medium);
-  border-radius: var(--radio-radius);
+  padding: 0;
+  height: 2.6rem;
+  background-color: transparent;
+  border: none;
   cursor: pointer;
   transition: var(--radio-transition);
   position: relative;
 }
 
 .option:hover:not(.container.disabled .option) {
-  border-color: var(--radio-primary);
-  background-color: var(--radio-primary-light);
+  /* Remove background color changes on hover */
 }
 
 .option:focus-within {
@@ -66,8 +65,7 @@
 
 /* 선택된 상태 */
 .option.selected {
-  border-color: var(--radio-primary);
-  background-color: var(--radio-primary-light);
+  background-color: transparent;
   color: var(--radio-primary);
   font-weight: var(--radio-font-weight-bold);
 }
@@ -90,7 +88,7 @@
   color: var(--radio-gray-darker);
   width: 100%;
   position: relative;
-  padding-left: 3.2rem;
+  padding-left: 2.4rem;
 }
 
 .radioLabel::before {
@@ -99,9 +97,9 @@
   left: 0;
   top: 50%;
   transform: translateY(-50%);
-  width: 2rem;
-  height: 2rem;
-  border: 0.2rem solid var(--radio-gray-button);
+  width: 1.6rem;
+  height: 1.6rem;
+  border: 0.15rem solid var(--radio-gray-button);
   border-radius: 50%;
   background-color: var(--radio-white);
   transition: var(--radio-transition);
@@ -111,7 +109,7 @@
 .option.selected .radioLabel::before {
   border-color: var(--radio-primary);
   background-color: var(--radio-primary);
-  box-shadow: inset 0 0 0 0.3rem var(--radio-white);
+  box-shadow: inset 0 0 0 0.25rem var(--radio-white);
 }
 
 /* 호버 상태 라디오 버튼 */
@@ -131,8 +129,6 @@
 /* 비활성화 상태 */
 .container.disabled .option {
   cursor: not-allowed;
-  border-color: var(--radio-gray-medium);
-  background-color: var(--radio-gray-light);
 }
 
 .container.disabled .radioLabel {
@@ -154,23 +150,22 @@
   }
   
   .option {
-    padding: 1.4rem;
-    border-width: 2.5px;
+    padding: 1rem 0;
   }
   
   .radioLabel {
     font-size: 1.5rem;
-    padding-left: 3.6rem;
+    padding-left: 2.8rem;
   }
   
   .radioLabel::before {
-    width: 2.2rem;
-    height: 2.2rem;
-    border-width: 0.25rem;
+    width: 1.8rem;
+    height: 1.8rem;
+    border-width: 0.18rem;
   }
   
   .option.selected .radioLabel::before {
-    box-shadow: inset 0 0 0 0.35rem var(--radio-white);
+    box-shadow: inset 0 0 0 0.28rem var(--radio-white);
   }
 }
 
@@ -182,37 +177,31 @@
   }
   
   .option {
-    padding: 1.6rem;
-    border-width: 3px;
+    padding: 1.2rem 0;
   }
   
   .radioLabel {
     font-size: 1.6rem;
-    padding-left: 4rem;
+    padding-left: 3.2rem;
   }
   
   .radioLabel::before {
-    width: 2.4rem;
-    height: 2.4rem;
-    border-width: 0.3rem;
+    width: 2rem;
+    height: 2rem;
+    border-width: 0.2rem;
   }
   
   .option.selected .radioLabel::before {
-    box-shadow: inset 0 0 0 0.4rem var(--radio-white);
+    box-shadow: inset 0 0 0 0.32rem var(--radio-white);
   }
   
-  .option:hover:not(.container.disabled .option) {
-    transform: translateY(-0.1rem);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  .option:hover:not(.container.disabled .option) .radioLabel::before {
+    transform: translateY(-50%) scale(1.05);
   }
 }
 
 /* 접근성 및 고대비 모드 */
 @media (prefers-contrast: high) {
-  .option {
-    border-width: 3px;
-  }
-  
   .radioLabel::before {
     border-width: 0.3rem;
   }

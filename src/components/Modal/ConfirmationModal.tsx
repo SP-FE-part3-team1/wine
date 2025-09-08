@@ -26,6 +26,7 @@ export const ConfirmationModal = ({
       onClose={onClose} 
       size="small"
       className={styles.confirmationModal}
+      contentPadding="3.2rem 1.6rem 2.4rem"
     >
       <div className={styles.content}>
         {/* Title */}

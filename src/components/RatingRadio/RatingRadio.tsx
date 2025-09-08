@@ -9,7 +9,8 @@ export const RatingRadio = ({
   onChange,
   options,
   name,
-  disabled = false
+  disabled = false,
+  className = ''
 }: RatingRadioProps) => {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (disabled) return;
@@ -18,7 +19,7 @@ export const RatingRadio = ({
 
   return (
     <div 
-      className={`${styles.container} ${disabled ? styles.disabled : ''}`}
+      className={`${styles.container} ${disabled ? styles.disabled : ''} ${className}`}
       role="radiogroup"
       aria-label="평점 범위 선택"
     >

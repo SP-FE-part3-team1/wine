@@ -1,5 +1,10 @@
 /* WineFormModal - 와인등록.png Figma 디자인 정확히 구현 */
 
+.wineFormModal {
+  width: 37.5rem !important;
+  max-width: 37.5rem !important;
+}
+
 .modalContent {
   display: flex;
   flex-direction: column;
@@ -25,45 +30,45 @@
 
 /* 이미지 업로드 영역 - Figma 디자인 정확히 구현 */
 .imageUpload {
-  width: 12rem;
-  height: 12rem;
-  border: 0.2rem dashed #D1D5DB;
-  border-radius: 0.8rem;
+  width: 14rem;
+  height: 14rem;
+  border: 0.1rem solid #d1d5db;
+  border-radius: 1.6rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #F9FAFB;
+  background-color: #f9fafb;
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
 .imageUpload:hover {
-  border-color: #6C5CE7;
-  background-color: #F5F4FF;
+  border-color: #6c5ce7;
+  background-color: #f5f4ff;
 }
 
 .uploadIcon {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #C4C4C4;
+  color: #c4c4c4;
 }
 
 /* 버튼 그룹 - Figma 디자인 정확히 구현 */
 .buttonGroup {
   display: flex;
   gap: 1.2rem;
-  margin-top: 1.2rem;
+  margin-top: 0.8rem;
 }
 
 .cancelButton {
-  flex: 1;
-  height: 4.8rem;
+  width: 9.6rem;
+  height: 5.4rem;
   padding: 1.2rem 2.4rem;
-  background-color: #F8F9FA;
-  color: #6C757D;
-  border: 0.1rem solid #E9ECEF;
-  border-radius: 0.8rem;
+  background-color: #f8f9fa;
+  color: #6c757d;
+  border: 0.1rem solid #e9ecef;
+  border-radius: 1.6rem;
   font-size: 1.4rem;
   font-weight: 500;
   cursor: pointer;
@@ -71,8 +76,8 @@
 }
 
 .cancelButton:hover {
-  background-color: #E9ECEF;
-  border-color: #DEE2E6;
+  background-color: #e9ecef;
+  border-color: #dee2e6;
 }
 
 .cancelButton:disabled {
@@ -81,13 +86,13 @@
 }
 
 .submitButton {
-  flex: 1;
-  height: 4.8rem;
+  width: 22.3rem;
+  height: 5.4rem;
   padding: 1.2rem 2.4rem;
-  background-color: #6C5CE7;
-  color: #FFFFFF;
+  background-color: #6c5ce7;
+  color: #ffffff;
   border: none;
-  border-radius: 0.8rem;
+  border-radius: 1.6rem;
   font-size: 1.4rem;
   font-weight: 500;
   cursor: pointer;
@@ -95,11 +100,11 @@
 }
 
 .submitButton:hover {
-  background-color: #5A4FCF;
+  background-color: #5a4fcf;
 }
 
 .submitButton:disabled {
-  background-color: #ADB5BD;
+  background-color: #adb5bd;
   cursor: not-allowed;
 }
 
@@ -107,31 +112,41 @@
 
 /* 테블릿 (768px ~ 1023px) */
 @media (min-width: 768px) and (max-width: 1023px) {
+  .wineFormModal {
+    width: 37.5rem !important;
+    max-width: 37.5rem !important;
+  }
+
   .modalContent {
     gap: 2.8rem;
-    padding: 2.4rem;
+    padding: 0;
   }
-  
+
   .formField {
     gap: 1rem;
   }
-  
+
   .fieldLabel {
     font-size: 1.5rem;
   }
-  
+
   .imageUpload {
     width: 14rem;
     height: 14rem;
   }
-  
+
   .buttonGroup {
-    gap: 1.6rem;
-    margin-top: 1.6rem;
+    margin-top: 1.2rem;
   }
-  
-  .cancelButton,
+
+  .cancelButton {
+    width: 9.6rem;
+    height: 5rem;
+    font-size: 1.5rem;
+  }
+
   .submitButton {
+    width: 22.3rem;
     height: 5rem;
     font-size: 1.5rem;
   }
@@ -139,34 +154,46 @@
 
 /* 데스크탑 (1024px ~) */
 @media (min-width: 1024px) {
+  .wineFormModal {
+    width: 46rem !important;
+    max-width: 46rem !important;
+  }
+
   .modalContent {
     gap: 3.2rem;
-    padding: 3.2rem;
+    padding: 0;
   }
-  
+
   .formField {
     gap: 1.2rem;
   }
-  
+
   .fieldLabel {
     font-size: 1.6rem;
   }
-  
+
   .imageUpload {
     width: 16rem;
     height: 16rem;
   }
-  
+
   .buttonGroup {
     gap: 2rem;
-    margin-top: 2rem;
+    margin-top: 0.8rem;
   }
-  
-  .cancelButton,
-  .submitButton {
-    height: 5.2rem;
+
+  .cancelButton {
+    width: 10.8rem;
+    height: 5.4rem;
     font-size: 1.6rem;
-    padding: 1.6rem 3.2rem;
+    padding: 1.6rem 3.6rem;
+  }
+
+  .submitButton {
+    width: 29.4rem;
+    height: 5.4rem;
+    font-size: 1.6rem;
+    padding: 1.6rem 3.6rem;
   }
 }
 
@@ -181,23 +208,23 @@
   padding: 1.2rem 1.4rem !important;
   height: 4.8rem !important;
   border-radius: 0.8rem !important;
-  border: 0.1rem solid #E9ECEF !important;
+  border: 0.1rem solid #e9ecef !important;
 }
 
 .modalContent :global(.customInput input:focus) {
-  border-color: #6C5CE7 !important;
+  border-color: #6c5ce7 !important;
   box-shadow: 0 0 0 0.2rem rgba(108, 92, 231, 0.1) !important;
 }
 
 /* 접근성 */
 .imageUpload:focus-visible {
-  outline: 0.2rem solid #6C5CE7;
+  outline: 0.2rem solid #6c5ce7;
   outline-offset: 0.2rem;
 }
 
 .cancelButton:focus-visible,
 .submitButton:focus-visible {
-  outline: 0.2rem solid #6C5CE7;
+  outline: 0.2rem solid #6c5ce7;
   outline-offset: 0.2rem;
 }
 

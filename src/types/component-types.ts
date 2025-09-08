@@ -17,6 +17,7 @@ export interface ChipProps {
   readonly?: boolean;
   multiple?: boolean;
   ariaLabel?: string;
+  className?: string;
 }
 
 // 와인 타입 칩 컴포넌트 (하위 호환성)
@@ -39,6 +40,7 @@ export interface RatingRadioProps {
   options: RatingOption[];
   name: string;
   disabled?: boolean;
+  className?: string;
 }
 
 // 별점 컴포넌트
@@ -69,6 +71,7 @@ export interface BaseModalProps {
   title?: string;
   size?: 'small' | 'medium' | 'large';
   className?: string;
+  contentPadding?: string;
   children: React.ReactNode;
 }
 

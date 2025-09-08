@@ -40,6 +40,7 @@ export const FilterModal = ({
     }));
   }, []);
 
+
   // 필터 초기화
   const handleReset = () => {
     setFilterData(FILTER_DEFAULT_VALUES);
@@ -58,10 +59,11 @@ export const FilterModal = ({
       title="필터"
       size="small"
       className={styles.filterModal}
+      contentPadding="3.2rem 2.4rem 2.4rem"
     >
       <div className={styles.modalContent}>
         {/* WINE TYPES - 피그마 디자인 그대로 */}
-        <div className={styles.section}>
+        <div className={`${styles.section} ${styles.wineTypeSection}`}>
           <h3 className={styles.sectionTitle}>WINE TYPES</h3>
           <Chip
             options={WINE_TYPE_FILTER_OPTIONS}
@@ -69,27 +71,68 @@ export const FilterModal = ({
             onSelectionChange={(values) => updateFilterData('wineTypes', values)}
             multiple={true}
             ariaLabel="와인 타입 필터"
+            className={styles.wineTypeChipContainer}
           />
         </div>
 
-        {/* PRICE - 피그마 디자인처럼 간단한 슬라이더 */}
+        {/* PRICE - 듀얼 핸들 커스텀 슬라이더 */}
         <div className={styles.section}>
           <h3 className={styles.sectionTitle}>PRICE</h3>
           <div className={styles.priceContainer}>
-            <div className={styles.priceLabels}>
-              <span>W 0</span>
-              <span>W 74,000</span>
-            </div>
             <div className={styles.priceSlider}>
-              <input
-                type="range"
-                min="0"
-                max="74000"
-                step="1000"
-                value={filterData.priceRange[1] || 74000}
-                onChange={(e) => updateFilterData('priceRange', [0, parseInt(e.target.value)] as [number, number])}
-                className={styles.slider}
-              />
+              <div className={styles.rangeSlider}>
+                <div className={styles.sliderTrack}>
+                  <div 
+                    className={styles.sliderRange}
+                    style={{
+                      left: `${((filterData.priceRange[0] || 0) / 400000) * (283 - 24)}px`,
+                      width: `${(((filterData.priceRange[1] || 400000) - (filterData.priceRange[0] || 0)) / 400000) * (283 - 24)}px`
+                    }}
+                  />
+                </div>
+                <input
+                  type="range"
+                  min="0"
+                  max="400000"
+                  step="10000"
+                  value={filterData.priceRange[0] || 0}
+                  onChange={(e) => {
+                    const value = parseInt(e.target.value);
+                    const maxValue = filterData.priceRange[1] || 400000;
+                    updateFilterData('priceRange', [Math.min(value, maxValue), maxValue] as [number, number]);
+                  }}
+                  className={`${styles.rangeInput} ${styles.rangeInputMin}`}
+                />
+                <input
+                  type="range"
+                  min="0"
+                  max="400000"
+                  step="10000"
+                  value={filterData.priceRange[1] || 400000}
+                  onChange={(e) => {
+                    const value = parseInt(e.target.value);
+                    const minValue = filterData.priceRange[0] || 0;
+                    updateFilterData('priceRange', [minValue, Math.max(value, minValue)] as [number, number]);
+                  }}
+                  className={`${styles.rangeInput} ${styles.rangeInputMax}`}
+                />
+                <div 
+                  className={styles.priceLabel}
+                  style={{
+                    left: `${12 + ((filterData.priceRange[0] || 0) / 400000) * (283 - 24)}px`
+                  }}
+                >
+                  ₩{(filterData.priceRange[0] || 0).toLocaleString()}
+                </div>
+                <div 
+                  className={styles.priceLabel}
+                  style={{
+                    left: `${12 + ((filterData.priceRange[1] || 400000) / 400000) * (283 - 24)}px`
+                  }}
+                >
+                  ₩{(filterData.priceRange[1] || 400000).toLocaleString()}
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -102,6 +145,7 @@ export const FilterModal = ({
             value={filterData.selectedRating || 'all'}
             onChange={(value) => updateFilterData('selectedRating', value)}
             name="rating-filter"
+            className="filterModalRating"
           />
         </div>
 

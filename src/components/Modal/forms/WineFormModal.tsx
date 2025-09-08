@@ -81,6 +81,7 @@ export const WineFormModal = ({
       onClose={onClose}
       title={mode === 'edit' ? '와인 수정' : '와인 등록'}
       size="small"
+      className={styles.wineFormModal}
     >
       <div className={styles.modalContent}>
         {/* 와인 이름 */}

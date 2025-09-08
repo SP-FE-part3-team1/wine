@@ -11,6 +11,7 @@ export const Modal = ({
   title, 
   size = 'medium', 
   className = '',
+  contentPadding,
   children 
 }: BaseModalProps) => {
   const modalRef = useRef<HTMLDivElement>(null);
@@ -87,7 +88,10 @@ export const Modal = ({
         )}
 
         {/* Content */}
-        <div className={styles.content}>
+        <div 
+          className={styles.content}
+          style={contentPadding ? { padding: contentPadding } : {}}
+        >
           {children}
         </div>
       </div>

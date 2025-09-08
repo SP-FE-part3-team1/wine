@@ -10,7 +10,8 @@ export const Chip = ({
   disabled = false,
   readonly = false,
   multiple = true,
-  ariaLabel = '옵션 선택'
+  ariaLabel = '옵션 선택',
+  className = ''
 }: ChipProps) => {
   const handleOptionToggle = (value: string) => {
     if (disabled || readonly) return;
@@ -35,7 +36,7 @@ export const Chip = ({
   };
 
   return (
-    <div className={styles.container} role="group" aria-label={ariaLabel}>
+    <div className={`${styles.container} ${className}`} role="group" aria-label={ariaLabel}>
       {options.map((option) => {
         const isSelected = selectedValues.includes(option.value);
         
