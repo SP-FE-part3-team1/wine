@@ -1,12 +1,8 @@
-"use client";
-
 import localFont from "next/font/local";
 import "./globals.css";
 import "./reset.css";
-import style from "./layout.module.css";
-import { usePathname } from "next/navigation";
-import Header from "@/components/Header/Header";
-import Nav from "./Nav";
+import ClientLayout from "./ClientLayout";
+import { hasToken } from "@/actions/hasToken.action";
 
 const pretendard = localFont({
   src: "./fonts/PretendardVariable.woff2",
@@ -15,28 +11,17 @@ const pretendard = localFont({
   variable: "--font-pretendard",
 });
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const pathname = usePathname();
+  const isLoggedIn = await hasToken();
 
   return (
     <html lang="en" className={`${pretendard.variable}`}>
       <body className={`${pretendard.className}`}>
-        <div
-          className={
-            pathname === "/login" || pathname === "/signup" ? "" : style.body
-          }
-        >
-          {!(pathname === "/login" || pathname === "/signup") && (
-            <div className={style.header}>
-              <Header rightBox={<Nav path={pathname} />} />
-            </div>
-          )}
-          {children}
-        </div>
+        <ClientLayout isLoggedIn={isLoggedIn}>{children}</ClientLayout>
         <div className="modal-root"></div>
       </body>
     </html>
