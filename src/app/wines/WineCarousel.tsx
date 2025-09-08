@@ -23,7 +23,7 @@ const WineCarousel = ({ wines, onClickWine }: WineCarouselProps) => {
         modules={[Navigation]}
         spaceBetween={16}
         slidesPerView="auto"
-        centerInsufficientSlides={true}
+        centerInsufficientSlides={false}
         onSwiper={(swiper) => {
           swiperRef.current = swiper;
         }}
