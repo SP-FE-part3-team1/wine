@@ -60,7 +60,7 @@ export default function PageClient({
       {/* 추천 와인 캐러셀 */}
       <WineCarousel
         wines={recommendedWines}
-        onClickWine={(id) => console.log(`와인 ${id} 클릭됨`)}
+        onClickWine={(id) => router.push(`/wines/${id}`)}
       />
 
       {/* 필터/검색/등록 버튼 */}

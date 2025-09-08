@@ -16,13 +16,6 @@ type WineCarouselProps = {
 const WineCarousel = ({ wines, onClickWine }: WineCarouselProps) => {
   const swiperRef = useRef<SwiperType | null>(null);
 
-  const shuffledTopWines = useMemo(() => {
-    const top10 = [...wines]
-      .sort((a, b) => b.avgRating - a.avgRating)
-      .slice(0, 10);
-    return top10.sort(() => Math.random() - 0.5);
-  }, [wines]);
-
   return (
     <div className={styles.carouselWrapper}>
       <h1 className={styles.title}>이번 달 추천 와인</h1>
@@ -39,7 +32,7 @@ const WineCarousel = ({ wines, onClickWine }: WineCarouselProps) => {
           769: { slidesPerView: "auto", spaceBetween: 16 },
         }}
       >
-        {shuffledTopWines.map((wine) => (
+        {wines.map((wine) => (
           <SwiperSlide key={wine.id} style={{ width: "16rem" }}>
             <CardMonthly
               imageUrl={wine.image}
