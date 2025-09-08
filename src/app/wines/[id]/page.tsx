@@ -46,10 +46,10 @@ export default async function WineDetailPage({ params }: {
   }
   
   // wine 객체에서 리뷰 목록을 바로 가져옵니다.
-  // const reviews = wine.reviews || [];
+  const initialReviews = wine.reviews || [];
 
     // 초기 5개 리뷰만 잘라서 전달
-  const initialReviews = wine.reviews ? wine.reviews.slice(0, 5) : [];
+  // const initialReviews = wine.reviews ? wine.reviews.slice(0, 5) : [];
 
   // API 응답 스키마에 맞춰 avgRatings를 ratingDistribution으로 사용합니다.
   const ratingDistribution = wine.avgRatings || { '5': 0, '4': 0, '3': 0, '2': 0, '1': 0 };
@@ -73,12 +73,12 @@ export default async function WineDetailPage({ params }: {
      </div> 
       <div className={styles.RatingSummaryAndReview}>
       <div className={styles.wineRatingSummaryContainer}>
-        <WineRatingSummary
+        {initialReviews.length > 0 && <WineRatingSummary
           avgRating={wine.avgRating}
           reviewCount={wine.reviewCount}
           ratingDistribution={ratingDistribution}
           // onWriteReviewClick={handleWriteReview}
-        />
+        />}
       </div>
       
       <div className={styles.reviewContainer}>
