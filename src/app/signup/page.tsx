@@ -3,24 +3,24 @@
 import Image from "next/image";
 import style from "./page.module.css";
 import CustomInput from "@/components/Input/CustomInput";
-import Button from "@/components/Button/Button";
-import { ChangeEvent, useState } from "react";
 import Link from "next/link";
+import { useLoginOrSignupInputValue } from "@/hooks/login-signup-hook";
+import { useActionState, useEffect } from "react";
+import { signupAction } from "@/actions/signup.action";
+import { useRouter } from "next/navigation";
 
 const Page = () => {
-  const [signup, setSignup] = useState({
-    email: "",
-    nickname: "",
-    password: "",
-    password_check: "",
-  });
+  const [input, handleInputChange] = useLoginOrSignupInputValue();
+  const [state, formAction, isPending] = useActionState(signupAction, null);
+  const router = useRouter();
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setSignup((prevSignup) => ({
-      ...prevSignup,
-      [e.target.name]: e.target.value,
-    }));
-  };
+  useEffect(() => {
+    if (state?.status) {
+      router.replace("/");
+    } else if (state?.fetchErrorText) {
+      alert(state.fetchErrorText);
+    }
+  }, [state, router]);
 
   return (
     <div className={style.body}>
@@ -33,7 +33,7 @@ const Page = () => {
             alt="wine logo"
           />
         </div>
-        <form className={style.form}>
+        <form className={style.form} action={formAction} noValidate={true}>
           <div className={style.form_input_container}>
             <CustomInput
               id="email"
@@ -41,10 +41,10 @@ const Page = () => {
               type="email"
               placeholder="whyne@email.com"
               labelText="이메일"
-              error={false}
-              errorText=""
-              value={signup.email}
-              handleChange={handleChange}
+              error={state?.isError.email}
+              errorText={state?.errors.email}
+              value={input.email}
+              handleChange={handleInputChange}
             />
             <CustomInput
               id="nickname"
@@ -52,10 +52,10 @@ const Page = () => {
               type="text"
               placeholder="whyne"
               labelText="닉네임"
-              error={false}
-              errorText=""
-              value={signup.nickname}
-              handleChange={handleChange}
+              error={state?.isError.nickname}
+              errorText={state?.errors.nickname}
+              value={input.nickname}
+              handleChange={handleInputChange}
             />
             <CustomInput
               id="password"
@@ -63,24 +63,26 @@ const Page = () => {
               type="password"
               placeholder="영문, 숫자, 특수문자(!@#$%^&*) 제한"
               labelText="비밀번호"
-              error={false}
-              errorText=""
-              value={signup.password}
-              handleChange={handleChange}
+              error={state?.isError.password}
+              errorText={state?.errors.password}
+              value={input.password}
+              handleChange={handleInputChange}
             />
             <CustomInput
-              id="password_check"
-              name="password_check"
+              id="passwordConfirmation"
+              name="passwordConfirmation"
               type="password"
               placeholder="비밀번호 확인"
               labelText="비밀번호 확인"
-              error={false}
-              errorText=""
-              value={signup.password_check}
-              handleChange={handleChange}
+              error={state?.isError.passwordConfirmation}
+              errorText={state?.errors.passwordConfirmation}
+              value={input.passwordConfirmation}
+              handleChange={handleInputChange}
             />
           </div>
-          <Button className={style.button}>가입하기</Button>
+          <button className={style.button} type="submit" disabled={isPending}>
+            {isPending ? "확인중" : "가입하기"}
+          </button>
         </form>
         <div className={style.move_login_container}>
           <span>계정이 이미 있으신가요?</span>

@@ -3,23 +3,25 @@
 import Image from "next/image";
 import style from "./page.module.css";
 import CustomInput from "@/components/Input/CustomInput";
-import Button from "@/components/Button/Button";
 import SocialLogin from "@/components/SocialLogin/SocialLogin";
-import { ChangeEvent, useState } from "react";
 import Link from "next/link";
+import { useLoginOrSignupInputValue } from "@/hooks/login-signup-hook";
+import { useActionState, useEffect } from "react";
+import { loginAction } from "@/actions/login.action";
+import { useRouter } from "next/navigation";
 
 const Page = () => {
-  const [login, setLogin] = useState({
-    email: "",
-    password: "",
-  });
+  const [input, handleInputChange] = useLoginOrSignupInputValue();
+  const [state, formAction, isPending] = useActionState(loginAction, null);
+  const router = useRouter();
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setLogin((prevLogin) => ({
-      ...prevLogin,
-      [e.target.name]: e.target.value,
-    }));
-  };
+  useEffect(() => {
+    if (state?.status) {
+      router.replace("/");
+    } else if (state?.fetchErrorText) {
+      alert(state.fetchErrorText);
+    }
+  }, [state, router]);
 
   return (
     <div className={style.body}>
@@ -33,7 +35,7 @@ const Page = () => {
           />
         </div>
         <div className={style.form_container}>
-          <form className={style.form}>
+          <form className={style.form} action={formAction} noValidate={true}>
             <div className={style.form_input_container}>
               <CustomInput
                 id="email"
@@ -41,10 +43,10 @@ const Page = () => {
                 type="email"
                 placeholder="이메일 입력"
                 labelText="이메일"
-                error={false}
-                errorText=""
-                value={login.email}
-                handleChange={handleChange}
+                error={state?.isError.email}
+                errorText={state?.errors.email}
+                value={input.email}
+                handleChange={handleInputChange}
               />
               <div className={style.pwd_container}>
                 <CustomInput
@@ -53,10 +55,10 @@ const Page = () => {
                   type="password"
                   placeholder="비밀번호 입력"
                   labelText="비밀번호"
-                  error={false}
-                  errorText=""
-                  value={login.password}
-                  handleChange={handleChange}
+                  error={state?.isError.password}
+                  errorText={state?.errors.password}
+                  value={input.password}
+                  handleChange={handleInputChange}
                 />
                 <div>
                   <span className={style.span}>비밀번호를 잊으셨나요?</span>
@@ -65,7 +67,9 @@ const Page = () => {
             </div>
             <div className={style.btn_move_signup_container}>
               <div className={style.btn_container}>
-                <Button className={style.login_btn}>로그인</Button>
+                <button className={style.login_btn}>
+                  {isPending ? "확인중" : "로그인"}
+                </button>
                 <SocialLogin
                   logoSrc="/assets/images/icon/google.svg"
                   size="fill"
