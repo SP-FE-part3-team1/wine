@@ -21,14 +21,11 @@ export const Chip = ({
     
     if (multiple) {
       if (isSelected) {
-        // 선택 해제
         newSelectedValues = selectedValues.filter(selectedValue => selectedValue !== value);
       } else {
-        // 선택 추가
         newSelectedValues = [...selectedValues, value];
       }
     } else {
-      // 단일 선택 모드
       newSelectedValues = isSelected ? [] : [value];
     }
     
@@ -58,7 +55,6 @@ export const Chip = ({
   );
 };
 
-// 와인 타입 전용 래퍼 컴포넌트 (하위 호환성을 위해 유지)
 export const WineTypeChip = ({ 
   types, 
   selectedTypes, 
@@ -85,7 +81,7 @@ export const WineTypeChip = ({
     <Chip
       options={options}
       selectedValues={selectedTypes}
-      onSelectionChange={onTypesChange as (values: string[]) => void}
+      onSelectionChange={(values) => onTypesChange(values as ('RED' | 'WHITE' | 'SPARKLING')[])}
       disabled={disabled}
       ariaLabel="와인 타입 선택"
     />

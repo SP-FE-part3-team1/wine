@@ -48,14 +48,11 @@ export const SearchInput = ({
     inputRef.current?.focus();
   };
 
-  const handleFocus = () => setIsFocused(true);
-  const handleBlur = () => setIsFocused(false);
 
   return (
     <div 
       className={`${styles.container} ${isFocused ? styles.focused : ''} ${disabled ? styles.disabled : ''}`}
     >
-      {/* 검색 아이콘 */}
       <button
         type="button"
         className={styles.searchIcon}
@@ -82,15 +79,14 @@ export const SearchInput = ({
         </svg>
       </button>
 
-      {/* 입력 필드 */}
       <input
         ref={inputRef}
         type="text"
         value={value}
         onChange={handleInputChange}
         onKeyDown={handleKeyDown}
-        onFocus={handleFocus}
-        onBlur={handleBlur}
+        onFocus={() => setIsFocused(true)}
+        onBlur={() => setIsFocused(false)}
         placeholder={placeholder}
         disabled={disabled}
         maxLength={maxLength}
@@ -98,7 +94,6 @@ export const SearchInput = ({
         aria-label="와인 검색"
       />
 
-      {/* 클리어 버튼 */}
       {value && onClear && (
         <button
           type="button"

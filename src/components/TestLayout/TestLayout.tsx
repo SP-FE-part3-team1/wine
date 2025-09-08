@@ -1,6 +1,4 @@
 'use client';
-
-import React from 'react';
 import styles from './TestLayout.module.css';
 
 interface TestLayoutProps {

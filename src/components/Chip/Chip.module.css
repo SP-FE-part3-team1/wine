@@ -162,10 +162,6 @@
     font-size: 1.5rem;
   }
   
-  .container {
-    gap: 0;
-  }
-  
   .chip:hover:not(:disabled) {
     transform: translateY(-0.15rem);
     box-shadow: var(--chip-shadow-md);
@@ -183,10 +179,6 @@
     padding: 1rem 1.8rem;
     font-size: 1.6rem;
     border-width: 0.15rem;
-  }
-  
-  .container {
-    gap: 0;
   }
   
   .chip:hover:not(:disabled) {

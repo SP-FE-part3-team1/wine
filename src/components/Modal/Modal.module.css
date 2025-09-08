@@ -100,10 +100,6 @@
   text-align: left;
 }
 
-/* Close Button - Hidden for consistent design */
-.closeButton {
-  display: none;
-}
 
 /* Content - Figma Aligned */
 .content {
@@ -134,34 +130,6 @@
   }
 }
 
-/* Exit animations for when modal closes */
-.backdrop.closing {
-  animation: backdropFadeOut 0.2s ease-in;
-}
-
-.modal.closing {
-  animation: modalSlideOut 0.2s ease-in;
-}
-
-@keyframes backdropFadeOut {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
-}
-
-@keyframes modalSlideOut {
-  from {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-  }
-  to {
-    opacity: 0;
-    transform: scale(0.95) translateY(-10px);
-  }
-}
 
 /* 반응형 디자인 - Mobile First */
 
@@ -228,16 +196,6 @@
   }
 }
 
-@keyframes modalSlideUp {
-  from {
-    opacity: 0;
-    transform: translateY(100%);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
 
 /* 접근성 및 고대비 모드 */
 @media (prefers-contrast: high) {
@@ -248,20 +206,13 @@
   .header {
     border-bottom: 0.2rem solid var(--modal-border);
   }
-
-  /* Close button removed */
 }
 
 /* 동작 줄이기 설정 지원 */
 @media (prefers-reduced-motion: reduce) {
   .backdrop,
-  .modal,
-  .closeButton {
+  .modal {
     animation: none;
     transition: none;
-  }
-
-  .closeButton:active {
-    transform: none;
   }
 }

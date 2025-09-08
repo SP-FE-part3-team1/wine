@@ -85,9 +85,7 @@
   color: var(--star-primary);
 }
 
-/* 포커스 상태 - outline 제거 */
 .star.focused {
-  outline: none;
   border-radius: var(--xm-size);
 }
 
@@ -133,14 +131,8 @@
   fill: url(#star-gradient);
 }
 
-/* 키보드 네비게이션 지원 - outline 제거 */
 .star.interactive:focus-visible {
-  outline: none;
   border-radius: var(--xm-size);
-}
-
-.star.interactive:focus {
-  outline: none;
 }
 
 /* 별점 애니메이션 */
@@ -278,9 +270,6 @@
     stroke-width: 0.1rem;
   }
   
-  .star.focused {
-    outline: none;
-  }
 }
 
 /* 동작 줄이기 설정 지원 */
@@ -302,13 +291,3 @@
   }
 }
 
-/* 다크모드 대응 (추후 확장 가능) */
-@media (prefers-color-scheme: dark) {
-  .star.empty {
-    color: var(--star-gray-medium);
-  }
-  
-  .star.filled {
-    color: var(--star-primary);
-  }
-}
