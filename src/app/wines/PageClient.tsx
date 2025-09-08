@@ -24,7 +24,7 @@ export default function PageClient({
   const router = useRouter();
   const [search, setSearch] = useState("");
   const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
-  const [priceRange, setPriceRange] = useState<[number, number]>([0, 74000]);
+  const [priceRange, setPriceRange] = useState<[number, number]>([0, 400000]);
   const [rating, setRating] = useState<string>("");
 
   // 검색/필터링 로직
