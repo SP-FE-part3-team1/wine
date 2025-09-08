@@ -4,6 +4,7 @@ import { useState, useCallback } from 'react';
 import { Modal } from '../Modal';
 import { WineFormModalProps, WineFormData, WineType, WINE_TYPE_OPTIONS } from '../../../types/component-types';
 import { WINE_FORM_CONFIG, transformWineDataForApi } from '../manager/modalConfigs';
+import { fetchWithAuth } from '../../../actions/api.action';
 import CustomInput from '../../Input/CustomInput';
 import Select from '../../Select/Select';
 import Button from '../../Button/Button';
@@ -41,26 +42,19 @@ export const WineFormModal = ({
     
     try {
       const apiData = transformWineDataForApi(formData);
-      const url = mode === 'edit' && wineId 
-        ? `https://winereview-api.vercel.app/17-1/wines/${wineId}`
-        : 'https://winereview-api.vercel.app/17-1/wines';
+      const endpoint = mode === 'edit' && wineId 
+        ? `/wines/${wineId}`
+        : '/wines';
       
       const method = mode === 'edit' ? 'PATCH' : 'POST';
       
-      const response = await fetch(url, {
+      const result = await fetchWithAuth(endpoint, {
         method,
         headers: {
           'Content-Type': 'application/json',
-          // TODO: Authorization 헤더 추가 필요
         },
         body: JSON.stringify(apiData)
       });
-
-      if (!response.ok) {
-        throw new Error(`Failed to ${mode} wine`);
-      }
-
-      const result = await response.json();
       
       if (onSuccess) {
         onSuccess(result);
@@ -69,7 +63,7 @@ export const WineFormModal = ({
       onClose();
     } catch (error) {
       console.error(`Error ${mode}ing wine:`, error);
-      // TODO: 에러 알림 처리
+      // 인증 실패 시 로그인 페이지로 리다이렉트는 fetchWithAuth에서 처리됨
     } finally {
       setIsSubmitting(false);
     }

@@ -4,6 +4,7 @@ import { useState, useCallback } from 'react';
 import { Modal } from '../Modal';
 import { ReviewFormModalProps, ReviewFormData, TASTE_PROFILE_OPTIONS } from '../../../types/component-types';
 import { REVIEW_FORM_CONFIG, transformReviewDataForApi } from '../manager/modalConfigs';
+import { fetchWithAuth } from '../../../actions/api.action';
 import { StarRating } from '../../StarRating/StarRating';
 import { Chip } from '../../Chip/Chip';
 import Button from '../../Button/Button';
@@ -42,26 +43,19 @@ export const ReviewFormModal = ({
 
     try {
       const apiData = transformReviewDataForApi(formData, wineId);
-      const url = mode === 'edit' && reviewId
-        ? `https://winereview-api.vercel.app/17-1/reviews/${reviewId}`
-        : 'https://winereview-api.vercel.app/17-1/reviews';
+      const endpoint = mode === 'edit' && reviewId
+        ? `/reviews/${reviewId}`
+        : '/reviews';
 
       const method = mode === 'edit' ? 'PATCH' : 'POST';
 
-      const response = await fetch(url, {
+      const result = await fetchWithAuth(endpoint, {
         method,
         headers: {
           'Content-Type': 'application/json',
-          // TODO: Authorization 헤더 추가 필요
         },
         body: JSON.stringify(apiData)
       });
-
-      if (!response.ok) {
-        throw new Error(`Failed to ${mode} review`);
-      }
-
-      const result = await response.json();
 
       if (onSuccess) {
         onSuccess(result);
@@ -70,7 +64,7 @@ export const ReviewFormModal = ({
       onClose();
     } catch (error) {
       console.error(`Error ${mode}ing review:`, error);
-      // TODO: 에러 알림 처리
+      // 인증 실패 시 로그인 페이지로 리다이렉트는 fetchWithAuth에서 처리됨
     } finally {
       setIsSubmitting(false);
     }

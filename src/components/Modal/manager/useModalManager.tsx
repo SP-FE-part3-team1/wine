@@ -3,14 +3,12 @@
 import { useState, useCallback } from 'react';
 
 import { ModalType, ModalState, UseModalManagerReturn, FilterState } from '../../../types/component-types';
+import { fetchWithAuth } from '../../../actions/api.action';
 
-// API 호출을 위한 임시 함수들 (실제 API 클라이언트로 교체 예정)
+// API 호출 함수들
 const fetchWineData = async (wineId: string) => {
-  // TODO: 실제 API 호출로 교체
   try {
-    const response = await fetch(`https://winereview-api.vercel.app/17-1/wines/${wineId}`);
-    if (!response.ok) throw new Error('Failed to fetch wine data');
-    const data = await response.json();
+    const data = await fetchWithAuth(`/wines/${wineId}`);
     return data;
   } catch (error) {
     console.error('Error fetching wine data:', error);
@@ -19,11 +17,8 @@ const fetchWineData = async (wineId: string) => {
 };
 
 const fetchReviewData = async (reviewId: string) => {
-  // TODO: 실제 API 호출로 교체
   try {
-    const response = await fetch(`https://winereview-api.vercel.app/17-1/reviews/${reviewId}`);
-    if (!response.ok) throw new Error('Failed to fetch review data');
-    const data = await response.json();
+    const data = await fetchWithAuth(`/reviews/${reviewId}`);
     return data;
   } catch (error) {
     console.error('Error fetching review data:', error);
