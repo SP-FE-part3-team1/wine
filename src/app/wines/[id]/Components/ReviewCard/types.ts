@@ -26,6 +26,7 @@ export interface ReviewCardProps {
   review: Review;
   onLikeClick?: (reviewId: number) => void;
   onMoreClick?: (reviewId: number) => void;
+  onDelete: (reviewId: number) => void;
 }
 
 
