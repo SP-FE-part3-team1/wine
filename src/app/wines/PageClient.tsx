@@ -14,11 +14,17 @@ import { RatingRadio } from "@/components/RatingRadio";
 import { components } from "@/types/types";
 
 export type WineListType = components["schemas"]["WineListType"];
-export default function PageClient({ wines }: { wines: WineListType[] }) {
+export default function PageClient({
+  wines,
+  recommendedWines,
+}: {
+  wines: WineListType[];
+  recommendedWines: WineListType[];
+}) {
   const router = useRouter();
   const [search, setSearch] = useState("");
   const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
-  const [priceRange, setPriceRange] = useState<[number, number]>([0, 74000]);
+  const [priceRange, setPriceRange] = useState<[number, number]>([0, 400000]);
   const [rating, setRating] = useState<string>("");
 
   // 검색/필터링 로직
@@ -53,7 +59,7 @@ export default function PageClient({ wines }: { wines: WineListType[] }) {
     <main className={styles.main}>
       {/* 추천 와인 캐러셀 */}
       <WineCarousel
-        wines={wines}
+        wines={recommendedWines}
         onClickWine={(id) => console.log(`와인 ${id} 클릭됨`)}
       />
 
