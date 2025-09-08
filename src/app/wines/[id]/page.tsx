@@ -2,6 +2,7 @@
 
 // import { getAllWines, getWineDetail } from '../../services/wineApi';
 import { wineDetailData } from './dummyWines.js';
+import { getWine } from '@/lib/wine';
 
 import { notFound } from 'next/navigation';
 import styles from './page.module.css'
@@ -13,12 +14,12 @@ import ReviewCard from './Components/ReviewCard/ReviewCard';
 import ReviewList from './Components/ReviewList/ReviewList';
 import WineRatingSummary from './Components/WineRatingSummary/WineRatingSummary';
 
-// --- 데이터 로직 ---
-// dummyWines.js를 직접 사용하도록 모의 함수를 수정합니다.
-const getWineDetail = async (id: string) => {
-  const wine = wineDetailData.find(w => w.id === Number(id));
-  return Promise.resolve(wine);
-};
+// // --- 데이터 로직 ---
+// // dummyWines.js를 직접 사용하도록 모의 함수를 수정합니다.
+// const getWineDetail = async (id: string) => {
+//   const wine = wineDetailData.find(w => w.id === Number(id));
+//   return Promise.resolve(wine);
+// };
 
 // // 빌드 시점에 일부 상세페이지 미리 만듦
 // export async function generateStaticParams() {
@@ -47,7 +48,7 @@ export default async function WineDetailPage({ params }: {
   const { id } = await params;
 
   // 와인 상세 정보 (리뷰 포함)를 조회합니다.
-  const wine = await getWineDetail(id);
+  const wine = await getWine(id);
   
   if (!wine) {
     notFound();
@@ -67,15 +68,6 @@ export default async function WineDetailPage({ params }: {
   //   'use server';
   //   console.log('리뷰 남기기 버튼 클릭!');
   //   // 실제 구현 시에는 useRouter 등을 사용해 페이지를 이동시킵니다.
-  // };
-
-
-  // 서버 컴포넌트이므로 실제 동작은 클라이언트 컴포넌트에서 구현해야 합니다.
-  // 여기서는 콘솔 로그만 남기는 예시 함수입니다.
-
-  // const handleMore = (reviewId: number) => {
-  //   'use server';
-  //   console.log(`${reviewId}번 리뷰 더보기 클릭!`);
   // };
 
   return (
