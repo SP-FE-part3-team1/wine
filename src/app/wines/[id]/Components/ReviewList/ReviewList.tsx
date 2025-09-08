@@ -1,10 +1,15 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-// 기존 ReviewCard와 타입을 그대로 사용합니다.
+
+
+
 import ReviewCard from '../ReviewCard/ReviewCard';
 import { Review } from '../ReviewCard/types';
 import styles from './ReviewList.module.css'; // 아래에 CSS 코드도 추가합니다.
+
+import Image from 'next/image';
+import Button from '@/components/Button/Button';
 
 // ReviewList가 받을 Props 타입 정의
 interface ReviewListProps {
@@ -138,13 +143,22 @@ export default function ReviewList({ initialReviews, wineId }: ReviewListProps) 
             />
           ))
         ) : (
-          <p className={styles.noReviews}>아직 작성된 리뷰가 없습니다.</p>
+          <div className={styles.noReviewsContainer}>
+          <div className={styles.noReviewsSign}>
+            <Image src="/assets/images/alert/alert.png" alt="No Reviews" width={100} height={100} />
+          <p>작성된 리뷰가 없어요</p>
+           <div className={styles.buttonWrapper}>
+          </div>
+         <Button variant="primary" className={styles.reviewButton}>
+          리뷰 남기기
+        </Button>
+        </div>
+        </div>
         )}
       </div>
 
       <div ref={observerRef} style={{ height: '50px' }}>
         {isLoading && <p>로딩 중...</p>}
-        {/* {!hasMore && reviews.length > 0 && <p>모든 리뷰를 다 봤습니다.</p>} */}
       </div>
     </section>
   );
