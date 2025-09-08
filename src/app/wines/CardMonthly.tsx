@@ -1,6 +1,7 @@
 "use client";
 import { StarRating } from "@/components/StarRating";
 import styles from "./CardMonthly.module.css";
+import Image from "next/image";
 
 type CardMonthlyProps = {
   rating: number;
@@ -25,7 +26,9 @@ const CardMonthly = ({
         )}
         <div className={styles.content}>
           <div className={styles.ratingWrapper}>
-            <span className={styles.ratingValue}>{rating.toFixed(1)}</span>
+            <span className={styles.ratingValue}>
+              {Number(rating ?? 0).toFixed(1)}
+            </span>
             <StarRating size="small" value={rating} />
           </div>
           {description && <p className={styles.description}>{description}</p>}
