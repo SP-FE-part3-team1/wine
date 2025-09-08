@@ -1,12 +1,9 @@
 
-
-// import { getAllWines, getWineDetail } from '../../services/wineApi';
 import { wineDetailData } from './dummyWines.js';
 import { getWine } from '@/lib/wine';
 
 import { notFound } from 'next/navigation';
 import styles from './page.module.css'
-// import { getWineDetail } from '@/app/wines/[id]/wineApi';
 
 
 import WineSummaryCard from './Components/WineSummaryCard/WineSummaryCard';
@@ -14,12 +11,6 @@ import ReviewCard from './Components/ReviewCard/ReviewCard';
 import ReviewList from './Components/ReviewList/ReviewList';
 import WineRatingSummary from './Components/WineRatingSummary/WineRatingSummary';
 
-// // --- 데이터 로직 ---
-// // dummyWines.js를 직접 사용하도록 모의 함수를 수정합니다.
-// const getWineDetail = async (id: string) => {
-//   const wine = wineDetailData.find(w => w.id === Number(id));
-//   return Promise.resolve(wine);
-// };
 
 // // 빌드 시점에 일부 상세페이지 미리 만듦
 // export async function generateStaticParams() {
@@ -57,7 +48,7 @@ export default async function WineDetailPage({ params }: {
   // wine 객체에서 리뷰 목록을 바로 가져옵니다.
   // const reviews = wine.reviews || [];
 
-    // ✨ 초기 5개 리뷰만 잘라서 전달합니다.
+    // 초기 5개 리뷰만 잘라서 전달
   const initialReviews = wine.reviews ? wine.reviews.slice(0, 5) : [];
 
   // API 응답 스키마에 맞춰 avgRatings를 ratingDistribution으로 사용합니다.
