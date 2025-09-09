@@ -70,7 +70,7 @@ function MyProfileReviewCard({ review, onMenuSelect }: Props) {
       </div>
       <div className={styles.review}>
         <div className={`${styles.wine} ${font["text-md-regular"]}`}>
-          {review.wine}
+          {review.wine ?? "와인 이름 없음"}
         </div>
         <div className={`${styles.textReview} ${font["text-md-regular"]}`}>
           {review.note}
