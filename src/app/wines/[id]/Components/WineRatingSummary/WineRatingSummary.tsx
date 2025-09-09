@@ -7,14 +7,13 @@ import styles from './WineRatingSummary.module.css';
 import Button from '@/components/Button/Button';
 import { StarRating } from '@/components/StarRating/StarRating';
 
-// ProgressBar를 외부에서 import하는 대신, 직접 JSX로 구현합니다.
 function WineRatingSummary({
   avgRating,
   reviewCount,
   ratingDistribution,
   onWriteReviewClick,
 }: WineRatingSummaryProps) {
-  // 1. Object.entries로 배열로 만든 뒤, 바로 정렬합니다.
+  // 1. Object.entries로 배열로 만든 뒤, 바로 정렬.
   const distributionEntries = Object.entries(ratingDistribution)
     .sort(([starsA], [starsB]) => Number(starsB) - Number(starsA));
 
