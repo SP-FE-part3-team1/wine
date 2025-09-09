@@ -157,7 +157,7 @@ export default function PageClient({
               tagLabel={`₩ ${wine.price.toLocaleString()}`}
               rating={wine.avgRating}
               reviewState={`${wine.reviewCount}개의 후기`}
-              detailTitle="최근 후기"
+              detailTitle="최신 후기"
               detailDescription={
                 wine.recentReview?.content ?? "아직 리뷰가 없습니다"
               }

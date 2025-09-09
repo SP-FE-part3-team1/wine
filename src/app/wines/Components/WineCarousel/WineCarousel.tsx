@@ -1,11 +1,11 @@
-import { useRef, useMemo } from "react";
+import { useRef } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import type { Swiper as SwiperType } from "swiper";
 import Button from "@/components/Button/Button";
 import Image from "next/image";
 import CardMonthly from "../CardMonthly/CardMonthly";
-import styles from "@/app/wines/WineCarousel.module.css";
+import styles from "@/app/wines/Components/WineCarousel/WineCarousel.module.css";
 import { components } from "@/types/types";
 
 type WineListType = components["schemas"]["WineListType"];

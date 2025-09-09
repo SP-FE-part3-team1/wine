@@ -1,6 +1,6 @@
 "use client";
 import Tag from "@/components/Tag/Tag";
-import styles from "@/app/wines/CardWine.module.css";
+import styles from "@/app/wines/Components/CardWine/CardWine.module.css";
 import { StarRating } from "@/components/StarRating";
 import Image from "next/image";
 import Button from "@/components/Button/Button";
