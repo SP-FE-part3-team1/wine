@@ -76,13 +76,18 @@ export default function PageClient({
             onClear={() => setSearch("")}
           />
         </div>
-        <Button
-          variant="primary"
-          ariaLabel="와인 등록하기"
-          className={styles.registerButton}
-        >
-          와인 등록하기
-        </Button>
+        <div className={styles.btn}>
+          <Button
+            variant="primary"
+            ariaLabel="와인 등록하기"
+            className={styles.registerButton}
+          >
+            와인 등록하기
+          </Button>
+        </div>
+      </div>
+      <div className={styles.mobileFilterWrapper}>
+        <FilterIcon />
       </div>
 
       {/* 본문 레이아웃 */}
