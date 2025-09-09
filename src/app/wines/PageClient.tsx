@@ -166,6 +166,16 @@ export default function PageClient({
           ))}
         </div>
       </div>
+      {/* 모바일 전용 하단 고정 버튼 */}
+      <div className={styles.mobileBtnBottom}>
+        <Button
+          variant="primary"
+          ariaLabel="와인 등록하기"
+          className={styles.mobileRegisterBtn}
+        >
+          와인 등록하기
+        </Button>
+      </div>
     </main>
   );
 }
