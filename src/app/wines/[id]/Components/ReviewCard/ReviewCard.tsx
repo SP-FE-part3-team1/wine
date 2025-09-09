@@ -146,25 +146,25 @@ function ReviewCard({ review, onLikeClick, onMoreClick, onDelete }: ReviewCardPr
         <div className={styles.sliderItem}>
           <span className={styles.sliderTag}>바디감</span>
             <span className={styles.sliderLabel}>가벼워요</span>
-          <RangeSlider type="single" min={0} max={100} value={lightBold} onChange={() => {}} />
+          <RangeSlider type="single" min={0} max={5} value={lightBold} onChange={() => {}} />
             <span className={styles.sliderLabel}>진해요</span>
         </div>
         <div className={styles.sliderItem}>
           <span className={styles.sliderTag}>타닌</span>
             <span className={styles.sliderLabel}>부드러워요</span>
-          <RangeSlider type="single" min={0} max={100} value={smoothTannic} onChange={() => {}} />
+          <RangeSlider type="single" min={0} max={5} value={smoothTannic} onChange={() => {}} />
             <span className={styles.sliderLabel}>떫어요</span>
         </div>
         <div className={styles.sliderItem}>
           <span className={styles.sliderTag}>당도</span>
             <span className={styles.sliderLabel}>드라이해요</span>
-          <RangeSlider type="single" min={0} max={100} value={drySweet} onChange={() => {}} />
+          <RangeSlider type="single" min={0} max={5} value={drySweet} onChange={() => {}} />
             <span className={styles.sliderLabel}>달아요</span>
         </div>
         <div className={styles.sliderItem}>
           <span className={styles.sliderTag}>산미</span>
             <span className={styles.sliderLabel}>안셔요</span>
-          <RangeSlider type="single" min={0} max={100} value={softAcidic} onChange={() => {}} />
+          <RangeSlider type="single" min={0} max={5} value={softAcidic} onChange={() => {}} />
             <span className={styles.sliderLabel}>많이셔요</span>
         </div>
       </div>

@@ -23,14 +23,35 @@
   gap: 2rem;
 }
 
-.noReviews {
-  padding: 4rem;
-  text-align: center;
+.noReviewsContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 8rem 11.5rem;
+  gap: 4rem;
   font-size: var(--lg-size);
   color: var(--grayscale-500);
-  background-color: var(--white);
-  border-radius: 1.6rem;
-  border: 1px solid var(--grayscale-300);
+}
+
+.noReviewsSign {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3.2rem;
+}
+
+/* button */
+.buttonWrapper {
+  grid-area: button;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.reviewButton {
+    padding: 1.4rem 3.2rem;
+    font-size: var(--lg-size);
+    font-weight: var(--semibold);
 }
 
 /* tablet */
@@ -38,6 +59,15 @@
     .reviewList {
         gap: 2.4rem;
     }
+
+
+  .buttonWrapper {
+  justify-content: flex-start;
+}
+
+.reviewButton {
+    padding: 1.6rem 4.8rem;
+}
 }
 
 
@@ -51,4 +81,18 @@
   .reviewList {
     gap: 2rem
   }
+
+  .buttonWrapper {
+  margin-top: 1rem;
+}
+
+ .reviewButton {
+    padding: 1.6rem 4.8rem;
+ }
+
+.distributionSection {
+  display: flex;
+  flex-grow: 0; /* 남은 공간을 모두 차지 */
+}
+
 }
