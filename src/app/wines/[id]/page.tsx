@@ -1,3 +1,4 @@
+import type { RatingDistribution } from './Components/WineRatingSummary/types';
 
 import { getWine } from '@/lib/wine';
 import { getUser } from "@/actions/api.action";
@@ -52,11 +53,12 @@ export default async function WineDetailPage({ params }: {
   // const initialReviews = wine.reviews ? wine.reviews.slice(0, 5) : [];
 
   // API 응답 스키마에 맞춰 avgRatings를 ratingDistribution으로 사용합니다.
-  const ratingDistribution = wine.avgRatings || { '5': 0, '4': 0, '3': 0, '2': 0, '1': 0 };
+  // const ratingDistribution = wine.avgRatings || { '5': 0, '4': 0, '3': 0, '2': 0, '1': 0 };
+  const ratingDistribution = (wine.avgRatings || { '5': 0, '4': 0, '3': 0, '2': 0, '1': 0 }) as unknown as RatingDistribution;
 
    // 유저 정보
   const user = await getUser();
-  const currentUser = JSON.parse(JSON.stringify((user.id || null)));
+  const currentUser = JSON.parse(JSON.stringify((user || null)));
 
   //  // 서버 액션 또는 클라이언트 컴포넌트에서 처리할 이벤트 핸들러 (예시)
   // const handleWriteReview = () => {

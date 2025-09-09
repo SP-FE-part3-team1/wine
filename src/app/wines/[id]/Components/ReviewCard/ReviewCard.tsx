@@ -43,16 +43,6 @@ const AROMA_MAP: { [key: string]: string } = {
 
 function ReviewCard({ review, onLikeClick, onMoreClick, onDelete, currentUser }: ReviewCardProps) {
 
-   // --- 💡 디버깅 코드 추가 ---
-  console.log("--- ReviewCard 데이터 확인 ---");
-  console.log("현재 유저 (currentUser):", currentUser);
-  console.log("리뷰 작성자 (review.user):", review.user);
-
-  if (currentUser && review.user) {
-    console.log("ID 비교:", currentUser.id, "===", review.user.id);
-    console.log("ID 타입 비교:", typeof currentUser.id, "vs", typeof review.user.id);
-  }
-
  // 접힘 상태 관리
   const [isExpanded, setIsExpanded] = useState(true);
 
