@@ -16,7 +16,7 @@ export interface Review {
     nickname: string;
     image: string | null;
   };
-  isLiked: boolean; // boolean 타입으로 변경
+  isLiked: boolean; 
 }
 
 /**
