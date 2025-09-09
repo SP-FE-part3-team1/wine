@@ -61,8 +61,7 @@
   overflow-wrap: break-word;
 }
 
-/* 태블릿 + 브라우저 공통 (37.6rem 이상) */
-@media screen and (min-width: 37.6rem) {
+@media screen and (min-width: 376px) {
   .card {
     width: 23.2rem;
     height: 18.5rem;

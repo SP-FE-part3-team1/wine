@@ -1,11 +1,11 @@
-import { useRef, useMemo } from "react";
+import { useRef } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import type { Swiper as SwiperType } from "swiper";
 import Button from "@/components/Button/Button";
 import Image from "next/image";
-import CardMonthly from "./CardMonthly";
-import styles from "@/app/wines/WineCarousel.module.css";
+import CardMonthly from "../CardMonthly/CardMonthly";
+import styles from "@/app/wines/Components/WineCarousel/WineCarousel.module.css";
 import { components } from "@/types/types";
 
 type WineListType = components["schemas"]["WineListType"];
@@ -16,13 +16,6 @@ type WineCarouselProps = {
 const WineCarousel = ({ wines, onClickWine }: WineCarouselProps) => {
   const swiperRef = useRef<SwiperType | null>(null);
 
-  const shuffledTopWines = useMemo(() => {
-    const top10 = [...wines]
-      .sort((a, b) => b.avgRating - a.avgRating)
-      .slice(0, 10);
-    return top10.sort(() => Math.random() - 0.5);
-  }, [wines]);
-
   return (
     <div className={styles.carouselWrapper}>
       <h1 className={styles.title}>이번 달 추천 와인</h1>
@@ -30,7 +23,7 @@ const WineCarousel = ({ wines, onClickWine }: WineCarouselProps) => {
         modules={[Navigation]}
         spaceBetween={16}
         slidesPerView="auto"
-        centerInsufficientSlides={true}
+        centerInsufficientSlides={false}
         onSwiper={(swiper) => {
           swiperRef.current = swiper;
         }}
@@ -39,7 +32,7 @@ const WineCarousel = ({ wines, onClickWine }: WineCarouselProps) => {
           769: { slidesPerView: "auto", spaceBetween: 16 },
         }}
       >
-        {shuffledTopWines.map((wine) => (
+        {wines.map((wine) => (
           <SwiperSlide key={wine.id} style={{ width: "16rem" }}>
             <CardMonthly
               imageUrl={wine.image}
