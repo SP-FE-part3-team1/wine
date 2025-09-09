@@ -63,6 +63,33 @@ export async function fetchWithAuth(url: string, options: RequestInit = {}) {
   return response;
 }
 
+//클라이언트에서 사용할 수 있는 api호출 함수
+export async function fetchWithAuthforClient(url: string, options: RequestInit = {}) {
+  const accessToken = (await cookies()).get("accessToken")?.value;
+
+  const headers = {
+    ...options.headers,
+    Authorization: accessToken ? `Bearer ${accessToken}` : "",
+  };
+
+  let response = await fetch(url, { ...options, headers });
+
+  if (response.status === 401) {
+    const newAccessToken = await setNewAccessToken();
+
+    if (newAccessToken) {
+      const newHeaders = {
+        ...options.headers,
+        Authorization: `Bearer ${newAccessToken}`,
+      };
+      response = await fetch(url, { ...options, headers: newHeaders });
+    }
+  }
+
+  return JSON.parse(JSON.stringify(response));
+}
+
+
 /**
  * 예시자료입니다.
  * 인증이 필요한 api요청의 경우

@@ -10,7 +10,7 @@ import Image from 'next/image';
 import Button from '@/components/Button/Button';
 
 
-import { likeReviewAction, unlikeReviewAction} from '@/lib/review'; 
+import { likeReview, unlikeReview} from '@/lib/review'; 
 
 // ReviewList가 받을 Props 타입 정의
 interface ReviewListProps {
@@ -38,9 +38,9 @@ export default function ReviewList({ initialReviews }: ReviewListProps) {
     console.log(`Review ID ${reviewId}의 좋아요 상태가 변경되었습니다.`);
       try {
         if(currentIsLiked) {
-          await unlikeReviewAction(reviewId); // 좋아요 취소
+          await unlikeReview(reviewId); // 좋아요 취소
         } else {
-          await likeReviewAction(reviewId); // 좋아요 추가
+          await likeReview(reviewId); // 좋아요 추가
         }
         //
       } catch (err) {
