@@ -10,18 +10,17 @@ import Image from 'next/image';
 import Button from '@/components/Button/Button';
 
 
-import { likeReviewAction, unlikeReviewAction} from '@/lib/review'; 
+import { likeReview, unlikeReview, deleteReview} from '@/lib/review'; 
 
 // ReviewList가 받을 Props 타입 정의
 interface ReviewListProps {
   initialReviews: Review[];
   wineId: number; // API 호출을 위해 와인 ID를 받음
+  currentUser: { id: number }; // 현재 로그인한 유저 정보 
 }
 
 
-export default function ReviewList({ initialReviews, wineId }: ReviewListProps) {
-
-  console.log('ReviewList가 받은 wineId:', wineId); 
+export default function ReviewList({ initialReviews, currentUser }: ReviewListProps) { 
 
   const [reviews, setReviews] = useState<Review[]>(initialReviews);
   
@@ -36,13 +35,12 @@ export default function ReviewList({ initialReviews, wineId }: ReviewListProps) 
           : review
       )
     );
-    // @TODO: 서버 API로 '좋아요' 상태를 업데이트하는 로직.
-    console.log(`Review ID ${reviewId}의 좋아요 상태가 변경되었습니다.`);
+    // API로 '좋아요' 상태를 업데이트하는 로직.
       try {
         if(currentIsLiked) {
-          await unlikeReviewAction(reviewId); // 좋아요 취소
+          await unlikeReview(reviewId); // 좋아요 취소
         } else {
-          await likeReviewAction(reviewId); // 좋아요 추가
+          await likeReview(reviewId); // 좋아요 추가
         }
         //
       } catch (err) {
@@ -58,38 +56,28 @@ export default function ReviewList({ initialReviews, wineId }: ReviewListProps) 
       }
   };
 
-  // '더보기' 메뉴 클릭 핸들러
-  const handleMore = (reviewId: number) => {
-    console.log(`Review ID ${reviewId}의 '더보기'가 클릭되었습니다.`);
-    // @TODO: 수정/삭제 메뉴를 보여주는 로직을 구현
-  };
+  //@TODO: 수정 핸들러 구현
 
   // 삭제 핸들러
-   // ✨ 리뷰 삭제 핸들러 함수를 수정합니다.
   const handleDelete = (reviewId: number) => {
     // 화면에서 리뷰 제거 (낙관적 업데이트)
     setReviews((currentReviews) =>
       currentReviews.filter((review) => review.id !== reviewId)
     );
 
-    // ✨ 2. @TODO: 실제 서버에 삭제를 요청하는 API 호출 로직
+    // 서버에 삭제를 요청하는 API 호출 
     console.log(`@TODO: 서버에 ID가 ${reviewId}인 리뷰 삭제 요청을 보내야 합니다.`);
-    /*
     try {
-      const response = await fetch(`/api/reviews/${reviewId}`, {
-        method: 'DELETE',
-      });
-
-      if (!response.ok) {
-        throw new Error('서버에서 리뷰 삭제에 실패했습니다.');
-      }
+      deleteReview(reviewId);
       console.log('서버에서 리뷰가 성공적으로 삭제되었습니다.');
     } catch (error) {
-      console.error(error);
-      // @TODO: 에러 발생 시 UI 롤백 처리
+      console.error('서버에서 리뷰 삭제에 실패했습니다.', error);
+      //롤백처리
       alert('리뷰 삭제에 실패했습니다. 다시 시도해 주세요.');
-    }
-    */
+      setReviews((currentReviews) =>
+        [...currentReviews, initialReviews.find((review) => review.id === reviewId)!]
+      );
+    } 
   };
 
 
@@ -103,8 +91,8 @@ export default function ReviewList({ initialReviews, wineId }: ReviewListProps) 
               key={review.id}
               review={review}
               onLikeClick={() => handleLike(review.id, review.isLiked)}
-              onMoreClick={handleMore}
               onDelete={handleDelete} 
+              currentUser={currentUser}
             />
           ))
         ) : (

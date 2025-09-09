@@ -1,9 +1,10 @@
+import type { RatingDistribution } from './Components/WineRatingSummary/types';
 
 import { getWine } from '@/lib/wine';
-
+import { getUser } from "@/actions/api.action";
 import { notFound } from 'next/navigation';
-import styles from './page.module.css'
 
+import styles from './page.module.css'
 import WineSummaryCard from './Components/WineSummaryCard/WineSummaryCard';
 import ReviewList from './Components/ReviewList/ReviewList';
 import WineRatingSummary from './Components/WineRatingSummary/WineRatingSummary';
@@ -37,6 +38,8 @@ export default async function WineDetailPage({ params }: {
 
   // 와인 데이터
   const wine = await getWine(id);
+
+ 
   
   if (!wine) {
     notFound();
@@ -45,23 +48,17 @@ export default async function WineDetailPage({ params }: {
   // wine 객체에서 리뷰 목록을 바로 가져옵니다.
   const initialReviews = JSON.parse(JSON.stringify(wine.reviews || []));
 
-  const reviews = initialReviews;
-
-    // --- ✨ 여기가 바로 확인 지점입니다! ---
-  console.log("--- 서버에서 클라이언트로 전달되는 props 확인 ---");
-  if (reviews && reviews.length > 0) {
-    console.log("첫 번째 리뷰 데이터:", reviews[0]);
-    console.log("첫 번째 리뷰의 createdAt 타입:", typeof reviews[0].createdAt);
-    console.log("createdAt이 Date 객체인가?:", reviews[0].createdAt instanceof Date);
-  }
-  // -----
-
 
     // 초기 5개 리뷰만 잘라서 전달
   // const initialReviews = wine.reviews ? wine.reviews.slice(0, 5) : [];
 
   // API 응답 스키마에 맞춰 avgRatings를 ratingDistribution으로 사용합니다.
-  const ratingDistribution = wine.avgRatings || { '5': 0, '4': 0, '3': 0, '2': 0, '1': 0 };
+  // const ratingDistribution = wine.avgRatings || { '5': 0, '4': 0, '3': 0, '2': 0, '1': 0 };
+  const ratingDistribution = (wine.avgRatings || { '5': 0, '4': 0, '3': 0, '2': 0, '1': 0 }) as unknown as RatingDistribution;
+
+   // 유저 정보
+  const user = await getUser();
+  const currentUser = JSON.parse(JSON.stringify((user || null)));
 
   //  // 서버 액션 또는 클라이언트 컴포넌트에서 처리할 이벤트 핸들러 (예시)
   // const handleWriteReview = () => {
@@ -93,7 +90,9 @@ export default async function WineDetailPage({ params }: {
       <div className={styles.reviewContainer}>
           <ReviewList 
           initialReviews={initialReviews}
-          wineId={wine.id} />
+          wineId={wine.id} 
+          currentUser={currentUser}
+          />
       </div>
       </div>
      </div> 

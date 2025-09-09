@@ -15,6 +15,15 @@ const Page = () => {
   const [state, formAction, isPending] = useActionState(loginAction, null);
   const router = useRouter();
 
+  const handleLogin = () => {
+    if (window.Kakao && !window.Kakao.isInitialized()) {
+      window.Kakao.init(process.env.NEXT_PUBLIC_KAKAO_SDK_KEY!);
+    }
+    window.Kakao.Auth.authorize({
+      redirectUri: process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI,
+    });
+  };
+
   useEffect(() => {
     if (state?.status) {
       router.replace("/");
@@ -79,6 +88,7 @@ const Page = () => {
                 <SocialLogin
                   logoSrc="/assets/images/icon/kakao.svg"
                   size="fill"
+                  onClick={handleLogin}
                 >
                   kakao로 시작하기
                 </SocialLogin>

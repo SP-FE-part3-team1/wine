@@ -96,7 +96,6 @@ export async function signupAction(
       if (!responseData) {
         throw new Error(responseData.message || "회원가입실패");
       }
-      console.log(responseData);
 
       const { accessToken, refreshToken } = responseData;
       (await cookies()).set("accessToken", accessToken, {
