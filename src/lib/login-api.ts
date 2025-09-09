@@ -1,7 +1,7 @@
 export async function loginUser(userData: { email: string; password: string }) {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_SERVER_URL}/auth/signIn`,
+      `https://winereview-api.vercel.app/17-1/auth/signIn`,
       {
         headers: {
           "Content-Type": "application/json",
