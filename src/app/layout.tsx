@@ -3,6 +3,7 @@ import "./globals.css";
 import "./reset.css";
 import ClientLayout from "./ClientLayout";
 import { hasToken } from "@/actions/hasToken.action";
+import Script from "next/script";
 
 const pretendard = localFont({
   src: "./fonts/PretendardVariable.woff2",
@@ -19,11 +20,16 @@ export default async function RootLayout({
   const isLoggedIn = await hasToken();
 
   return (
-    <html lang="en" className={`${pretendard.variable}`}>
+    <html lang="ko" className={`${pretendard.variable}`}>
       <body className={`${pretendard.className}`}>
         <ClientLayout isLoggedIn={isLoggedIn}>{children}</ClientLayout>
         <div className="modal-root"></div>
       </body>
+      <Script
+        src={`https://t1.kakaocdn.net/kakao_js_sdk/${process.env.NEXT_PUBLIC_KAKAO_SDK_VERSION}/kakao.min.js`}
+        integrity={process.env.NEXT_PUBLIC_KAKAO_INTEGRITY}
+        crossOrigin="anonymous"
+      />
     </html>
   );
 }
