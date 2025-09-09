@@ -19,9 +19,7 @@ interface ReviewListProps {
 }
 
 
-export default function ReviewList({ initialReviews, wineId }: ReviewListProps) {
-
-  console.log('ReviewList가 받은 wineId:', wineId); 
+export default function ReviewList({ initialReviews }: ReviewListProps) { 
 
   const [reviews, setReviews] = useState<Review[]>(initialReviews);
   
