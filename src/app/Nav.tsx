@@ -16,7 +16,6 @@ const Nav = ({
   isLoggedIn: boolean;
 }) => {
   const router = useRouter();
-
   return (
     <div className={style.container}>
       {isLoggedIn ? (

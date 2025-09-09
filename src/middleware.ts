@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 const protectedRoutes = ["/myprofile", "/wines"];
 
 // 인증이 없는 상태에서는 접근가능한 라우트 목록
-const authRoutes = ["/login", "/signup"];
+const authRoutes = ["/login", "/signup", "/login/oauth/kakao"];
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
@@ -34,5 +34,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/login", "/signup", "/wines/:path*", "/myprofile/:path*"],
+  matcher: ["/login/:path*", "/signup", "/wines/:path*", "/myprofile/:path*"],
 };
