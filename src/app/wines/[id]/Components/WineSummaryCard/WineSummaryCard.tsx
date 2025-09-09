@@ -23,16 +23,19 @@ const WineSummaryCard = ({imageUrl, name, origin, price}: WineSummaryCardProps) 
 
   return(
     <div className={styles.card}>
-      <div className={styles.wineImageContainer}>
-      <Image 
-      src={imgSrc} 
-      alt={`${name} wine bottle`} 
-      fill
-      style={{ objectFit: 'cover' }}
-      onError={(e) => {
-        setImgSrc(fallbackImage);
-      }}
-      />
+      <div className={styles.wineImagePositioner}>
+        <div className={styles.wineImageContainer}>
+          <Image 
+          src={imgSrc} 
+          alt={`${name} wine bottle`} 
+          fill
+          sizes='5.8rem'
+          style={{ objectFit: 'contain' }}
+          onError={(e) => {
+            setImgSrc(fallbackImage);
+          }}
+          />
+        </div>
       </div>
       <div className={styles.cardContent}>
         <h2 className={styles.name}>{name}</h2>
