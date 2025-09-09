@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import CardWine from "@/app/wines/CardWine";
+import CardWine from "@/app/wines/Components/CardWine/CardWine";
 import "@/app/reset.css";
 
 const meta: Meta<typeof CardWine> = {

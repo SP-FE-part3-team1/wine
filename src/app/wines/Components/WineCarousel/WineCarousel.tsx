@@ -4,7 +4,7 @@ import { Navigation } from "swiper/modules";
 import type { Swiper as SwiperType } from "swiper";
 import Button from "@/components/Button/Button";
 import Image from "next/image";
-import CardMonthly from "./CardMonthly";
+import CardMonthly from "../CardMonthly/CardMonthly";
 import styles from "@/app/wines/WineCarousel.module.css";
 import { components } from "@/types/types";
 

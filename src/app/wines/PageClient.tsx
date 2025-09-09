@@ -3,10 +3,10 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
-import WineCarousel from "./WineCarousel";
-import CardWine from "./CardWine";
+import WineCarousel from "./Components/WineCarousel/WineCarousel";
+import CardWine from "./Components/CardWine/CardWine";
 import { SearchInput } from "@/components/SearchInput/SearchInput";
-import FilterIcon from "./FilterIcon";
+import FilterIcon from "./Components/FilterIcon/FilterIcon";
 import Button from "@/components/Button/Button";
 import { Chip } from "@/components/Chip";
 import RangeSlider from "@/components/RangeSlider/RangeSlider";

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import CardMonthly from "@/app/wines/CardMonthly";
+import CardMonthly from "@/app/wines/Components/CardMonthly/CardMonthly";
 import "@/app/reset.css";
 
 const meta: Meta<typeof CardMonthly> = {
