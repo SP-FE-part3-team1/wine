@@ -98,15 +98,33 @@
   margin-bottom: 1.6rem;
 }
 
-/* --- 맛 슬라이더 --- */
+/* --- [핵심] 맛 슬라이더 애니메이션 --- */
 .tasteSliders {
   display: grid;
   grid-template-columns: max-content max-content 1fr max-content;
   align-items: center;
   row-gap: 2rem;
   column-gap: 1.2rem;
+  
+  /* 1. 기본 스타일 (펼쳐진 상태) */
+  max-height: 50rem;
+  opacity: 1;
+  margin-bottom: 1.6rem;
+  pointer-events: auto;
+
+  /* 2. 애니메이션 효과 설정 */
+  transition: max-height 0.4s ease-out, opacity 0.3s ease-out, margin-bottom 0.4s ease-out;
+  overflow: hidden;
+}
+
+/* 3. 접혔을 때의 스타일 */
+.collapsed .tasteSliders {
+  max-height: 0;
+  opacity: 0;
+  margin-bottom: 0;
   pointer-events: none;
 }
+
 
 .sliderItem {
   display: grid;
@@ -147,10 +165,19 @@
   padding-top: 1.6rem;
 }
 
+/* --- [핵심] 접기 아이콘 애니메이션 --- */
 .foldIcon {
-  /* 위쪽 화살표로 보이도록 180도 회전 */
+  /* 1. 기본 스타일 (펼쳐진 상태) */
   transform: rotate(180deg);
+  /* 2. 애니메이션 효과 설정 */
+  transition: transform 0.3s ease-in-out;
 }
+
+/* 3. 접혔을 때의 스타일 */
+.collapsed .foldIcon {
+  transform: rotate(0deg);
+}
+
 
 @media screen and (min-width: 768px) {
   .card {

@@ -1,7 +1,10 @@
 import { fetchWithAuth } from "../actions/api.action";
+import type { components } from "@/types/types";
+
+type WineDetailType = components["schemas"]["WineDetailType"];
 
 /* 와인 상세 정보를 가져오는 함수 */
-export async function getWine(wineId: number | string): Promise<any> {
+export async function getWine(wineId: number | string): Promise<WineDetailType | null> {
   const url = `${process.env.NEXT_PUBLIC_API_SERVER_URL}/wines/${wineId}`;
 
   try {

@@ -27,6 +27,7 @@ export interface ReviewCardProps {
   onLikeClick?: (reviewId: number) => void;
   onMoreClick?: (reviewId: number) => void;
   onDelete: (reviewId: number) => void;
+  currentUser: { id: number }; // 현재 로그인한 유저 정보
 }
 
 
