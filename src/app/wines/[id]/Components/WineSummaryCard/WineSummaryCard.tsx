@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import styles from './WineSummaryCard.module.css'
 import Tag from '../../../../../components/Tag/Tag'
 import Image from 'next/image';
-import WineImage from '../WineImage';
 
 type WineSummaryCardProps = {
     imageUrl: string;

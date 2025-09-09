@@ -1,9 +1,9 @@
 
 import { getWine } from '@/lib/wine';
-
+import { getUser } from "@/actions/api.action";
 import { notFound } from 'next/navigation';
-import styles from './page.module.css'
 
+import styles from './page.module.css'
 import WineSummaryCard from './Components/WineSummaryCard/WineSummaryCard';
 import ReviewList from './Components/ReviewList/ReviewList';
 import WineRatingSummary from './Components/WineRatingSummary/WineRatingSummary';
@@ -37,6 +37,8 @@ export default async function WineDetailPage({ params }: {
 
   // 와인 데이터
   const wine = await getWine(id);
+
+ 
   
   if (!wine) {
     notFound();
@@ -51,6 +53,10 @@ export default async function WineDetailPage({ params }: {
 
   // API 응답 스키마에 맞춰 avgRatings를 ratingDistribution으로 사용합니다.
   const ratingDistribution = wine.avgRatings || { '5': 0, '4': 0, '3': 0, '2': 0, '1': 0 };
+
+   // 유저 정보
+  const user = await getUser();
+  const currentUser = JSON.parse(JSON.stringify((user.id || null)));
 
   //  // 서버 액션 또는 클라이언트 컴포넌트에서 처리할 이벤트 핸들러 (예시)
   // const handleWriteReview = () => {
@@ -82,7 +88,9 @@ export default async function WineDetailPage({ params }: {
       <div className={styles.reviewContainer}>
           <ReviewList 
           initialReviews={initialReviews}
-          wineId={wine.id} />
+          wineId={wine.id} 
+          currentUser={currentUser}
+          />
       </div>
       </div>
      </div> 

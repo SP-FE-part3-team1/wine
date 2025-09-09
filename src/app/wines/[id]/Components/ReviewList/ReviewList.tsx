@@ -16,10 +16,11 @@ import { likeReview, unlikeReview, deleteReview} from '@/lib/review';
 interface ReviewListProps {
   initialReviews: Review[];
   wineId: number; // API 호출을 위해 와인 ID를 받음
+  currentUser: { id: number }; // 현재 로그인한 유저 정보 
 }
 
 
-export default function ReviewList({ initialReviews }: ReviewListProps) { 
+export default function ReviewList({ initialReviews, currentUser }: ReviewListProps) { 
 
   const [reviews, setReviews] = useState<Review[]>(initialReviews);
   
@@ -91,6 +92,7 @@ export default function ReviewList({ initialReviews }: ReviewListProps) {
               review={review}
               onLikeClick={() => handleLike(review.id, review.isLiked)}
               onDelete={handleDelete} 
+              currentUser={currentUser}
             />
           ))
         ) : (

@@ -41,11 +41,22 @@ const AROMA_MAP: { [key: string]: string } = {
 };
 
 
-function ReviewCard({ review, onLikeClick, onMoreClick, onDelete }: ReviewCardProps) {
+function ReviewCard({ review, onLikeClick, onMoreClick, onDelete, currentUser }: ReviewCardProps) {
+
+   // --- 💡 디버깅 코드 추가 ---
+  console.log("--- ReviewCard 데이터 확인 ---");
+  console.log("현재 유저 (currentUser):", currentUser);
+  console.log("리뷰 작성자 (review.user):", review.user);
+
+  if (currentUser && review.user) {
+    console.log("ID 비교:", currentUser.id, "===", review.user.id);
+    console.log("ID 타입 비교:", typeof currentUser.id, "vs", typeof review.user.id);
+  }
 
  // 접힘 상태 관리
   const [isExpanded, setIsExpanded] = useState(true);
 
+  // 리뷰 데이터
   const {
     id,
     rating,
@@ -58,6 +69,9 @@ function ReviewCard({ review, onLikeClick, onMoreClick, onDelete }: ReviewCardPr
     createdAt,
     user,
   } = review;
+
+ //리뷰 작성자와 현재 유저가 같을때만 수정,삭제 메뉴 보이도록
+ const isAuthor = currentUser && currentUser?.id === review.user.id; 
 
   // Chip 컴포넌트에 맞는 형태로 props를 변환
   const chipOptions = aroma.map((aromaKey) => ({
@@ -104,15 +118,8 @@ function ReviewCard({ review, onLikeClick, onMoreClick, onDelete }: ReviewCardPr
           </div>
         </div>
         <div className={styles.actions}>
-          <Button variant="icon" ariaLabel="좋아요" onClick={() => onLikeClick?.(id)} className={styles.iconButton}>
-            <Image
-              src={review.isLiked ? "/assets/images/icon/liked.svg" : "/assets/images/icon/like.svg"}
-              alt="좋아요 아이콘"
-              fill={true}
-              style={{ objectFit: 'cover' }} 
-            />
-          </Button>
-              <DropdownMenu items={dropdownOptions} size='M'>
+          {isAuthor ? (             
+            <DropdownMenu items={dropdownOptions} size='M'>
             <Button variant="icon" ariaLabel="더보기" className={styles.iconButton}>
               <Image
                 src="/assets/images/icon/menu.svg"
@@ -122,6 +129,17 @@ function ReviewCard({ review, onLikeClick, onMoreClick, onDelete }: ReviewCardPr
               />
             </Button>
           </DropdownMenu>
+        ) : (        
+        <Button variant="icon" ariaLabel="좋아요" onClick={() => onLikeClick?.(id)} className={styles.iconButton}>
+            <Image
+              src={review.isLiked ? "/assets/images/icon/liked.svg" : "/assets/images/icon/like.svg"}
+              alt="좋아요 아이콘"
+              fill={true}
+              style={{ objectFit: 'cover' }} 
+            />
+          </Button>)}
+  
+
         </div>
       </div>
 
