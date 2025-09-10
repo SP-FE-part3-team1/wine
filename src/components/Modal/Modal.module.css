@@ -1,28 +1,28 @@
-/* Modal Design Tokens - Using Global Variables */
+/* Modal Design Tokens - Figma Design Aligned */
 .backdrop {
-  /* Color Variables from Global */
-  --modal-overlay: rgba(0, 0, 0, 0.6);
+  /* Color Variables - Using only existing globals */
+  --modal-overlay: rgba(0, 0, 0, 0.4);
   --modal-bg: var(--white);
-  --modal-border: var(--grayscale-200);
-  --modal-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --modal-border: var(--grayscale-300);
+  --modal-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
   --modal-primary: var(--primary-purple-100);
   --modal-text: var(--grayscale-800);
-  --modal-text-secondary: var(--grayscale-600);
-  
-  /* Local Spacing Variables */
+  --modal-text-secondary: var(--grayscale-500);
+
+  /* Figma-based Spacing Variables */
   --modal-spacing-xs: 0.8rem;
   --modal-spacing-sm: 1.2rem;
   --modal-spacing-md: 1.6rem;
-  --modal-spacing-lg: 2.4rem;
-  --modal-spacing-xl: 3.2rem;
-  
-  /* Border Radius from Global */
+  --modal-spacing-lg: 2rem;
+  --modal-spacing-xl: 2.4rem;
+
+  /* Border Radius from Figma */
   --modal-radius: var(--middle);
-  
-  /* Local Effect Variables */
-  --modal-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  --modal-backdrop-transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  
+
+  /* Figma-based Effect Variables */
+  --modal-transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --modal-backdrop-transition: opacity 0.2s ease;
+
   /* Backdrop Styles */
   position: fixed;
   top: 0;
@@ -33,11 +33,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: var(--modal-spacing-md);
+  padding: var(--modal-spacing-lg);
   z-index: 1000;
-  
+
   /* Animation */
-  animation: backdropFadeIn 0.3s ease-out;
+  animation: backdropFadeIn 0.2s ease-out;
 }
 
 /* Modal Container */
@@ -50,10 +50,10 @@
   max-height: calc(100vh - 3.2rem);
   overflow: hidden;
   position: relative;
-  
+
   /* Animation */
   animation: modalSlideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  
+
   /* Focus outline */
   outline: none;
 }
@@ -63,50 +63,50 @@
   outline-offset: 2px;
 }
 
-/* Modal Sizes */
+/* Modal Sizes - Figma Aligned */
 .modal.small {
   width: 100%;
   max-width: 400px;
+  min-height: auto;
 }
 
 .modal.medium {
   width: 100%;
-  max-width: 500px;
+  max-width: 480px;
+  min-height: auto;
 }
 
 .modal.large {
   width: 100%;
-  max-width: 700px;
+  max-width: 600px;
+  min-height: auto;
 }
 
-/* Header */
+/* Header - Figma Aligned */
 .header {
   display: flex;
   align-items: center;
-  justify-content: center;
-  padding: var(--modal-spacing-lg);
-  border-bottom: 0.1rem solid var(--modal-border);
+  justify-content: flex-start;
+  padding: var(--modal-spacing-xl) 32px;
   flex-shrink: 0;
 }
 
 .title {
   margin: 0;
-  font-size: var(--xl-size);
+  font-size: 1.6rem;
   font-weight: var(--semibold);
   color: var(--modal-text);
-  line-height: 1.4;
+  line-height: 1.5;
+  text-align: left;
 }
 
-/* Close Button - Hidden for consistent design */
-.closeButton {
-  display: none;
-}
 
-/* Content */
+/* Content - Figma Aligned */
 .content {
-  padding: var(--modal-spacing-lg);
+  padding: 2.4rem;
   overflow-y: auto;
   flex: 1;
+  min-height: 0; /* Allows flex child to shrink */
 }
 
 /* Animations */
@@ -130,125 +130,89 @@
   }
 }
 
-/* Exit animations for when modal closes */
-.backdrop.closing {
-  animation: backdropFadeOut 0.2s ease-in;
-}
 
-.modal.closing {
-  animation: modalSlideOut 0.2s ease-in;
-}
+/* 반응형 디자인 - Mobile First */
 
-@keyframes backdropFadeOut {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
-}
-
-@keyframes modalSlideOut {
-  from {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-  }
-  to {
-    opacity: 0;
-    transform: scale(0.95) translateY(-10px);
-  }
-}
-
-/* 반응형 디자인 */
-@media (max-width: 76.8rem) {
+/* 테블릿 (768px ~ 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
   .backdrop {
-    padding: var(--modal-spacing-sm);
-    align-items: flex-end;
+    padding: var(--modal-spacing-lg);
   }
-  
-  .modal {
-    max-height: 90vh;
-    width: 100%;
-    border-radius: var(--modal-radius) var(--modal-radius) 0 0;
-    animation: modalSlideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  .modal.small {
+    max-width: 480px;
   }
-  
-  .modal.small,
-  .modal.medium,
+
+  .modal.medium {
+    max-width: 560px;
+  }
+
   .modal.large {
-    max-width: none;
-    width: 100%;
+    max-width: 680px;
   }
-  
+
   .header {
-    padding: var(--modal-spacing-md);
+    padding: 24px 24px 0px;
   }
-  
+
   .content {
-    padding: var(--modal-spacing-md);
+    padding: 3.2rem 2.4rem 2.4rem;
   }
-  
+
   .title {
-    font-size: var(--lg-size);
+    font-size: 1.8rem;
   }
 }
 
-@media (max-width: 37.5rem) {
+/* 데스크탑 (1024px ~) */
+@media (min-width: 1024px) {
   .backdrop {
-    padding: var(--modal-spacing-xs);
+    padding: var(--modal-spacing-xl);
   }
-  
-  .modal {
-    max-height: 95vh;
+
+  .modal.small {
+    max-width: 520px;
   }
-  
+
+  .modal.medium {
+    max-width: 640px;
+  }
+
+  .modal.large {
+    max-width: 800px;
+  }
+
   .header {
-    padding: var(--modal-spacing-sm) var(--modal-spacing-md);
+    padding: 24px 24px 0px;
   }
-  
+
   .content {
-    padding: var(--modal-spacing-sm) var(--modal-spacing-md);
+    padding: 4rem 2.4rem 2.4rem;
   }
-  
+
   .title {
-    font-size: var(--md-size);
+    font-size: 2rem;
+    font-weight: 600;
   }
 }
 
-@keyframes modalSlideUp {
-  from {
-    opacity: 0;
-    transform: translateY(100%);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
 
 /* 접근성 및 고대비 모드 */
 @media (prefers-contrast: high) {
   .modal {
     border: 2px solid var(--modal-text);
   }
-  
+
   .header {
     border-bottom: 0.2rem solid var(--modal-border);
   }
-  
-  /* Close button removed */
 }
 
 /* 동작 줄이기 설정 지원 */
 @media (prefers-reduced-motion: reduce) {
   .backdrop,
-  .modal,
-  .closeButton {
+  .modal {
     animation: none;
     transition: none;
-  }
-  
-  .closeButton:active {
-    transform: none;
   }
 }

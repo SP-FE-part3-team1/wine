@@ -1,6 +1,6 @@
 'use client';
 
-import { ChipProps, ChipOption } from '../../types/component-types';
+import { ChipProps } from '../../types/component-types';
 import styles from './Chip.module.css';
 
 export const Chip = ({ 
@@ -10,7 +10,8 @@ export const Chip = ({
   disabled = false,
   readonly = false,
   multiple = true,
-  ariaLabel = '옵션 선택'
+  ariaLabel = '옵션 선택',
+  className = ''
 }: ChipProps) => {
   const handleOptionToggle = (value: string) => {
     if (disabled || readonly) return;
@@ -20,14 +21,11 @@ export const Chip = ({
     
     if (multiple) {
       if (isSelected) {
-        // 선택 해제
         newSelectedValues = selectedValues.filter(selectedValue => selectedValue !== value);
       } else {
-        // 선택 추가
         newSelectedValues = [...selectedValues, value];
       }
     } else {
-      // 단일 선택 모드
       newSelectedValues = isSelected ? [] : [value];
     }
     
@@ -35,7 +33,7 @@ export const Chip = ({
   };
 
   return (
-    <div className={styles.container} role="group" aria-label={ariaLabel}>
+    <div className={`${styles.container} ${className}`} role="group" aria-label={ariaLabel}>
       {options.map((option) => {
         const isSelected = selectedValues.includes(option.value);
         
@@ -57,7 +55,6 @@ export const Chip = ({
   );
 };
 
-// 와인 타입 전용 래퍼 컴포넌트 (하위 호환성을 위해 유지)
 export const WineTypeChip = ({ 
   types, 
   selectedTypes, 
@@ -84,7 +81,7 @@ export const WineTypeChip = ({
     <Chip
       options={options}
       selectedValues={selectedTypes}
-      onSelectionChange={onTypesChange as (values: string[]) => void}
+      onSelectionChange={(values) => onTypesChange(values as ('RED' | 'WHITE' | 'SPARKLING')[])}
       disabled={disabled}
       ariaLabel="와인 타입 선택"
     />

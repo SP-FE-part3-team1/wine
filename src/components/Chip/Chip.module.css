@@ -29,7 +29,7 @@
   
   /* Container Styles */
   display: flex;
-  gap: var(--chip-spacing-sm);
+  gap: 0;
   flex-wrap: wrap;
 }
 
@@ -40,7 +40,7 @@
   justify-content: center;
   
   /* 크기 */
-  padding: var(--chip-spacing-sm) var(--chip-spacing-lg);
+  padding: 1rem 1.8rem;
   min-height: 3.6rem;
   
   /* 폰트 */
@@ -50,7 +50,7 @@
   
   /* 테두리 */
   border: 0.1rem solid var(--chip-gray-light);
-  border-radius: var(--chip-radius);
+  border-radius: 10rem;
   
   /* 배경 */
   background-color: var(--chip-white);
@@ -152,35 +152,46 @@
   color: var(--chip-white);
 }
 
-/* 반응형 디자인 */
-@media (max-width: 76.8rem) {
+/* 반응형 디자인 - Mobile First */
+
+/* 테블릿 (768px ~ 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
   .chip {
-    min-height: 3.2rem;
-    padding: var(--chip-spacing-xs) var(--chip-spacing-md);
-    font-size: var(--sm-size);
-  }
-  
-  .container {
-    gap: var(--chip-spacing-xs);
+    min-height: 4rem;
+    padding: 1rem 1.8rem;
+    font-size: 1.5rem;
   }
   
   .chip:hover:not(:disabled) {
-    transform: translateY(-0.1rem);
+    transform: translateY(-0.15rem);
+    box-shadow: var(--chip-shadow-md);
   }
   
   .chip.selected:hover:not(:disabled) {
-    transform: translateY(-0.1rem);
+    transform: translateY(-0.15rem);
   }
 }
 
-@media (max-width: 37.5rem) {
+/* 데스크탑 (1024px ~) */
+@media (min-width: 1024px) {
   .chip {
-    min-height: 2.8rem;
-    padding: var(--chip-spacing-xs) var(--chip-spacing-sm);
-    font-size: var(--xm-size);
+    min-height: 4.4rem;
+    padding: 1rem 1.8rem;
+    font-size: 1.6rem;
+    border-width: 0.15rem;
   }
   
-  .container {
-    gap: var(--chip-spacing-xs);
+  .chip:hover:not(:disabled) {
+    transform: translateY(-0.2rem);
+    box-shadow: var(--chip-shadow-md);
+  }
+  
+  .chip.selected:hover:not(:disabled) {
+    transform: translateY(-0.2rem);
+  }
+  
+  .chip:focus-visible {
+    outline-width: 0.3rem;
+    outline-offset: 0.3rem;
   }
 }

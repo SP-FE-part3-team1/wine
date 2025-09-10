@@ -1,65 +1,56 @@
 /* ConfirmationModal Design Tokens */
 .confirmationModal {
   /* Inherits styles from base Modal */
+  max-width: 353px !important;
+  width: 353px !important;
+  height: 172px !important;
+  min-height: 172px !important;
 }
+
+/* Base Modal content padding is now controlled via contentPadding prop */
 
 .content {
   /* Color Variables from Global */
   --confirm-primary: var(--primary-purple-100);
-  --confirm-destructive: #DC2626;
-  --confirm-destructive-light: #FEF2F2;
-  --confirm-destructive-hover: #B91C1C;
+  --confirm-destructive: #dc2626;
+  --confirm-destructive-light: #fef2f2;
+  --confirm-destructive-hover: #b91c1c;
   --confirm-gray-light: var(--grayscale-100);
   --confirm-gray-medium: var(--grayscale-300);
   --confirm-gray-dark: var(--grayscale-500);
   --confirm-gray-darker: var(--grayscale-800);
   --confirm-white: var(--white);
-  
+
   /* Local Spacing Variables */
   --confirm-spacing-sm: 0.8rem;
   --confirm-spacing-md: 1.6rem;
   --confirm-spacing-lg: 2.4rem;
-  
+
   /* Local Effect Variables */
   --confirm-transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  
-  /* Layout */
+
+  /* Layout - No padding since base Modal content now has the desired padding */
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  gap: var(--confirm-spacing-md);
-  padding: var(--confirm-spacing-sm) 0;
-}
-
-/* Icon Container */
-.iconContainer {
-  display: flex;
-  align-items: center;
+  gap: 4rem;
+  padding: 0;
+  height: 100%;
   justify-content: center;
-  width: 4.8rem;
-  height: 4.8rem;
-  border-radius: 50%;
-  margin-bottom: var(--confirm-spacing-sm);
-}
-
-.iconContainer.default {
-  background-color: var(--primary-purple-10);
-  color: var(--confirm-primary);
-}
-
-.iconContainer.destructive {
-  background-color: var(--confirm-destructive-light);
-  color: var(--confirm-destructive);
 }
 
 /* Title */
 .title {
   margin: 0;
-  font-size: var(--lg-size);
-  font-weight: var(--semibold);
+  font-size: 1.8rem;
+  font-weight: 600;
   color: var(--confirm-gray-darker);
-  line-height: 1.4;
+  line-height: 1.78; /* 32px / 18px = 1.78 */
+  height: 3.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* Message */
@@ -67,22 +58,26 @@
   margin: 0;
   font-size: var(--md-size);
   color: var(--confirm-gray-dark);
-  line-height: 1.5;
+  line-height: 3.2rem;
+  height: 3.2rem;
   max-width: 320px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* Actions */
 .actions {
   display: flex;
-  gap: var(--confirm-spacing-md);
+  justify-content: space-between;
   width: 100%;
-  margin-top: var(--confirm-spacing-sm);
+  height: 5rem;
 }
 
 /* Buttons */
 .cancelButton,
 .confirmButton {
-  flex: 1;
+  width: 15.6rem !important;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -94,7 +89,9 @@
   cursor: pointer;
   transition: var(--confirm-transition);
   outline: none;
-  min-height: 4.4rem;
+  min-height: 5rem !important;
+  height: 5rem !important;
+  flex: none !important;
 }
 
 /* Cancel Button */
@@ -133,12 +130,12 @@
 }
 
 .confirmButton.destructive {
-  background-color: var(--confirm-destructive);
+  background-color: var(--confirm-primary);
   color: var(--confirm-white);
 }
 
 .confirmButton.destructive:hover {
-  background-color: var(--confirm-destructive-hover);
+  background-color: #5a38c7;
 }
 
 .confirmButton:focus-visible {
@@ -150,34 +147,71 @@
   transform: translateY(1px);
 }
 
-/* 반응형 디자인 */
-@media (max-width: 76.8rem) {
+/* 반응형 디자인 - Mobile First */
+
+/* 테블릿 (768px ~ 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .confirmationModal {
+    max-width: 353px !important;
+    width: 353px !important;
+    height: 182px !important;
+    min-height: 182px !important;
+  }
+
   .content {
-    padding: var(--confirm-spacing-md) 0;
-    gap: var(--confirm-spacing-md);
+    padding: 0;
+    gap: 4rem !important;
+    height: 100%;
+    justify-content: center;
   }
-  
-  .iconContainer {
-    width: 4rem;
-    height: 4rem;
-  }
-  
+
   .title {
-    font-size: var(--md-size);
+    font-size: 1.8rem;
   }
-  
-  .message {
-    font-size: var(--sm-size);
-  }
-  
-  .actions {
-    flex-direction: column;
-    gap: var(--confirm-spacing-sm);
-  }
-  
+
   .cancelButton,
   .confirmButton {
-    width: 100%;
+    width: 15.6rem !important;
+    min-height: 5rem !important;
+    height: 5rem !important;
+    font-size: 1.5rem;
+    flex: none !important;
+  }
+}
+
+/* 데스크탑 (1024px ~) */
+@media (min-width: 1024px) {
+  .confirmationModal {
+    max-width: 353px !important;
+    width: 353px !important;
+    height: 182px !important;
+    min-height: 182px !important;
+  }
+
+  .content {
+    padding: 0;
+    gap: 4rem !important;
+    height: 100%;
+    justify-content: center;
+  }
+
+  .title {
+    font-size: 2rem;
+  }
+
+  .actions {
+    justify-content: space-between;
+    height: 5.4rem;
+  }
+
+  .cancelButton,
+  .confirmButton {
+    width: 15.6rem !important;
+    min-height: 5.4rem !important;
+    height: 5.4rem !important;
+    font-size: 1.6rem;
+    padding: 1.6rem 2rem;
+    flex: none !important;
   }
 }
 
@@ -186,7 +220,7 @@
   .cancelButton {
     border-width: 2px;
   }
-  
+
   .confirmButton:focus-visible,
   .cancelButton:focus-visible {
     outline-width: 3px;
@@ -199,7 +233,7 @@
   .confirmButton {
     transition: none;
   }
-  
+
   .cancelButton:active,
   .confirmButton:active {
     transform: none;

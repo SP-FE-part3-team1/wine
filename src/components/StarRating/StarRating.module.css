@@ -85,9 +85,7 @@
   color: var(--star-primary);
 }
 
-/* 포커스 상태 - outline 제거 */
 .star.focused {
-  outline: none;
   border-radius: var(--xm-size);
 }
 
@@ -133,14 +131,8 @@
   fill: url(#star-gradient);
 }
 
-/* 키보드 네비게이션 지원 - outline 제거 */
 .star.interactive:focus-visible {
-  outline: none;
   border-radius: var(--xm-size);
-}
-
-.star.interactive:focus {
-  outline: none;
 }
 
 /* 별점 애니메이션 */
@@ -160,46 +152,88 @@
   animation: starFill 0.2s ease-out;
 }
 
-/* 반응형 디자인 */
-@media (max-width: 76.8rem) {
+/* 반응형 디자인 - Mobile First */
+
+/* 테블릿 (768px ~ 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
   .star.small {
-    width: 1.4rem;
-    height: 1.4rem;
-  }
-  
-  .star.medium {
     width: 1.8rem;
     height: 1.8rem;
   }
   
-  .star.large {
+  .star.medium {
     width: 2.2rem;
     height: 2.2rem;
+  }
+  
+  .star.large {
+    width: 2.6rem;
+    height: 2.6rem;
+  }
+  
+  .star.interactive {
+    padding: 0.3rem;
+  }
+  
+  .star.interactive:hover {
+    transform: scale(1.15);
+  }
+  
+  .stars {
+    gap: 0.25rem;
+  }
+  
+  .container.large .stars {
+    gap: 0.4rem;
+  }
+}
+
+/* 데스크탑 (1024px ~) */
+@media (min-width: 1024px) {
+  .star.small {
+    width: 2rem;
+    height: 2rem;
+  }
+  
+  .star.medium {
+    width: 2.4rem;
+    height: 2.4rem;
+  }
+  
+  .star.large {
+    width: 2.8rem;
+    height: 2.8rem;
   }
   
   .star.interactive {
     padding: 0.4rem;
   }
-}
-
-@media (max-width: 37.5rem) {
-  .star.small {
-    width: 1.2rem;
-    height: 1.2rem;
+  
+  .star.interactive:hover {
+    transform: scale(1.2);
   }
   
-  .star.medium {
-    width: 1.6rem;
-    height: 1.6rem;
+  .star.interactive:active {
+    transform: scale(0.9);
   }
   
-  .star.large {
-    width: 2rem;
-    height: 2rem;
+  .stars {
+    gap: 0.3rem;
   }
   
-  .star.interactive {
-    padding: 0.3rem;
+  .container.large .stars {
+    gap: 0.5rem;
+  }
+  
+  /* 더 부드러운 애니메이션 */
+  @keyframes starFillDesktop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.3); }
+    100% { transform: scale(1); }
+  }
+  
+  .star.interactive.filled {
+    animation: starFillDesktop 0.3s ease-out;
   }
 }
 
@@ -236,9 +270,6 @@
     stroke-width: 0.1rem;
   }
   
-  .star.focused {
-    outline: none;
-  }
 }
 
 /* 동작 줄이기 설정 지원 */
@@ -260,13 +291,3 @@
   }
 }
 
-/* 다크모드 대응 (추후 확장 가능) */
-@media (prefers-color-scheme: dark) {
-  .star.empty {
-    color: var(--star-gray-medium);
-  }
-  
-  .star.filled {
-    color: var(--star-primary);
-  }
-}

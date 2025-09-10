@@ -82,9 +82,7 @@ export const StarRating = ({
     setFocusedIndex(null);
   };
 
-  const getCurrentValue = () => {
-    return hoverValue !== null ? hoverValue : value;
-  };
+  const getCurrentValue = () => hoverValue ?? value;
 
   const getStarStatus = (starIndex: number): 'empty' | 'filled' | 'half' => {
     const currentValue = getCurrentValue();
@@ -102,14 +100,7 @@ export const StarRating = ({
     const status = getStarStatus(index);
     const isFocused = focusedIndex === index;
     
-    const starClasses = `
-      ${styles.star} 
-      ${styles[size]} 
-      ${styles[status]}
-      ${isInteractive ? styles.interactive : ''}
-      ${isFocused ? styles.focused : ''}
-      ${disabled ? styles.disabled : ''}
-    `.trim();
+    const starClasses = `${styles.star} ${styles[size]} ${styles[status]}${isInteractive ? ` ${styles.interactive}` : ''}${isFocused ? ` ${styles.focused}` : ''}${disabled ? ` ${styles.disabled}` : ''}`;
 
     if (isInteractive) {
       return (
