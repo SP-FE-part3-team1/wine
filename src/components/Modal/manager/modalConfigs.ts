@@ -119,9 +119,9 @@ export const TASTE_SLIDERS = [
   },
   {
     key: "softAcidic" as const,
-    label: "부드러운 ← → 산미",
-    leftLabel: "부드러운",
-    rightLabel: "산미",
+    label: "안 셔요 ← → 셔요",
+    leftLabel: "안 셔요",
+    rightLabel: "셔요",
     min: 0,
     max: 5,
     step: 1,
