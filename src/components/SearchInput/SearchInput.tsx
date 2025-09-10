@@ -1,17 +1,19 @@
-'use client';
+"use client";
 
-import { useState, useRef, KeyboardEvent, ChangeEvent } from 'react';
-import { SearchInputProps } from '../../types/component-types';
-import styles from './SearchInput.module.css';
+import { useState, useRef, KeyboardEvent, ChangeEvent } from "react";
+import { SearchInputProps } from "../../types/component-types";
+import styles from "./SearchInput.module.css";
 
-export const SearchInput = ({ 
-  value, 
-  onChange, 
-  placeholder = "와인을 검색해 보세요", 
+export const SearchInput = ({
+  value,
+  onChange,
+  placeholder = "와인을 검색해 보세요",
   onSearch,
   onClear,
   disabled = false,
-  maxLength = 100
+  maxLength = 100,
+  onFocus,
+  onBlur,
 }: SearchInputProps) => {
   const [isFocused, setIsFocused] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -23,13 +25,13 @@ export const SearchInput = ({
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (disabled) return;
-    
-    if (e.key === 'Enter' && onSearch) {
+
+    if (e.key === "Enter" && onSearch) {
       e.preventDefault();
       onSearch(value);
     }
-    
-    if (e.key === 'Escape') {
+
+    if (e.key === "Escape") {
       inputRef.current?.blur();
       if (value && onClear) {
         onClear();
@@ -48,10 +50,21 @@ export const SearchInput = ({
     inputRef.current?.focus();
   };
 
+  const handleFocus = () => {
+    setIsFocused(true);
+    onFocus?.();
+  };
+
+  const handleBlur = () => {
+    setIsFocused(false);
+    onBlur?.();
+  };
 
   return (
-    <div 
-      className={`${styles.container} ${isFocused ? styles.focused : ''} ${disabled ? styles.disabled : ''}`}
+    <div
+      className={`${styles.container} ${isFocused ? styles.focused : ""} ${
+        disabled ? styles.disabled : ""
+      }`}
     >
       <button
         type="button"
@@ -85,8 +98,8 @@ export const SearchInput = ({
         value={value}
         onChange={handleInputChange}
         onKeyDown={handleKeyDown}
-        onFocus={() => setIsFocused(true)}
-        onBlur={() => setIsFocused(false)}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
         placeholder={placeholder}
         disabled={disabled}
         maxLength={maxLength}

@@ -63,6 +63,8 @@ export interface SearchInputProps {
   onClear?: () => void;
   disabled?: boolean;
   maxLength?: number;
+  onFocus?: () => void;
+  onBlur?: () => void;
 }
 
 // Modal 컴포넌트 타입 정의
@@ -119,7 +121,10 @@ export interface WineFormModalProps {
 }
 
 // 리뷰 관련 타입
-export type ReviewFormData = Omit<components["schemas"]["CreateReviewBody"], "wineId">;
+export type ReviewFormData = Omit<
+  components["schemas"]["CreateReviewBody"],
+  "wineId"
+>;
 
 export interface ReviewFormModalProps {
   mode: "create" | "edit";

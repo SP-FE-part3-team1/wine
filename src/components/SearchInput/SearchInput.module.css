@@ -8,29 +8,29 @@
   --search-gray-medium: var(--grayscale-300);
   --search-gray-dark: var(--grayscale-500);
   --search-gray-darker: var(--grayscale-800);
-  
+
   /* Local Spacing Variables */
   --search-spacing-xs: 0.4rem;
   --search-spacing-sm: 0.8rem;
   --search-spacing-md: var(--small);
-  
+
   /* Font Variables from Global */
   --search-font-sm: var(--md-size);
   --search-font-md: var(--lg-size);
-  
+
   /* Border Radius from Global */
   --search-radius: var(--small);
   --search-radius-sm: var(--xm-size);
-  
+
   /* Local Effect Variables */
   --search-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
   --search-transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  
+
   /* Container Styles */
   position: relative;
   display: flex;
   align-items: center;
-  width: 40rem;
+  width: 100%;
   height: 4.8rem;
   background-color: var(--search-white);
   border: 0.1rem solid var(--search-gray-medium);
@@ -143,25 +143,25 @@
 /* 테블릿 (768px ~ 1023px) */
 @media (min-width: 768px) and (max-width: 1023px) {
   .container {
-    width: 32rem;
+    width: 100%;
     height: 5.2rem;
   }
-  
+
   .input {
     font-size: 1.5rem;
     padding: 1.2rem 1rem;
   }
-  
+
   .searchIcon {
     padding: 1.2rem;
   }
-  
+
   .clearButton {
     width: 3.6rem;
     height: 3.6rem;
     margin: 0.8rem;
   }
-  
+
   .container.focused {
     box-shadow: 0 0 0 0.4rem rgba(106, 67, 219, 0.1), var(--search-shadow-sm);
   }
@@ -170,33 +170,32 @@
 /* 데스크탑 (1024px ~) */
 @media (min-width: 1024px) {
   .container {
-    width: 44rem;
+    width: 70rem;
     height: 5.6rem;
   }
-  
+
   .input {
     font-size: 1.6rem;
     padding: 1.6rem 1.2rem;
   }
-  
+
   .searchIcon {
     padding: 1.6rem;
   }
-  
+
   .clearButton {
     width: 4rem;
     height: 4rem;
     margin: 1rem;
   }
-  
+
   .container.focused {
     box-shadow: 0 0 0 0.4rem rgba(106, 67, 219, 0.12), var(--search-shadow-sm);
   }
-  
+
   .searchIcon:focus-visible,
   .clearButton:focus-visible {
     outline-width: 0.3rem;
     outline-offset: 0.3rem;
   }
 }
-
