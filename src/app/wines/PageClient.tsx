@@ -12,10 +12,10 @@ import { Chip } from "@/components/Chip";
 import RangeSlider from "@/components/RangeSlider/RangeSlider";
 import { RatingRadio } from "@/components/RatingRadio";
 import { components } from "@/types/types";
-import { ModalProvider, useQuickModal } from "@/components/Modal";
+import { useQuickModal } from "@/components/Modal";
 
 export type WineListType = components["schemas"]["WineListType"];
-function WinePageContent({
+export default function PageClient({
   wines,
   recommendedWines,
 }: {
@@ -67,7 +67,7 @@ function WinePageContent({
 
       {/* 필터/검색/등록 버튼 */}
       <div className={styles.topBar}>
-        <div className={styles.filterWrapper}>
+        <div className={styles.filterWrapper} onClick={() => modal.filter()}>
           <FilterIcon />
         </div>
         <div className={styles.searchInput}>
@@ -89,7 +89,10 @@ function WinePageContent({
           </Button>
         </div>
       </div>
-      <div className={styles.mobileFilterWrapper}>
+      <div
+        className={styles.mobileFilterWrapper}
+        onClick={() => modal.filter()}
+      >
         <FilterIcon />
       </div>
 
@@ -144,6 +147,7 @@ function WinePageContent({
             variant="primary"
             ariaLabel="와인 등록하기"
             className={styles.registerButtonSide}
+            onClick={() => modal.add()}
           >
             와인 등록하기
           </Button>
@@ -175,21 +179,11 @@ function WinePageContent({
           variant="primary"
           ariaLabel="와인 등록하기"
           className={styles.mobileRegisterBtn}
+          onClick={() => modal.add()}
         >
           와인 등록하기
         </Button>
       </div>
     </main>
-  );
-}
-
-export default function PageClient(props: {
-  wines: WineListType[];
-  recommendedWines: WineListType[];
-}) {
-  return (
-    <ModalProvider>
-      <WinePageContent {...props} />
-    </ModalProvider>
   );
 }
