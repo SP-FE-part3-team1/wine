@@ -21,7 +21,7 @@ interface ReviewListProps {
 }
 
 
-export default function ReviewList({ initialReviews, currentUser }: ReviewListProps) { 
+export default function ReviewList({ initialReviews, wineId, currentUser }: ReviewListProps) { 
   const modal = useQuickModal();
 
   // 리뷰 상태 관리
@@ -59,7 +59,11 @@ export default function ReviewList({ initialReviews, currentUser }: ReviewListPr
       }
   };
 
-  //@TODO: 수정 핸들러 구현
+  //수정 핸들러
+  const handleEdit = (reviewId: number) => {
+      modal.review.edit(wineId, reviewId);
+    }
+
 
   // 삭제 핸들러
   const handleDelete = (reviewId: number) => {
@@ -99,6 +103,7 @@ export default function ReviewList({ initialReviews, currentUser }: ReviewListPr
               review={review}
               onLikeClick={() => handleLike(review.id, review.isLiked)}
               onDelete={handleDelete} 
+              onEdit={handleEdit}
               currentUser={currentUser}
             />
           ))

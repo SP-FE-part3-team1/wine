@@ -41,7 +41,7 @@ const AROMA_MAP: { [key: string]: string } = {
 };
 
 
-function ReviewCard({ review, onLikeClick, onMoreClick, onDelete, currentUser }: ReviewCardProps) {
+function ReviewCard({ review, onLikeClick, onEdit, onDelete, currentUser }: ReviewCardProps) {
 
  // 접힘 상태 관리
   const [isExpanded, setIsExpanded] = useState(true);
@@ -79,7 +79,7 @@ function ReviewCard({ review, onLikeClick, onMoreClick, onDelete, currentUser }:
       label: '수정하기',
       onClick: () => {
         console.log(`리뷰 ${id} 수정`);
-        onMoreClick?.(id); 
+        onEdit(id); 
       },
     },
     {
