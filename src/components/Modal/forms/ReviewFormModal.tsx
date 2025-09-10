@@ -143,7 +143,11 @@ export const ReviewFormModal = ({
               <StarRating
                 value={formData.rating}
                 onChange={(newRating) => updateFormData("rating", newRating)}
+<<<<<<< HEAD
                 size="large" /* CSS에서 제어할 수 있도록 large 사이즈 지정 */
+=======
+                size="small"
+>>>>>>> develop
                 maxRating={5}
                 disabled={isSubmitting}
               />

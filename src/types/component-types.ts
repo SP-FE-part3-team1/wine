@@ -1,5 +1,5 @@
 // Wine Platform - 공통 컴포넌트 타입 정의
-
+import { FocusEvent } from "react";
 import { components } from "./types.d";
 // API 타입에서 가져온 와인 타입
 export type WineType = "RED" | "WHITE" | "SPARKLING";
@@ -63,6 +63,8 @@ export interface SearchInputProps {
   onClear?: () => void;
   disabled?: boolean;
   maxLength?: number;
+  onFocus?: () => void;
+  onBlur?: (e: FocusEvent<HTMLInputElement>) => void;
 }
 
 // Modal 컴포넌트 타입 정의
