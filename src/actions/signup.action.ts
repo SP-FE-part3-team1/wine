@@ -100,7 +100,7 @@ export async function signupAction(
       const { accessToken, refreshToken } = responseData;
       (await cookies()).set("accessToken", accessToken, {
         httpOnly: true,
-        secure: false,
+        secure: Boolean(process.env.NEXT_PUBLIC_SECURE),
         path: "/",
         sameSite: "lax",
         maxAge: 60 * 60,
@@ -108,7 +108,7 @@ export async function signupAction(
 
       (await cookies()).set("refreshToken", refreshToken, {
         httpOnly: true,
-        secure: false,
+        secure: Boolean(process.env.NEXT_PUBLIC_SECURE),
         path: "/",
         sameSite: "lax",
         maxAge: 60 * 60 * 24,

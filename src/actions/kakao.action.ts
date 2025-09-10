@@ -71,7 +71,7 @@ export async function signInWithKakao({
 
     (await cookies()).set("accessToken", data.accessToken, {
       httpOnly: true,
-      secure: false,
+      secure: Boolean(process.env.NEXT_PUBLIC_SECURE),
       path: "/",
       sameSite: "lax",
       maxAge: 60 * 60,
@@ -79,7 +79,7 @@ export async function signInWithKakao({
 
     (await cookies()).set("refreshToken", data.refreshToken, {
       httpOnly: true,
-      secure: false,
+      secure: Boolean(process.env.NEXT_PUBLIC_SECURE),
       path: "/",
       sameSite: "lax",
       maxAge: 60 * 60 * 24,

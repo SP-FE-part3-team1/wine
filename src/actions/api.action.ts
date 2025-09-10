@@ -24,7 +24,7 @@ export async function setNewAccessToken() {
 
       (await cookies()).set("accessToken", newAccessToken, {
         httpOnly: true,
-        secure: false,
+        secure: Boolean(process.env.NEXT_PUBLIC_SECURE),
         path: "/",
         sameSite: "lax",
         maxAge: 60 * 60,
@@ -64,7 +64,10 @@ export async function fetchWithAuth(url: string, options: RequestInit = {}) {
 }
 
 //클라이언트에서 사용할 수 있는 api호출 함수
-export async function fetchWithAuthforClient(url: string, options: RequestInit = {}) {
+export async function fetchWithAuthforClient(
+  url: string,
+  options: RequestInit = {}
+) {
   const accessToken = (await cookies()).get("accessToken")?.value;
 
   const headers = {
@@ -88,7 +91,6 @@ export async function fetchWithAuthforClient(url: string, options: RequestInit =
 
   return JSON.parse(JSON.stringify(response));
 }
-
 
 /**
  * 예시자료입니다.
