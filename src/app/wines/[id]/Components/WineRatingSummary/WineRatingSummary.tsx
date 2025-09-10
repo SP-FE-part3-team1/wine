@@ -12,6 +12,7 @@ function WineRatingSummary({
   avgRating,
   reviewCount,
   ratingDistribution,
+  wineId,
 }: WineRatingSummaryProps) {
   // 모달
   const modal = useQuickModal();
@@ -22,7 +23,7 @@ function WineRatingSummary({
 
   // '리뷰 남기기' 버튼 클릭 핸들러
   const handleWriteReviewClick = () => {
-    modal.add();
+    modal.review.create(wineId);
   };
 
   return (
