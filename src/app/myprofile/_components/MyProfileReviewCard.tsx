@@ -113,8 +113,7 @@ function MyProfileReviewCard({ review, onDeleted }: Props) {
 
       <ConfirmationModal
         isOpen={open}
-        title="리뷰 삭제"
-        message="작성한 리뷰를 삭제하시겠습니까?"
+        title="작성한 리뷰를 삭제하시겠습니까?"
         confirmText="삭제"
         cancelText="취소"
         onClose={() => setOpen(false)}
