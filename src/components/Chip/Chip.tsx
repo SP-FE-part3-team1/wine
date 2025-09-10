@@ -1,6 +1,6 @@
 'use client';
 
-import { ChipProps, ChipOption } from '../../types/component-types';
+import { ChipProps } from '../../types/component-types';
 import styles from './Chip.module.css';
 
 export const Chip = ({ 

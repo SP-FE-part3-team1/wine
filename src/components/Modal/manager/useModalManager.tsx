@@ -3,28 +3,8 @@
 import { useState, useCallback } from 'react';
 
 import { ModalType, ModalState, UseModalManagerReturn, FilterState } from '../../../types/component-types';
-import { fetchWithAuth } from '../../../actions/api.action';
-
-// API 호출 함수들
-const fetchWineData = async (wineId: string) => {
-  try {
-    const data = await fetchWithAuth(`/wines/${wineId}`);
-    return data;
-  } catch (error) {
-    console.error('Error fetching wine data:', error);
-    throw error;
-  }
-};
-
-const fetchReviewData = async (reviewId: string) => {
-  try {
-    const data = await fetchWithAuth(`/reviews/${reviewId}`);
-    return data;
-  } catch (error) {
-    console.error('Error fetching review data:', error);
-    throw error;
-  }
-};
+import { getWine } from '../../../actions/wine.action';
+import { getReview } from '../../../actions/review.action';
 
 /**
  * Modal Manager Hook
@@ -65,18 +45,14 @@ export const useModalManager = (): UseModalManagerReturn => {
       setModalState(prev => ({ ...prev, isLoading: true }));
       
       try {
-        const wineData = await fetchWineData(wineId);
+        const wineData = await getWine(wineId);
         // API 응답을 폼 데이터 형식으로 변환
         initialData = {
-          name: wineData.name || '',
-          type: wineData.type || 'RED',
-          region: wineData.region || '',
-          year: wineData.year || new Date().getFullYear(),
-          price: wineData.price || 0,
-          alcoholContent: wineData.alcoholContent || 0,
-          volume: wineData.volume || 750,
-          tasteProfile: wineData.tasteProfile || [],
-          image: wineData.image || ''
+          name: wineData.name,
+          type: wineData.type as 'RED' | 'WHITE' | 'SPARKLING',
+          region: wineData.region,
+          price: wineData.price,
+          image: wineData.image
         };
       } catch (error) {
         console.error('Failed to load wine data:', error);
@@ -118,20 +94,16 @@ export const useModalManager = (): UseModalManagerReturn => {
       setModalState(prev => ({ ...prev, isLoading: true }));
       
       try {
-        const reviewData = await fetchReviewData(reviewId);
+        const reviewData = await getReview(reviewId);
         // API 응답을 폼 데이터 형식으로 변환
         initialData = {
-          rating: reviewData.rating || 0,
-          content: reviewData.content || '',
-          tasteProfile: reviewData.tasteProfile || [],
-          body: reviewData.body || 3,
-          tannin: reviewData.tannin || 3,
-          sweetness: reviewData.sweetness || 3,
-          acidity: reviewData.acidity || 3,
-          lightBold: reviewData.lightBold || 0,
-          smoothTannic: reviewData.smoothTannic || 0,
-          drySweet: reviewData.drySweet || 0,
-          softAcidic: reviewData.softAcidic || 0
+          rating: reviewData.rating,
+          content: reviewData.content,
+          aroma: reviewData.aroma,
+          lightBold: reviewData.lightBold,
+          smoothTannic: reviewData.smoothTannic,
+          drySweet: reviewData.drySweet,
+          softAcidic: reviewData.softAcidic
         };
       } catch (error) {
         console.error('Failed to load review data:', error);

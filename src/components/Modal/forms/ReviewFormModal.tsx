@@ -2,13 +2,37 @@
 
 import { useState, useCallback } from 'react';
 import { Modal } from '../Modal';
-import { ReviewFormModalProps, ReviewFormData, TASTE_PROFILE_OPTIONS } from '../../../types/component-types';
+import { ReviewFormModalProps, ReviewFormData, ChipOption } from '../../../types/component-types';
 import { REVIEW_FORM_CONFIG, transformReviewDataForApi } from '../manager/modalConfigs';
-import { fetchWithAuth } from '../../../actions/api.action';
+import { createReview, updateReview } from '../../../actions/review.action';
+import { components } from '../../../types/types';
 import { StarRating } from '../../StarRating/StarRating';
 import { Chip } from '../../Chip/Chip';
 import Button from '../../Button/Button';
 import styles from './ReviewFormModal.module.css';
+
+// API 스키마에 맞는 아로마 옵션들
+const AROMA_OPTIONS: ChipOption[] = [
+  { value: 'CHERRY', label: '체리' },
+  { value: 'BERRY', label: '베리' },
+  { value: 'OAK', label: '오크' },
+  { value: 'VANILLA', label: '바닐라' },
+  { value: 'PEPPER', label: '후추' },
+  { value: 'BAKING', label: '베이킹' },
+  { value: 'GRASS', label: '풀' },
+  { value: 'APPLE', label: '사과' },
+  { value: 'PEACH', label: '복숭아' },
+  { value: 'CITRUS', label: '시트러스' },
+  { value: 'TROPICAL', label: '열대과일' },
+  { value: 'MINERAL', label: '미네랄' },
+  { value: 'FLOWER', label: '꽃' },
+  { value: 'TOBACCO', label: '담배' },
+  { value: 'EARTH', label: '흙' },
+  { value: 'CHOCOLATE', label: '초콜릿' },
+  { value: 'SPICE', label: '향신료' },
+  { value: 'CARAMEL', label: '카라멜' },
+  { value: 'LEATHER', label: '가죽' }
+];
 
 export const ReviewFormModal = ({
   mode,
@@ -32,7 +56,7 @@ export const ReviewFormModal = ({
 
   // 폼 검증
   const validateForm = (): boolean => {
-    return formData.content.trim().length > 0;
+    return formData.content.trim().length > 0 && formData.rating > 0;
   };
 
   // 폼 제출
@@ -43,19 +67,13 @@ export const ReviewFormModal = ({
 
     try {
       const apiData = transformReviewDataForApi(formData, wineId);
-      const endpoint = mode === 'edit' && reviewId
-        ? `/reviews/${reviewId}`
-        : '/reviews';
-
-      const method = mode === 'edit' ? 'PATCH' : 'POST';
-
-      const result = await fetchWithAuth(endpoint, {
-        method,
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(apiData)
-      });
+      
+      let result;
+      if (mode === 'edit' && reviewId) {
+        result = await updateReview(reviewId, apiData);
+      } else {
+        result = await createReview(apiData);
+      }
 
       if (onSuccess) {
         onSuccess(result);
@@ -64,7 +82,7 @@ export const ReviewFormModal = ({
       onClose();
     } catch (error) {
       console.error(`Error ${mode}ing review:`, error);
-      // 인증 실패 시 로그인 페이지로 리다이렉트는 fetchWithAuth에서 처리됨
+      // TODO: 사용자에게 에러 메시지 표시
     } finally {
       setIsSubmitting(false);
     }
@@ -112,14 +130,34 @@ export const ReviewFormModal = ({
           </div>
         </div>
 
+        {/* 별점 입력 */}
+        <div className={styles.section}>
+          <h3 className={styles.sectionTitle}>별점을 남겨주세요</h3>
+          <div className={styles.ratingSection}>
+            <StarRating
+              value={formData.rating}
+              onChange={(rating) => updateFormData('rating', rating)}
+              size="large"
+              maxRating={5}
+              disabled={isSubmitting}
+            />
+            <span className={styles.ratingText}>
+              {formData.rating > 0 ? `${formData.rating}점` : '별점을 선택해주세요'}
+            </span>
+          </div>
+        </div>
+
         {/* 리뷰 내용 입력 - 리뷰등록.png 정확히 구현 */}
-        <textarea
-          className={styles.reviewTextarea}
-          placeholder="후기를 작성해 주세요"
-          value={formData.content}
-          onChange={(e) => updateFormData('content', e.target.value)}
-          disabled={isSubmitting}
-        />
+        <div className={styles.section}>
+          <h3 className={styles.sectionTitle}>리뷰를 작성해주세요</h3>
+          <textarea
+            className={styles.reviewTextarea}
+            placeholder="후기를 작성해 주세요"
+            value={formData.content}
+            onChange={(e) => updateFormData('content', e.target.value)}
+            disabled={isSubmitting}
+          />
+        </div>
 
         {/* 맛 특성 슬라이더 - 리뷰등록.png 정확히 구현 */}
         <div className={styles.section}>
@@ -135,8 +173,8 @@ export const ReviewFormModal = ({
                 min="0"
                 max="5"
                 step="1"
-                value={formData.body || 3}
-                onChange={(e) => updateFormData('body', parseInt(e.target.value))}
+                value={formData.lightBold}
+                onChange={(e) => updateFormData('lightBold', parseInt(e.target.value))}
                 className={styles.tasteSlider}
                 disabled={isSubmitting}
               />
@@ -151,8 +189,8 @@ export const ReviewFormModal = ({
                 min="0"
                 max="5"
                 step="1"
-                value={formData.tannin || 3}
-                onChange={(e) => updateFormData('tannin', parseInt(e.target.value))}
+                value={formData.smoothTannic}
+                onChange={(e) => updateFormData('smoothTannic', parseInt(e.target.value))}
                 className={styles.tasteSlider}
                 disabled={isSubmitting}
               />
@@ -167,8 +205,8 @@ export const ReviewFormModal = ({
                 min="0"
                 max="5"
                 step="1"
-                value={formData.sweetness || 3}
-                onChange={(e) => updateFormData('sweetness', parseInt(e.target.value))}
+                value={formData.drySweet}
+                onChange={(e) => updateFormData('drySweet', parseInt(e.target.value))}
                 className={styles.tasteSlider}
                 disabled={isSubmitting}
               />
@@ -183,8 +221,8 @@ export const ReviewFormModal = ({
                 min="0"
                 max="5"
                 step="1"
-                value={formData.acidity || 3}
-                onChange={(e) => updateFormData('acidity', parseInt(e.target.value))}
+                value={formData.softAcidic}
+                onChange={(e) => updateFormData('softAcidic', parseInt(e.target.value))}
                 className={styles.tasteSlider}
                 disabled={isSubmitting}
               />
@@ -197,9 +235,9 @@ export const ReviewFormModal = ({
           <h3 className={styles.sectionTitle}>기억에 남는 향이 있나요?</h3>
           <div className={styles.tasteChips}>
             <Chip
-              options={TASTE_PROFILE_OPTIONS}
-              selectedValues={formData.tasteProfile}
-              onSelectionChange={(values) => updateFormData('tasteProfile', values)}
+              options={AROMA_OPTIONS}
+              selectedValues={formData.aroma}
+              onSelectionChange={(values) => updateFormData('aroma', values as components['schemas']['Aroma'][])}
               multiple
               ariaLabel="기억에 남는 향 선택"
               disabled={isSubmitting}

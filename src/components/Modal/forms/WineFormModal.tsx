@@ -4,7 +4,7 @@ import { useState, useCallback } from 'react';
 import { Modal } from '../Modal';
 import { WineFormModalProps, WineFormData, WineType, WINE_TYPE_OPTIONS } from '../../../types/component-types';
 import { WINE_FORM_CONFIG, transformWineDataForApi } from '../manager/modalConfigs';
-import { fetchWithAuth } from '../../../actions/api.action';
+import { createWine, updateWine } from '../../../actions/wine.action';
 import CustomInput from '../../Input/CustomInput';
 import Select from '../../Select/Select';
 import Button from '../../Button/Button';
@@ -31,7 +31,7 @@ export const WineFormModal = ({
 
   // 폼 검증
   const validateForm = (): boolean => {
-    return !!(formData.name && formData.type && formData.region && formData.price >= 0);
+    return !!(formData.name && formData.type && formData.region && formData.price >= 0 && formData.image);
   };
 
   // 폼 제출
@@ -42,19 +42,13 @@ export const WineFormModal = ({
     
     try {
       const apiData = transformWineDataForApi(formData);
-      const endpoint = mode === 'edit' && wineId 
-        ? `/wines/${wineId}`
-        : '/wines';
       
-      const method = mode === 'edit' ? 'PATCH' : 'POST';
-      
-      const result = await fetchWithAuth(endpoint, {
-        method,
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(apiData)
-      });
+      let result;
+      if (mode === 'edit' && wineId) {
+        result = await updateWine(wineId, apiData);
+      } else {
+        result = await createWine(apiData);
+      }
       
       if (onSuccess) {
         onSuccess(result);
@@ -63,7 +57,7 @@ export const WineFormModal = ({
       onClose();
     } catch (error) {
       console.error(`Error ${mode}ing wine:`, error);
-      // 인증 실패 시 로그인 페이지로 리다이렉트는 fetchWithAuth에서 처리됨
+      // TODO: 사용자에게 에러 메시지 표시
     } finally {
       setIsSubmitting(false);
     }
@@ -138,14 +132,30 @@ export const WineFormModal = ({
 
         {/* 와인 사진 */}
         <div className={styles.formField}>
-          <label className={styles.fieldLabel}>와인 사진</label>
-          <div className={styles.imageUpload}>
-            <div className={styles.uploadIcon}>
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
-                <path d="M19 7v2.99s-1.99.01-2 0V7h-3s.01-1.99 0-2h3V2h2v3h3v2h-3zm-3 4V8h-3V5H5c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-8h-3zM5 19l3-4 2 3 3-4 4 5H5z" fill="#C4C4C4"/>
-              </svg>
+          <label className={styles.fieldLabel}>와인 사진 URL</label>
+          <CustomInput
+            id="wine-image"
+            name="image"
+            type="text"
+            placeholder="이미지 URL을 입력하세요 (예: https://example.com/wine.jpg)"
+            value={formData.image}
+            handleChange={(e) => updateFormData('image', e.target.value)}
+            error={!formData.image}
+            errorText="이미지 URL을 입력해주세요"
+            labelText=""
+          />
+          {formData.image && (
+            <div className={styles.imagePreview}>
+              <img 
+                src={formData.image} 
+                alt="와인 이미지 미리보기" 
+                className={styles.previewImage}
+                onError={(e) => {
+                  (e.target as HTMLImageElement).style.display = 'none';
+                }}
+              />
             </div>
-          </div>
+          )}
         </div>
 
         {/* 버튼 그룹 */}
