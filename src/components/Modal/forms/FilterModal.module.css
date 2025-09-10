@@ -225,11 +225,7 @@
 
 /* 와인 타입 섹션 너비 조정 */
 .wineTypeSection {
-  width: 269px;
-}
-
-.wineTypeChipContainer {
-  justify-content: space-between !important;
+  width: 100%;
 }
 
 /* 애니메이션 */
