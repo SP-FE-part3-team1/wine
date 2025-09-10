@@ -7,6 +7,9 @@ export { useModal as useModalState } from './useModal';
 export { ModalProvider, useModal, useWineModal, useReviewModal, useFilterModal } from './manager/ModalProvider';
 export { useModalManager } from './manager/useModalManager';
 
+// Smart Modal Hook 시스템
+export { useSmartModal, useQuickModal } from './hooks/useSmartModal';
+
 // Form Modals
 export { WineFormModal, ReviewFormModal, FilterModal } from './forms';
 
