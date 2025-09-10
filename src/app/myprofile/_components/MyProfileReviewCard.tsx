@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useCallback } from "react";
 import Image from "next/image";
 import Tag from "@/components/Tag/Tag";
 import styles from "./MyProfileReviewCard.module.css";
@@ -7,24 +8,55 @@ import Button from "@/components/Button/Button";
 import font from "@/app/fonts.module.css";
 import DropdownMenu from "@/components/DropdownMenu/DropdownMenu";
 import { DropdownMenuItem } from "@/components/DropdownMenu/types";
+import { useQuickModal, ConfirmationModal } from "@/components/Modal";
+import { deleteReview } from "@/actions/review.action";
 
 export type Review = {
   id: string;
-  rating: number; // 별점
+  rating: number;
   time: string;
-  wine: string; //와인 이름
-  note: string; // tasting note
+  wine: string;
+  note: string;
+  /** 있으면 리뷰 수정에 함께 사용됨 */
+  wineId?: string | number;
 };
 
 type Props = {
   review: Review;
-  onMenuSelect?: (action: "edit" | "delete", id: string) => void;
+  /** 선택: 부모에서 삭제 후 목록 갱신하고 싶으면 콜백 전달 */
+  onDeleted?: (id: string) => void;
 };
 
-function MyProfileReviewCard({ review, onMenuSelect }: Props) {
+function MyProfileReviewCard({ review, onDeleted }: Props) {
+  const modal = useQuickModal();
+  const [open, setOpen] = useState(false);
+
+  const handleEditReview = useCallback(() => {
+    if (review.wineId != null) {
+      modal.review.edit(String(review.wineId), review.id);
+    } else {
+      // wineId가 없으면 reviewId만으로 동작하는 구현 fallback
+      modal.edit({ reviewId: review.id });
+    }
+  }, [modal, review.id, review.wineId]);
+
+  // 삭제 확인 모달 열기
+  const handleAskDeleteReview = useCallback(() => {
+    setOpen(true);
+  }, []);
+
+  // 삭제 확정
+  const handleConfirmDeleteReview = useCallback(async () => {
+    await deleteReview(review.id);
+    onDeleted?.(review.id);
+    // ConfirmationModal은 onConfirm 실행 직후 onClose를 자동 호출(현재 구현)하므로
+    // 여기서 setOpen(false)는 불필요하지만, 안전하게 두고 싶으면 아래 주석 해제:
+    // setOpen(false);
+  }, [review.id, onDeleted]);
+
   const menuItems: DropdownMenuItem[] = [
-    { label: "수정하기", onClick: () => onMenuSelect?.("edit", review.id) },
-    { label: "삭제하기", onClick: () => onMenuSelect?.("delete", review.id) },
+    { label: "수정하기", onClick: handleEditReview },
+    { label: "삭제하기", onClick: handleAskDeleteReview },
   ];
 
   return (
@@ -52,6 +84,7 @@ function MyProfileReviewCard({ review, onMenuSelect }: Props) {
         </div>
         <div className={styles.right}>
           <DropdownMenu items={menuItems} size="S">
+            {/* 케밥 버튼은 메뉴만 열기 */}
             <Button
               variant="icon"
               ariaLabel="Kebab menu"
@@ -68,6 +101,7 @@ function MyProfileReviewCard({ review, onMenuSelect }: Props) {
           </DropdownMenu>
         </div>
       </div>
+
       <div className={styles.review}>
         <div className={`${styles.wine} ${font["text-md-regular"]}`}>
           {review.wine ?? "와인 이름 없음"}
@@ -76,6 +110,15 @@ function MyProfileReviewCard({ review, onMenuSelect }: Props) {
           {review.note}
         </div>
       </div>
+
+      <ConfirmationModal
+        isOpen={open}
+        title="작성한 리뷰를 삭제하시겠습니까?"
+        confirmText="삭제"
+        cancelText="취소"
+        onClose={() => setOpen(false)}
+        onConfirm={handleConfirmDeleteReview}
+      />
     </div>
   );
 }
