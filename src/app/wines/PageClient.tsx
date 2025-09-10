@@ -29,6 +29,7 @@ export default function PageClient({
   const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 400000]);
   const [rating, setRating] = useState<string>("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // 검색/필터링 로직
   const filteredWines = wines.filter((wine) => {
@@ -78,7 +79,20 @@ export default function PageClient({
             onSearch={(val) => console.log("검색 실행:", val)}
             onClear={() => setSearch("")}
             onFocus={() => setIsSearching(true)}
-            onBlur={() => setIsSearching(false)}
+            onBlur={(e) => {
+              if (isModalOpen) return; // 모달 열려 있으면 blur 무시
+
+              const target = e.relatedTarget as HTMLElement | null;
+              if (!target) {
+                setIsSearching(false);
+                return;
+              }
+
+              const btnClass = styles.mobileRegisterBtn ?? "";
+              if (!btnClass || !target.classList.contains(btnClass)) {
+                setIsSearching(false);
+              }
+            }}
           />
         </div>
         <div className={styles.btn}>
@@ -177,13 +191,21 @@ export default function PageClient({
         </div>
       </div>
       {/* 모바일 전용 하단 고정 버튼 */}
-      {isSearching && (
+      {isSearching && !isModalOpen && (
         <div className={styles.mobileBtnBottom}>
           <Button
             variant="primary"
             ariaLabel="와인 등록하기"
             className={styles.mobileRegisterBtn}
-            onClick={() => modal.add()}
+            onClick={() => {
+              setIsModalOpen(true);
+              modal.add({
+                onClose: () => {
+                  setIsModalOpen(false);
+                  setIsSearching(true);
+                },
+              });
+            }}
           >
             와인 등록하기
           </Button>
