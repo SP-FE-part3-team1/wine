@@ -25,6 +25,7 @@ export default function PageClient({
   const router = useRouter();
   const modal = useQuickModal();
   const [search, setSearch] = useState("");
+  const [isSearching, setIsSearching] = useState(false);
   const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 400000]);
   const [rating, setRating] = useState<string>("");
@@ -76,6 +77,8 @@ export default function PageClient({
             onChange={setSearch}
             onSearch={(val) => console.log("검색 실행:", val)}
             onClear={() => setSearch("")}
+            onFocus={() => setIsSearching(true)}
+            onBlur={() => setIsSearching(false)}
           />
         </div>
         <div className={styles.btn}>
@@ -174,16 +177,18 @@ export default function PageClient({
         </div>
       </div>
       {/* 모바일 전용 하단 고정 버튼 */}
-      <div className={styles.mobileBtnBottom}>
-        <Button
-          variant="primary"
-          ariaLabel="와인 등록하기"
-          className={styles.mobileRegisterBtn}
-          onClick={() => modal.add()}
-        >
-          와인 등록하기
-        </Button>
-      </div>
+      {isSearching && (
+        <div className={styles.mobileBtnBottom}>
+          <Button
+            variant="primary"
+            ariaLabel="와인 등록하기"
+            className={styles.mobileRegisterBtn}
+            onClick={() => modal.add()}
+          >
+            와인 등록하기
+          </Button>
+        </div>
+      )}
     </main>
   );
 }
