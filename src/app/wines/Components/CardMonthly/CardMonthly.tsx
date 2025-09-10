@@ -21,7 +21,13 @@ const CardMonthly = ({
       <div className={styles.body}>
         {imageUrl && (
           <div className={styles.imageWrapper}>
-            <img src={imageUrl} alt="와인 이미지" className={styles.image} />
+            <Image
+              src={imageUrl}
+              alt="와인 이미지"
+              width={38}
+              height={136}
+              className={styles.image}
+            />
           </div>
         )}
         <div className={styles.content}>
