@@ -41,7 +41,12 @@ const AROMA_MAP: { [key: string]: string } = {
 };
 
 
-function ReviewCard({ review, onLikeClick, onMoreClick, onDelete }: ReviewCardProps) {
+function ReviewCard({ review, onLikeClick, onMoreClick, onDelete, currentUser }: ReviewCardProps) {
+
+ // 접힘 상태 관리
+  const [isExpanded, setIsExpanded] = useState(true);
+
+  // 리뷰 데이터
   const {
     id,
     rating,
@@ -53,11 +58,10 @@ function ReviewCard({ review, onLikeClick, onMoreClick, onDelete }: ReviewCardPr
     content,
     createdAt,
     user,
-    isLiked,
   } = review;
 
-  // 드롭다운 열림/ 닫힘 관리
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+ //리뷰 작성자와 현재 유저가 같을때만 수정,삭제 메뉴 보이도록
+ const isAuthor = currentUser && currentUser?.id === review.user.id; 
 
   // Chip 컴포넌트에 맞는 형태로 props를 변환
   const chipOptions = aroma.map((aromaKey) => ({
@@ -76,7 +80,6 @@ function ReviewCard({ review, onLikeClick, onMoreClick, onDelete }: ReviewCardPr
       onClick: () => {
         console.log(`리뷰 ${id} 수정`);
         onMoreClick?.(id); 
-        setIsDropdownOpen(false);
       },
     },
     {
@@ -84,13 +87,17 @@ function ReviewCard({ review, onLikeClick, onMoreClick, onDelete }: ReviewCardPr
       onClick: () => {
         onDelete(id);
         console.log(`리뷰 ${id} 삭제`);
-        setIsDropdownOpen(false);
       },
     },
   ];
 
+  //닫힘,열림 토글 핸들러
+  const handleExpandedToggle = () => {
+    setIsExpanded(!isExpanded);
+  };
+
   return (
-    <div className={styles.card}>
+    <div className={`${styles.card} ${!isExpanded ? styles.collapsed : ''}`}>
       {/* --- 카드 헤더 --- */}
       <div className={styles.header}>
         <div className={styles.userInfo}>
@@ -101,15 +108,8 @@ function ReviewCard({ review, onLikeClick, onMoreClick, onDelete }: ReviewCardPr
           </div>
         </div>
         <div className={styles.actions}>
-          <Button variant="icon" ariaLabel="좋아요" onClick={() => onLikeClick?.(id)} className={styles.iconButton}>
-            <Image
-              src={review.isLiked ? "/assets/images/icon/liked.svg" : "/assets/images/icon/like.svg"}
-              alt="좋아요 아이콘"
-              fill={true}
-              style={{ objectFit: 'cover' }} 
-            />
-          </Button>
-              <DropdownMenu items={dropdownOptions} size='M'>
+          {isAuthor ? (             
+            <DropdownMenu items={dropdownOptions} size='M'>
             <Button variant="icon" ariaLabel="더보기" className={styles.iconButton}>
               <Image
                 src="/assets/images/icon/menu.svg"
@@ -119,6 +119,17 @@ function ReviewCard({ review, onLikeClick, onMoreClick, onDelete }: ReviewCardPr
               />
             </Button>
           </DropdownMenu>
+        ) : (        
+        <Button variant="icon" ariaLabel="좋아요" onClick={() => onLikeClick?.(id)} className={styles.iconButton}>
+            <Image
+              src={review.isLiked ? "/assets/images/icon/liked.svg" : "/assets/images/icon/like.svg"}
+              alt="좋아요 아이콘"
+              fill={true}
+              style={{ objectFit: 'cover' }} 
+            />
+          </Button>)}
+  
+
         </div>
       </div>
 
@@ -142,7 +153,8 @@ function ReviewCard({ review, onLikeClick, onMoreClick, onDelete }: ReviewCardPr
       <p className={styles.contentText}>{content}</p>
 
       {/* --- 와인 맛 슬라이더 --- */}
-      <div className={styles.tasteSliders}>
+      <div className={`${styles.tasteSliders} 
+      ${isExpanded ? styles.expanded : styles.collapsed}`}>
         <div className={styles.sliderItem}>
           <span className={styles.sliderTag}>바디감</span>
             <span className={styles.sliderLabel}>가벼워요</span>
@@ -171,8 +183,12 @@ function ReviewCard({ review, onLikeClick, onMoreClick, onDelete }: ReviewCardPr
 
       {/* --- 접기 버튼 --- */}
       <div className={styles.footer}>
-        <Button variant='icon' ariaLabel='접기'>
-          <Image src='/assets/images/icon/more.svg' alt='접기 아이콘' width={30} height={30} className={styles.foldIcon}/>
+        <Button variant='icon' ariaLabel='접기' onClick={handleExpandedToggle} className={styles.foldButton}>
+          <Image src='/assets/images/icon/more.svg' 
+          alt='접기 아이콘' 
+          width={30} 
+          height={30} 
+          className={styles.foldIcon}/>
         </Button>
       </div>
     </div>

@@ -64,7 +64,7 @@
   line-height: 2.4rem;
 }
 
-.tagLabel {
+.tagWrapper {
   margin-bottom: 2.2rem;
 }
 
@@ -72,6 +72,7 @@
   display: flex;
   gap: 1rem;
   margin-bottom: 2.8rem;
+  justify-content: space-between;
 }
 
 .ratingBox {
@@ -110,6 +111,7 @@
 .detailTitle {
   font-size: 1.4rem;
   font-weight: 700;
+  line-height: 2.4rem;
   color: var(--grayscale-900);
 }
 
@@ -121,7 +123,7 @@
   overflow: hidden;
 }
 
-@media screen and (min-width: 37.6rem) {
+@media screen and (min-width: 768px) {
   .card {
     max-width: 70.4rem;
     height: 37.5rem;
@@ -176,7 +178,7 @@
   }
 }
 
-@media screen and (min-width: 76.9rem) {
+@media screen and (min-width: 1024px) {
   .card {
     max-width: 80rem;
     height: 37.5rem;

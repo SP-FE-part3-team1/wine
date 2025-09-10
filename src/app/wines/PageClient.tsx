@@ -3,10 +3,10 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
-import WineCarousel from "./WineCarousel";
-import CardWine from "./CardWine";
+import WineCarousel from "./Components/WineCarousel/WineCarousel";
+import CardWine from "./Components/CardWine/CardWine";
 import { SearchInput } from "@/components/SearchInput/SearchInput";
-import FilterIcon from "./FilterIcon";
+import FilterIcon from "./Components/FilterIcon/FilterIcon";
 import Button from "@/components/Button/Button";
 import { Chip } from "@/components/Chip";
 import RangeSlider from "@/components/RangeSlider/RangeSlider";
@@ -60,7 +60,7 @@ export default function PageClient({
       {/* 추천 와인 캐러셀 */}
       <WineCarousel
         wines={recommendedWines}
-        onClickWine={(id) => console.log(`와인 ${id} 클릭됨`)}
+        onClickWine={(id) => router.push(`/wines/${id}`)}
       />
 
       {/* 필터/검색/등록 버튼 */}
@@ -76,13 +76,18 @@ export default function PageClient({
             onClear={() => setSearch("")}
           />
         </div>
-        <Button
-          variant="primary"
-          ariaLabel="와인 등록하기"
-          className={styles.registerButton}
-        >
-          와인 등록하기
-        </Button>
+        <div className={styles.btn}>
+          <Button
+            variant="primary"
+            ariaLabel="와인 등록하기"
+            className={styles.registerButton}
+          >
+            와인 등록하기
+          </Button>
+        </div>
+      </div>
+      <div className={styles.mobileFilterWrapper}>
+        <FilterIcon />
       </div>
 
       {/* 본문 레이아웃 */}
@@ -152,7 +157,7 @@ export default function PageClient({
               tagLabel={`₩ ${wine.price.toLocaleString()}`}
               rating={wine.avgRating}
               reviewState={`${wine.reviewCount}개의 후기`}
-              detailTitle="최근 후기"
+              detailTitle="최신 후기"
               detailDescription={
                 wine.recentReview?.content ?? "아직 리뷰가 없습니다"
               }
@@ -160,6 +165,16 @@ export default function PageClient({
             />
           ))}
         </div>
+      </div>
+      {/* 모바일 전용 하단 고정 버튼 */}
+      <div className={styles.mobileBtnBottom}>
+        <Button
+          variant="primary"
+          ariaLabel="와인 등록하기"
+          className={styles.mobileRegisterBtn}
+        >
+          와인 등록하기
+        </Button>
       </div>
     </main>
   );

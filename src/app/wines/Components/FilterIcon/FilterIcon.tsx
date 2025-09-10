@@ -1,6 +1,6 @@
 "use client";
 
-import styles from "@/app/wines/FilterIcon.module.css";
+import styles from "@/app/wines/Components/FilterIcon/FilterIcon.module.css";
 
 type FilterIconProps = {
   onClick?: () => void;

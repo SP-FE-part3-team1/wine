@@ -1,9 +1,10 @@
 "use client";
 import Tag from "@/components/Tag/Tag";
-import styles from "@/app/wines/CardWine.module.css";
+import styles from "@/app/wines/Components/CardWine/CardWine.module.css";
 import { StarRating } from "@/components/StarRating";
 import Image from "next/image";
 import Button from "@/components/Button/Button";
+import { useState } from "react";
 
 type CardWineProps = {
   imageUrl?: string;
@@ -17,6 +18,8 @@ type CardWineProps = {
   onClick?: () => void;
 };
 
+const fallbackImage = "/assets/images/wine/default-wine-placeholder.png";
+
 const CardWine = ({
   imageUrl,
   infoTitle,
@@ -28,12 +31,25 @@ const CardWine = ({
   detailDescription,
   onClick,
 }: CardWineProps) => {
+  const validSrc =
+    imageUrl && (imageUrl.startsWith("http") || imageUrl.startsWith("/"))
+      ? imageUrl
+      : fallbackImage;
+
+  const [imgSrc, setImgSrc] = useState(validSrc);
   return (
     <div className={styles.card} onClick={onClick}>
       <div className={styles.body}>
         {imageUrl && (
           <div className={styles.imageWrapper}>
-            <img src={imageUrl} alt="와인 이미지" className={styles.image} />
+            <Image
+              src={imgSrc}
+              alt="와인 이미지"
+              width={70}
+              height={212}
+              className={styles.image}
+              onError={() => setImgSrc(fallbackImage)}
+            />
           </div>
         )}
         <div className={styles.contentBox}>
@@ -42,7 +58,9 @@ const CardWine = ({
             {infoDescription && (
               <div className={styles.infoDescription}>{infoDescription}</div>
             )}
-            <div className={tagLabel}>{tagLabel && <Tag>{tagLabel}</Tag>}</div>
+            <div className={styles.tagWrapper}>
+              {tagLabel && <Tag>{tagLabel}</Tag>}
+            </div>
           </div>
           <div className={styles.wineRating}>
             {rating !== undefined && (

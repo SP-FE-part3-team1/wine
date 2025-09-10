@@ -12,13 +12,18 @@
   width: 100%;
 }
 
-.wineImage {
+.wineImagePositioner {
   position: absolute;
-  bottom: 0; 
-  width: 5.8rem; 
-  height: auto; 
-  z-index: 1; 
-  object-fit: contain;
+  bottom: 0;
+  width: 5.8rem;
+  height: 20.9rem;
+  z-index: 1;
+}
+
+.wineImageContainer {
+  position: relative; 
+  width: 100%;
+  height: 100%;
 }
 
 .cardContent {
@@ -50,7 +55,7 @@
 .card {
     padding: 5.2rem 6rem 4rem;
 }
-.wineImage {
+.wineImagePositioner {
   width: 8.4rem;
   height: 30.2rem;
   padding-top: 2rem;
@@ -81,9 +86,9 @@
     max-width: 114rem;
     margin-top: 0;
 }
-.wineImage {
+.wineImagePositioner {
   width: 5.8rem;
-  height: auto;
+  height: 20.9rem;
   padding-top: 0;
 }
 
