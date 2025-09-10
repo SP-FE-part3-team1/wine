@@ -105,8 +105,7 @@ function MyWineCard({ mywine, onDeleted }: Props) {
 
       <ConfirmationModal
         isOpen={open}
-        title="와인 삭제"
-        message="정말로 이 와인을 삭제하시겠습니까?"
+        title="정말로 이 와인을 삭제하시겠습니까?"
         confirmText="삭제"
         cancelText="취소"
         onClose={() => setOpen(false)}
