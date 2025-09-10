@@ -19,21 +19,6 @@ type CardWineProps = {
 };
 
 const fallbackImage = "/assets/images/wine/default-wine-placeholder.png";
-// URL 유효성 체크 + fallback 처리
-const normalizeSrc = (src?: string) => {
-  if (!src) return fallbackImage;
-  try {
-    const url = new URL(src); // 제대로 된 URL인지 확인
-    // 확장자 검사
-    if (!/\.(jpg|jpeg|png|gif|webp|avif|svg)$/i.test(url.pathname)) {
-      return fallbackImage;
-    }
-    return src;
-  } catch {
-    // URL 생성 자체가 실패하면 fallback
-    return fallbackImage;
-  }
-};
 
 const CardWine = ({
   imageUrl,
@@ -46,8 +31,12 @@ const CardWine = ({
   detailDescription,
   onClick,
 }: CardWineProps) => {
-  const [imgSrc, setImgSrc] = useState(normalizeSrc(imageUrl));
+  const validSrc =
+    imageUrl && (imageUrl.startsWith("http") || imageUrl.startsWith("/"))
+      ? imageUrl
+      : fallbackImage;
 
+  const [imgSrc, setImgSrc] = useState(validSrc);
   return (
     <div className={styles.card} onClick={onClick}>
       <div className={styles.body}>
