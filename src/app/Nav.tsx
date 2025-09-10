@@ -16,13 +16,17 @@ const Nav = ({
   isLoggedIn: boolean;
 }) => {
   const router = useRouter();
+
+  const handleLogout = () => {
+    logout().then(() => router.replace("/"));
+  };
   return (
     <div className={style.container}>
       {isLoggedIn ? (
         <DropdownMenu
           items={[
             { label: "마이페이지", onClick: () => router.push("/myprofile") },
-            { label: "로그아웃", onClick: () => logout() },
+            { label: "로그아웃", onClick: handleLogout },
           ]}
           size="M"
         >
