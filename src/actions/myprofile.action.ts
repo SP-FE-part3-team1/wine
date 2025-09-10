@@ -1,6 +1,8 @@
 "use server";
 
 import { fetchWithAuth } from "@/actions/api.action";
+import { uploadImage } from "@/actions/image.action";
+
 const BASE = process.env.NEXT_PUBLIC_API_SERVER_URL!;
 
 export type MyProfile = {
@@ -9,25 +11,91 @@ export type MyProfile = {
   image: string | null;
 };
 
-/**
- * 프로필 가져오기
- * - 먼저 /users/me 로 내 정보(팀ID 포함) 조회
- * - 스웨거 기준: GET /{teamId}/users/me 로 프로필 사용 가능하지만
- *   /users/me 응답에 닉네임/이미지가 이미 들어오므로 그 값을 그대로 사용
- */
+export type PatchState = {
+  ok: boolean;
+  message?: string;
+  nickname?: string;
+  image?: string | null;
+};
+
+/** GET /users/me */
 export async function getMyProfileAction(): Promise<MyProfile> {
-  const res = await fetchWithAuth(`${BASE}/users/me`, {
-    method: "GET",
-    headers: { "Content-Type": "application/json" },
-  });
+  const res = await fetchWithAuth(`${BASE}/users/me`, { method: "GET" });
   if (!res.ok) {
     throw new Error(`프로필 불러오기 실패 (/users/me ${res.status})`);
   }
   const me = await res.json();
-
   return {
     id: me.id,
     nickname: me.nickname,
     image: me.image ?? null,
+  };
+}
+
+/**
+ * PATCH 프로필: 파일은 uploadImage로 업로드 → 반환 URL을 JSON으로 저장
+ * - 닉네임만 변경: JSON PATCH
+ * - 파일만 변경: uploadImage → JSON PATCH(image)
+ * - 둘 다 변경: uploadImage → JSON PATCH({ nickname, image })
+ */
+export async function patchMyProfileAction(
+  _prev: PatchState,
+  formData: FormData
+): Promise<PatchState> {
+  const rawNickname = formData.get("nickname");
+  const file = formData.get("image");
+  const nickname = typeof rawNickname === "string" ? rawNickname.trim() : "";
+  const hasNickname = !!nickname;
+  const hasFile = file instanceof File && file.size > 0;
+
+  if (!hasNickname && !hasFile) {
+    return { ok: false, message: "변경된 항목이 없습니다." };
+  }
+
+  // 1) 파일이 있으면 먼저 업로드(JPEG/PNG만)
+  let imageUrl: string | null | undefined = undefined;
+  if (hasFile) {
+    const f = file as File;
+    const allowed = new Set(["image/jpeg", "image/png"]);
+    if (!allowed.has(f.type)) {
+      return { ok: false, message: "JPEG/PNG 이미지만 업로드할 수 있어요." };
+    }
+    const imageForm = new FormData();
+    imageForm.append("image", f);
+    // ✅ 와인에서 쓰던 업로드 액션 그대로 사용
+    const uploaded = await uploadImage(imageForm);
+    imageUrl = uploaded?.url ?? null; // 보수적으로 키 두 개 지원
+    if (!imageUrl) {
+      return { ok: false, message: "이미지 업로드에 실패했어요." };
+    }
+  }
+
+  // 2) /users/me JSON PATCH (nickname, image 중 바뀐 것만)
+  const body: Record<string, unknown> = {};
+  if (hasNickname) body.nickname = nickname;
+  if (typeof imageUrl !== "undefined") body.image = imageUrl;
+
+  const res = await fetchWithAuth(`${BASE}/users/me`, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
+
+  if (!res.ok) {
+    let extra = "";
+    try {
+      const t = await res.text();
+      if (t) extra = " - " + t.slice(0, 200);
+    } catch {}
+    return { ok: false, message: `프로필 저장 실패 (${res.status})${extra}` };
+  }
+
+  const updated = await res.json().catch(() => ({}));
+  return {
+    ok: true,
+    nickname: updated?.nickname ?? (hasNickname ? nickname : undefined),
+    image:
+      updated?.image ??
+      (typeof imageUrl !== "undefined" ? imageUrl : undefined),
   };
 }
