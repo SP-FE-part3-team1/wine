@@ -89,7 +89,7 @@ export default function ReviewList({ initialReviews, wineId, currentUser }: Revi
 
   // '리뷰 남기기' 버튼 클릭 핸들러
   const handleWriteReviewClick = () => {
-    modal.add();
+    modal.review.create(wineId);
   };
 
   return (
