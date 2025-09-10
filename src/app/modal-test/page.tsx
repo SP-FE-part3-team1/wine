@@ -202,6 +202,15 @@ export default function ModalTestPage() {
       return;
     }
 
+    const firstWine = sampleWines[0];
+    if (!firstWine) {
+      addTestResult({
+        success: false,
+        message: '첫 번째 와인 데이터를 찾을 수 없습니다'
+      });
+      return;
+    }
+
     try {
       const testReviewData = {
         rating: 4,
@@ -211,7 +220,7 @@ export default function ModalTestPage() {
         smoothTannic: 2,
         drySweet: 4,
         softAcidic: 3,
-        wineId: sampleWines[0].id
+        wineId: firstWine.id
       };
 
       addTestResult({ success: true, message: '리뷰 생성 API 호출 중...' });
@@ -317,7 +326,7 @@ export default function ModalTestPage() {
                         <span className={styles.resultTime}>{result.timestamp}</span>
                       </div>
                       <p className={styles.resultMessage}>{result.message}</p>
-                      {result.data && (
+                      {result.data !== undefined && (
                         <details className={styles.resultData}>
                           <summary>데이터 보기</summary>
                           <pre>{JSON.stringify(result.data, null, 2)}</pre>
@@ -374,8 +383,13 @@ function ModalTestSection({
                 onTestResult({ success: false, message: '수정할 와인이 없습니다. 먼저 샘플 데이터를 로드해주세요.' });
                 return;
               }
+              const firstWine = sampleWines[0];
+              if (!firstWine) {
+                onTestResult({ success: false, message: '첫 번째 와인 데이터를 찾을 수 없습니다.' });
+                return;
+              }
               onTestResult({ success: true, message: '와인 수정 모달 열기 시도' });
-              openEditWineModal(sampleWines[0].id.toString());
+              openEditWineModal(firstWine.id.toString());
             }}
             disabled={!isAuthenticated || sampleWines.length === 0}
           >
@@ -395,8 +409,13 @@ function ModalTestSection({
                 onTestResult({ success: false, message: '리뷰를 작성할 와인이 없습니다. 먼저 샘플 데이터를 로드해주세요.' });
                 return;
               }
+              const firstWine = sampleWines[0];
+              if (!firstWine) {
+                onTestResult({ success: false, message: '첫 번째 와인 데이터를 찾을 수 없습니다.' });
+                return;
+              }
               onTestResult({ success: true, message: '리뷰 생성 모달 열기 시도' });
-              openCreateReviewModal(sampleWines[0].id.toString());
+              openCreateReviewModal(firstWine.id.toString());
             }}
             disabled={!isAuthenticated || sampleWines.length === 0}
           >
