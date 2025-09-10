@@ -1,6 +1,12 @@
 "use client";
 
-import { useState, useRef, KeyboardEvent, ChangeEvent } from "react";
+import {
+  useState,
+  useRef,
+  KeyboardEvent,
+  ChangeEvent,
+  FocusEvent,
+} from "react";
 import { SearchInputProps } from "../../types/component-types";
 import styles from "./SearchInput.module.css";
 
@@ -55,9 +61,9 @@ export const SearchInput = ({
     onFocus?.();
   };
 
-  const handleBlur = () => {
+  const handleBlur = (e: FocusEvent<HTMLInputElement>) => {
     setIsFocused(false);
-    onBlur?.();
+    onBlur?.(e);
   };
 
   return (
