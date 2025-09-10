@@ -1,4 +1,6 @@
-import { useState, useCallback } from 'react';
+// "use client";
+
+import { useState, useCallback } from "react";
 
 interface UseModalReturn {
   isOpen: boolean;
@@ -9,7 +11,7 @@ interface UseModalReturn {
 
 /**
  * Modal 상태를 관리하는 커스텀 훅
- * 
+ *
  * @param initialState - 초기 상태 (기본값: false)
  * @returns Modal 상태와 제어 함수들
  */
@@ -25,13 +27,13 @@ export const useModal = (initialState: boolean = false): UseModalReturn => {
   }, []);
 
   const toggle = useCallback(() => {
-    setIsOpen(prev => !prev);
+    setIsOpen((prev) => !prev);
   }, []);
 
   return {
     isOpen,
     open,
     close,
-    toggle
+    toggle,
   };
 };

@@ -160,7 +160,10 @@ export interface UseModalManagerReturn {
     wineId: string,
     reviewId?: string
   ) => Promise<void>;
-  openFilterModal: (currentFilters: FilterState) => void;
+  openFilterModal: (
+    currentFilters: FilterState,
+    onApply?: (filters: FilterState) => void
+  ) => void;
   closeModal: () => void;
 }
 

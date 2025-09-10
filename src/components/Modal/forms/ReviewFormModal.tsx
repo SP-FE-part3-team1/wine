@@ -1,38 +1,26 @@
-'use client';
+"use client";
 
-import { useState, useCallback } from 'react';
-import { Modal } from '../Modal';
-import { ReviewFormModalProps, ReviewFormData, ChipOption } from '../../../types/component-types';
-import { REVIEW_FORM_CONFIG, transformReviewDataForApi } from '../manager/modalConfigs';
-import { createReview, updateReview } from '../../../actions/review.action';
-import { components } from '../../../types/types';
-import { StarRating } from '../../StarRating/StarRating';
-import { Chip } from '../../Chip/Chip';
-import Button from '../../Button/Button';
-import styles from './ReviewFormModal.module.css';
-
-// API 스키마에 맞는 아로마 옵션들
-const AROMA_OPTIONS: ChipOption[] = [
-  { value: 'CHERRY', label: '체리' },
-  { value: 'BERRY', label: '베리' },
-  { value: 'OAK', label: '오크' },
-  { value: 'VANILLA', label: '바닐라' },
-  { value: 'PEPPER', label: '후추' },
-  { value: 'BAKING', label: '베이킹' },
-  { value: 'GRASS', label: '풀' },
-  { value: 'APPLE', label: '사과' },
-  { value: 'PEACH', label: '복숭아' },
-  { value: 'CITRUS', label: '시트러스' },
-  { value: 'TROPICAL', label: '열대과일' },
-  { value: 'MINERAL', label: '미네랄' },
-  { value: 'FLOWER', label: '꽃' },
-  { value: 'TOBACCO', label: '담배' },
-  { value: 'EARTH', label: '흙' },
-  { value: 'CHOCOLATE', label: '초콜릿' },
-  { value: 'SPICE', label: '향신료' },
-  { value: 'CARAMEL', label: '카라멜' },
-  { value: 'LEATHER', label: '가죽' }
-];
+import { useState, useCallback } from "react";
+import { useRouter } from "next/navigation";
+import { Modal } from "../Modal";
+import {
+  ReviewFormModalProps,
+  ReviewFormData,
+  TASTE_PROFILE_OPTIONS,
+} from "../../../types/component-types";
+import {
+  REVIEW_FORM_CONFIG,
+  transformReviewDataForApi,
+} from "../manager/modalConfigs";
+// ❌ 삭제된 API URL 파일과 fetchWithAuth는 더 이상 사용하지 않습니다.
+// import { fetchWithAuth } from "../../../actions/api.action";
+// import { reviewApiUrls } from "./api-urls";
+// ✅ 새로운 Server Action을 임포트합니다. (파일 경로는 실제 프로젝트에 맞게 조정)
+import { createReview, updateReview } from "@/actions/review.action";
+import { StarRating } from "../../StarRating/StarRating";
+import { Chip } from "../../Chip/Chip";
+import Button from "../../Button/Button";
+import styles from "./ReviewFormModal.module.css";
 
 export const ReviewFormModal = ({
   mode,
@@ -40,23 +28,29 @@ export const ReviewFormModal = ({
   reviewId,
   initialData,
   onClose,
-  onSuccess
+  onSuccess,
+  wineName,
+  wineAvgRating,
 }: ReviewFormModalProps) => {
+  const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState<ReviewFormData>(
-    mode === 'edit' && initialData
+    mode === "edit" && initialData
       ? initialData
       : REVIEW_FORM_CONFIG.create.initialValues
   );
 
   // 폼 데이터 업데이트
-  const updateFormData = useCallback((field: keyof ReviewFormData, value: string | number | string[]) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
-  }, []);
+  const updateFormData = useCallback(
+    (field: keyof ReviewFormData, value: string | number | string[]) => {
+      setFormData((prev) => ({ ...prev, [field]: value }));
+    },
+    []
+  );
 
   // 폼 검증
   const validateForm = (): boolean => {
-    return formData.content.trim().length > 0 && formData.rating > 0;
+    return formData.content.trim().length > 0;
   };
 
   // 폼 제출
@@ -67,34 +61,29 @@ export const ReviewFormModal = ({
 
     try {
       const apiData = transformReviewDataForApi(formData, wineId);
-      
       let result;
-      if (mode === 'edit' && reviewId) {
+
+      if (mode === "edit" && reviewId) {
         result = await updateReview(reviewId, apiData);
       } else {
         result = await createReview(apiData);
       }
 
-      if (onSuccess) {
+      if (onSuccess && result) {
         onSuccess(result);
       }
-
+      router.refresh(); // 페이지 새로고침
       onClose();
     } catch (error) {
       console.error(`Error ${mode}ing review:`, error);
-      // TODO: 사용자에게 에러 메시지 표시
+      // 인증 실패 시 로그인 페이지로 리다이렉트는 fetchWithAuth에서 처리됨
     } finally {
       setIsSubmitting(false);
     }
   };
 
   return (
-    <Modal
-      isOpen={true}
-      onClose={onClose}
-      title="리뷰 등록"
-      size="medium"
-    >
+    <Modal isOpen={true} onClose={onClose} title="리뷰 등록" size="medium">
       <div className={styles.modalContent}>
         {/* Wine Icon and Title - Matching Figma Design */}
         <div className={styles.wineHeader}>
@@ -111,17 +100,14 @@ export const ReviewFormModal = ({
                 fill="currentColor"
                 opacity="0.8"
               />
-              <path
-                d="M8 2h8v2H8V2z"
-                fill="currentColor"
-              />
+              <path d="M8 2h8v2H8V2z" fill="currentColor" />
             </svg>
           </div>
           <div className={styles.wineInfo}>
-            <h3 className={styles.wineName}>Sentinel Carbernet Sauvignon 2016</h3>
+            <h3 className={styles.wineName}>{wineName || "와인 이름"}</h3>
             <div className={styles.wineRating}>
               <StarRating
-                value={4}
+                value={wineAvgRating || 0}
                 readOnly={true}
                 size="small"
                 maxRating={5}
@@ -130,34 +116,14 @@ export const ReviewFormModal = ({
           </div>
         </div>
 
-        {/* 별점 입력 */}
-        <div className={styles.section}>
-          <h3 className={styles.sectionTitle}>별점을 남겨주세요</h3>
-          <div className={styles.ratingSection}>
-            <StarRating
-              value={formData.rating}
-              onChange={(rating) => updateFormData('rating', rating)}
-              size="large"
-              maxRating={5}
-              disabled={isSubmitting}
-            />
-            <span className={styles.ratingText}>
-              {formData.rating > 0 ? `${formData.rating}점` : '별점을 선택해주세요'}
-            </span>
-          </div>
-        </div>
-
         {/* 리뷰 내용 입력 - 리뷰등록.png 정확히 구현 */}
-        <div className={styles.section}>
-          <h3 className={styles.sectionTitle}>리뷰를 작성해주세요</h3>
-          <textarea
-            className={styles.reviewTextarea}
-            placeholder="후기를 작성해 주세요"
-            value={formData.content}
-            onChange={(e) => updateFormData('content', e.target.value)}
-            disabled={isSubmitting}
-          />
-        </div>
+        <textarea
+          className={styles.reviewTextarea}
+          placeholder="후기를 작성해 주세요"
+          value={formData.content}
+          onChange={(e) => updateFormData("content", e.target.value)}
+          disabled={isSubmitting}
+        />
 
         {/* 맛 특성 슬라이더 - 리뷰등록.png 정확히 구현 */}
         <div className={styles.section}>
@@ -165,8 +131,8 @@ export const ReviewFormModal = ({
           <div className={styles.tasteSliders}>
             <div className={styles.sliderGroup}>
               <div className={styles.sliderLabel}>
-                <span className={styles.leftLabel}>가벼워요</span>
-                <span className={styles.rightLabel}>진해요</span>
+                <span className={styles.leftLabel}>라이트</span>
+                <span className={styles.rightLabel}>진한</span>
               </div>
               <input
                 type="range"
@@ -174,15 +140,17 @@ export const ReviewFormModal = ({
                 max="5"
                 step="1"
                 value={formData.lightBold}
-                onChange={(e) => updateFormData('lightBold', parseInt(e.target.value))}
+                onChange={(e) =>
+                  updateFormData("lightBold", parseInt(e.target.value, 10))
+                }
                 className={styles.tasteSlider}
                 disabled={isSubmitting}
               />
             </div>
             <div className={styles.sliderGroup}>
               <div className={styles.sliderLabel}>
-                <span className={styles.leftLabel}>부드러워요</span>
-                <span className={styles.rightLabel}>떫어요</span>
+                <span className={styles.leftLabel}>부드러운</span>
+                <span className={styles.rightLabel}>떫은</span>
               </div>
               <input
                 type="range"
@@ -190,15 +158,17 @@ export const ReviewFormModal = ({
                 max="5"
                 step="1"
                 value={formData.smoothTannic}
-                onChange={(e) => updateFormData('smoothTannic', parseInt(e.target.value))}
+                onChange={(e) =>
+                  updateFormData("smoothTannic", parseInt(e.target.value, 10))
+                }
                 className={styles.tasteSlider}
                 disabled={isSubmitting}
               />
             </div>
             <div className={styles.sliderGroup}>
               <div className={styles.sliderLabel}>
-                <span className={styles.leftLabel}>드라이해요</span>
-                <span className={styles.rightLabel}>달아요</span>
+                <span className={styles.leftLabel}>드라이</span>
+                <span className={styles.rightLabel}>달콤한</span>
               </div>
               <input
                 type="range"
@@ -206,15 +176,17 @@ export const ReviewFormModal = ({
                 max="5"
                 step="1"
                 value={formData.drySweet}
-                onChange={(e) => updateFormData('drySweet', parseInt(e.target.value))}
+                onChange={(e) =>
+                  updateFormData("drySweet", parseInt(e.target.value, 10))
+                }
                 className={styles.tasteSlider}
                 disabled={isSubmitting}
               />
             </div>
             <div className={styles.sliderGroup}>
               <div className={styles.sliderLabel}>
-                <span className={styles.leftLabel}>안셔요</span>
-                <span className={styles.rightLabel}>많이셔요</span>
+                <span className={styles.leftLabel}>부드러운</span>
+                <span className={styles.rightLabel}>산미</span>
               </div>
               <input
                 type="range"
@@ -222,7 +194,9 @@ export const ReviewFormModal = ({
                 max="5"
                 step="1"
                 value={formData.softAcidic}
-                onChange={(e) => updateFormData('softAcidic', parseInt(e.target.value))}
+                onChange={(e) =>
+                  updateFormData("softAcidic", parseInt(e.target.value, 10))
+                }
                 className={styles.tasteSlider}
                 disabled={isSubmitting}
               />
@@ -235,9 +209,9 @@ export const ReviewFormModal = ({
           <h3 className={styles.sectionTitle}>기억에 남는 향이 있나요?</h3>
           <div className={styles.tasteChips}>
             <Chip
-              options={AROMA_OPTIONS}
+              options={TASTE_PROFILE_OPTIONS}
               selectedValues={formData.aroma}
-              onSelectionChange={(values) => updateFormData('aroma', values as components['schemas']['Aroma'][])}
+              onSelectionChange={(values) => updateFormData("aroma", values)}
               multiple
               ariaLabel="기억에 남는 향 선택"
               disabled={isSubmitting}
@@ -252,7 +226,7 @@ export const ReviewFormModal = ({
           disabled={!validateForm() || isSubmitting}
           className={styles.submitButton}
         >
-          {isSubmitting ? '저장 중...' : '리뷰 남기기'}
+          {isSubmitting ? "저장 중..." : "리뷰 남기기"}
         </Button>
       </div>
     </Modal>
