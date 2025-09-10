@@ -119,7 +119,10 @@ export interface WineFormModalProps {
 }
 
 // 리뷰 관련 타입
-export type ReviewFormData = Omit<components["schemas"]["CreateReviewBody"], "wineId">;
+export type ReviewFormData = Omit<
+  components["schemas"]["CreateReviewBody"],
+  "wineId"
+>;
 
 export interface ReviewFormModalProps {
   mode: "create" | "edit";
@@ -155,7 +158,10 @@ export interface UseModalManagerReturn {
     wineId: string,
     reviewId?: string
   ) => Promise<void>;
-  openFilterModal: (currentFilters: FilterState) => void;
+  openFilterModal: (
+    currentFilters: FilterState,
+    onApply?: (filters: FilterState) => void
+  ) => void;
   closeModal: () => void;
 }
 
