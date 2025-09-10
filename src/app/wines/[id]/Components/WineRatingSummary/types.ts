@@ -13,6 +13,7 @@ export interface WineRatingSummaryProps {
   reviewCount: number;
   /** 점수대별 리뷰 분포 */
   ratingDistribution: RatingDistribution;
+  wineId: number;
   /** '리뷰 남기기' 버튼 클릭 시 실행될 함수 */
   onWriteReviewClick?: () => void;
 }
