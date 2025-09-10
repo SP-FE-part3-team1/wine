@@ -108,8 +108,12 @@
   font-weight: var(--bold);
 }
 
-@media screen and (min-width: 768px) {
+@media (min-width: 768px) and (max-width: 1023px) {
   .btn {
+    display: block;
+  }
+
+  .registerButton {
     display: block;
   }
 
@@ -136,6 +140,10 @@
   }
 
   .filterWrapper {
+    display: none;
+  }
+
+  .mobileFilterWrapper {
     display: none;
   }
 
