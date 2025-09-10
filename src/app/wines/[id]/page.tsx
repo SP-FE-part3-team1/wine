@@ -82,6 +82,7 @@ export default async function WineDetailPage({ params }: {
           avgRating={wine.avgRating}
           reviewCount={wine.reviewCount}
           ratingDistribution={ratingDistribution}
+          wineId={wine.id}
         />}
       </div>
       
