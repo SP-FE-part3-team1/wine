@@ -1,534 +1,441 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { ModalProvider, useWineModal, useReviewModal, useFilterModal } from '../../components/Modal/manager/ModalProvider';
-import { ConfirmationModal } from '../../components/Modal/ConfirmationModal';
-import { TestLayout } from '../../components/TestLayout/TestLayout';
-import Button from '../../components/Button/Button';
-import { FILTER_DEFAULT_VALUES } from '../../components/Modal/manager/modalConfigs';
-import { FilterState } from '../../types/component-types';
-import { fetchWithAuth } from '../../actions/api.action';
-import { hasToken } from '../../actions/hasToken.action';
+import { ModalProvider } from '@/components/Modal';
+import { useWineModal, useReviewModal, useFilterModal } from '@/components/Modal';
+// 팀원이 만든 인증 시스템 사용
+import { hasToken } from '@/actions/hasToken.action';
+import { testApiConnection, testAuthenticatedEndpoint, createWine } from '@/actions/wine.action';
+import { createReview } from '@/actions/review.action';
+import { components } from '@/types/types';
+import Button from '@/components/Button/Button';
+import styles from './page.module.css';
 
-// Wine 데이터 타입
-interface TestWine {
-  id: number;
-  name: string;
-  type: string;
-  region: string;
-  price: number;
-  createdAt: string;
+type WineDetailType = components['schemas']['WineDetailType'];
+
+interface TestResult {
+  success: boolean;
+  message: string;
+  data?: unknown;
+  timestamp: string;
 }
 
-// Review 데이터 타입
-interface TestReview {
-  id: number;
-  wineId: number;
-  content: string;
-  rating: number;
-  createdAt: string;
-}
-
-// 실제 API를 사용한 테스트 컴포넌트
-function ModalTestContent() {
-  const { openCreateWineModal, openEditWineModal } = useWineModal();
-  const { openCreateReviewModal, openEditReviewModal } = useReviewModal();
-  const { openFilterModal } = useFilterModal();
-
-  const [createdWines, setCreatedWines] = useState<TestWine[]>([]);
-  const [createdReviews, setCreatedReviews] = useState<TestReview[]>([]);
-  const [filterResults, setFilterResults] = useState<FilterState | null>(null);
+export default function ModalTestPage() {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [lastAction, setLastAction] = useState<string | null>(null);
-  const [showConfirmModal, setShowConfirmModal] = useState<{type: 'wine' | 'review', id: number} | null>(null);
+  const [authLoading, setAuthLoading] = useState(true);
+  const [testResults, setTestResults] = useState<TestResult[]>([]);
+  const [sampleWines, setSampleWines] = useState<WineDetailType[]>([]);
+
+  // 테스트 결과 추가 함수
+  const addTestResult = (result: Omit<TestResult, 'timestamp'>) => {
+    setTestResults(prev => [{
+      ...result,
+      timestamp: new Date().toLocaleTimeString()
+    }, ...prev]);
+  };
 
   // 인증 상태 확인
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const authStatus = await hasToken();
-        setIsAuthenticated(authStatus);
+        const hasAuth = await hasToken();
+        setIsAuthenticated(hasAuth);
+        addTestResult({
+          success: hasAuth,
+          message: hasAuth ? '✅ 인증 상태: 로그인됨' : '❌ 인증 상태: 로그인 필요'
+        });
       } catch (error) {
-        console.error('Auth check failed:', error);
-        setIsAuthenticated(false);
+        addTestResult({
+          success: false,
+          message: `인증 확인 실패: ${error}`
+        });
       } finally {
-        setIsLoading(false);
+        setAuthLoading(false);
       }
     };
 
     checkAuth();
   }, []);
 
-  // 생성된 데이터 새로고침
-  const refreshData = async () => {
-    if (!isAuthenticated) return;
-
+  // 실제 와인 데이터 로드
+  const loadSampleWines = async () => {
     try {
-      // 와인 목록 조회
-      const winesResponse = await fetchWithAuth('/wines?limit=50');
-      const wines = winesResponse.list?.slice(0, 10) || [];
-      setCreatedWines(wines.map((wine: any) => ({
-        id: wine.id,
-        name: wine.name,
-        type: wine.type,
-        region: wine.region,
-        price: wine.price,
-        createdAt: wine.createdAt || new Date().toISOString()
-      })));
-
-      setLastAction('데이터를 성공적으로 새로고침했습니다! 🔄');
-    } catch (error) {
-      console.error('Failed to refresh data:', error);
-      setLastAction('데이터 새로고침에 실패했습니다. 로그인을 확인해주세요.');
-    }
-  };
-
-  // 데이터 삭제
-  const handleDelete = async (type: 'wine' | 'review', id: number) => {
-    try {
-      if (type === 'wine') {
-        await fetchWithAuth(`/wines/${id}`, { method: 'DELETE' });
-        setCreatedWines(prev => prev.filter(wine => wine.id !== id));
-        setLastAction(`와인 ID ${id}가 성공적으로 삭제되었습니다! 🗑️`);
-      } else if (type === 'review') {
-        await fetchWithAuth(`/reviews/${id}`, { method: 'DELETE' });
-        setCreatedReviews(prev => prev.filter(review => review.id !== id));
-        setLastAction(`리뷰 ID ${id}가 성공적으로 삭제되었습니다! 🗑️`);
+      addTestResult({ success: true, message: '실제 와인 목록 로딩 시도 중...' });
+      
+      const result = await testApiConnection();
+      if (result.success) {
+        // API 응답에서 실제 와인 목록을 파싱
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_SERVER_URL || 'https://winereview-api.vercel.app/17-1'}/wines?limit=5`, {
+          method: 'GET',
+        });
+        
+        if (response.ok) {
+          const data = await response.json();
+          const apiWines = data.list || [];
+          
+          // API 응답을 WineDetailType 형식으로 변환
+          const convertedWines: WineDetailType[] = apiWines.map((wine: components['schemas']['WineListType']) => ({
+            id: wine.id,
+            name: wine.name,
+            region: wine.region,
+            image: wine.image,
+            price: wine.price,
+            type: wine.type,
+            avgRating: wine.avgRating || 0,
+            reviewCount: wine.reviewCount || 0,
+            recentReview: wine.recentReview,
+            userId: wine.userId,
+            reviews: [],
+            avgRatings: {}
+          }));
+          
+          setSampleWines(convertedWines);
+          addTestResult({
+            success: true,
+            message: `실제 와인 데이터 로드 완료 (${convertedWines.length}개)`,
+            data: convertedWines
+          });
+        } else {
+          throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+      } else {
+        throw new Error('API 연결 실패');
       }
     } catch (error) {
-      console.error(`Failed to delete ${type}:`, error);
-      setLastAction(`${type === 'wine' ? '와인' : '리뷰'} 삭제에 실패했습니다.`);
+      addTestResult({
+        success: false,
+        message: `와인 데이터 로드 실패: ${error}`
+      });
+      
+      // 실패 시 fallback으로 Mock 데이터 사용
+      const mockWines: WineDetailType[] = [
+        {
+          id: 1,
+          name: 'Fallback Test Wine',
+          region: 'France',
+          image: 'https://via.placeholder.com/150',
+          price: 25000,
+          type: 'RED',
+          avgRating: 4.5,
+          reviewCount: 10,
+          recentReview: null,
+          userId: 1,
+          reviews: [],
+          avgRatings: {}
+        }
+      ];
+      setSampleWines(mockWines);
     }
-    setShowConfirmModal(null);
   };
 
-  // 모달 성공 콜백들
-  const handleWineSuccess = (result: any) => {
-    setLastAction(`와인 "${result.name}"이 성공적으로 등록되었습니다! 🍷`);
-    refreshData();
+  // API 연결 테스트
+  const handleApiConnectionTest = async () => {
+    try {
+      addTestResult({ success: true, message: 'API 연결 테스트 시작...' });
+      
+      const result = await testApiConnection();
+      addTestResult({
+        success: result.success,
+        message: result.message,
+        data: { status: result.status, statusText: result.statusText }
+      });
+    } catch (error) {
+      addTestResult({
+        success: false,
+        message: `API 연결 실패: ${error}`
+      });
+    }
   };
 
-  const handleReviewSuccess = (result: any) => {
-    setLastAction('리뷰가 성공적으로 등록되었습니다! ⭐');
-    refreshData();
+  // 인증된 API 테스트
+  const handleAuthenticatedApiTest = async () => {
+    try {
+      addTestResult({ success: true, message: '인증된 API 테스트 시작...' });
+      
+      const result = await testAuthenticatedEndpoint();
+      addTestResult({
+        success: result.success,
+        message: result.message,
+        data: result.data
+      });
+    } catch (error) {
+      addTestResult({
+        success: false,
+        message: `인증된 API 테스트 실패: ${error}`
+      });
+    }
   };
 
-  const handleFilterApply = (filterData: FilterState) => {
-    setFilterResults(filterData);
-    setLastAction('필터가 성공적으로 적용되었습니다! 🔍');
+  // API 테스트 함수들
+  const testWineCreation = async () => {
+    try {
+      const testWineData = {
+        name: '테스트 와인 ' + Date.now(),
+        type: 'RED' as const,
+        region: '프랑스',
+        price: 50000,
+        image: 'https://via.placeholder.com/300x400'
+      };
+
+      addTestResult({ success: true, message: '와인 생성 API 호출 중...' });
+      const result = await createWine(testWineData);
+      
+      addTestResult({
+        success: true,
+        message: '와인 생성 성공!',
+        data: result
+      });
+    } catch (error) {
+      addTestResult({
+        success: false,
+        message: `와인 생성 실패: ${error}`
+      });
+    }
   };
 
-  if (isLoading) {
+  const testReviewCreation = async () => {
+    if (sampleWines.length === 0) {
+      addTestResult({
+        success: false,
+        message: '리뷰 테스트를 위해 먼저 와인 데이터가 필요합니다'
+      });
+      return;
+    }
+
+    try {
+      const testReviewData = {
+        rating: 4,
+        content: '테스트 리뷰 내용 ' + Date.now(),
+        aroma: ['CHERRY', 'OAK'] as components['schemas']['Aroma'][],
+        lightBold: 3,
+        smoothTannic: 2,
+        drySweet: 4,
+        softAcidic: 3,
+        wineId: sampleWines[0].id
+      };
+
+      addTestResult({ success: true, message: '리뷰 생성 API 호출 중...' });
+      const result = await createReview(testReviewData);
+      
+      addTestResult({
+        success: true,
+        message: '리뷰 생성 성공!',
+        data: result
+      });
+    } catch (error) {
+      addTestResult({
+        success: false,
+        message: `리뷰 생성 실패: ${error}`
+      });
+    }
+  };
+
+  if (authLoading) {
     return (
-      <div style={{ 
-        display: 'flex', 
-        justifyContent: 'center', 
-        alignItems: 'center', 
-        minHeight: '50vh',
-        fontSize: '1.6rem',
-        color: '#6c757d'
-      }}>
-        <div>
-          <div style={{ fontSize: '3rem', marginBottom: '1rem', textAlign: 'center' }}>⏳</div>
-          인증 상태를 확인하는 중...
-        </div>
-      </div>
-    );
-  }
-
-  if (!isAuthenticated) {
-    return (
-      <div style={{
-        textAlign: 'center',
-        padding: '4rem 2rem',
-        backgroundColor: '#fff3cd',
-        border: '0.1rem solid #ffeeba',
-        borderRadius: '1.2rem',
-        margin: '2rem'
-      }}>
-        <div style={{ fontSize: '4rem', marginBottom: '2rem' }}>🔐</div>
-        <h2 style={{ fontSize: '2.4rem', fontWeight: '700', color: '#856404', marginBottom: '1.6rem' }}>
-          로그인이 필요합니다
-        </h2>
-        <p style={{ fontSize: '1.6rem', color: '#856404', marginBottom: '2rem', lineHeight: '1.6' }}>
-          모달 API 연동 테스트를 위해 로그인해주세요.<br/>
-          로그인 후 이 페이지를 새로고침하면 테스트를 시작할 수 있습니다.
-        </p>
-        <Button
-          variant="primary"
-          onClick={() => window.location.href = '/login'}
-          style={{ padding: '1.2rem 2.4rem', fontSize: '1.6rem' }}
-        >
-          로그인 페이지로 이동
-        </Button>
+      <div className={styles.loading}>
+        <h1>모달 테스트 페이지</h1>
+        <p>인증 상태 확인 중...</p>
       </div>
     );
   }
 
   return (
-    <>
-      <style jsx>{`
-        @keyframes fadeIn {
-          from {
-            opacity: 0;
-            transform: translateY(-1rem);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-      `}</style>
-      
-      <TestLayout title="🍷 실제 API 연동 모달 테스트">
-        {/* 인증 상태 표시 */}
-        <div style={{
-          backgroundColor: '#d4edda',
-          border: '0.1rem solid #c3e6cb',
-          borderRadius: '0.8rem',
-          padding: '1.6rem 2rem',
-          marginBottom: '2rem',
-          display: 'flex',
-          alignItems: 'center',
-          gap: '1rem'
-        }}>
-          <span style={{ fontSize: '2rem' }}>✅</span>
-          <div>
-            <h3 style={{ fontSize: '1.6rem', fontWeight: '600', color: '#155724', margin: 0 }}>
-              API 연동 테스트 환경
-            </h3>
-            <p style={{ fontSize: '1.3rem', color: '#155724', margin: 0 }}>
-              실제 서버 API와 인증 시스템을 사용한 모달 테스트입니다.
-            </p>
+    <ModalProvider>
+      <div className={styles.container}>
+        <header className={styles.header}>
+          <h1>🧪 모달 시스템 테스트 페이지</h1>
+          <div className={styles.authStatus}>
+            <span className={`${styles.statusBadge} ${isAuthenticated ? styles.authenticated : styles.unauthenticated}`}>
+              {isAuthenticated ? '✅ 인증됨' : '❌ 미인증'}
+            </span>
+            {!isAuthenticated && (
+              <Button 
+                variant="primary" 
+                onClick={() => window.location.href = '/login'}
+              >
+                로그인하기
+              </Button>
+            )}
           </div>
-        </div>
+        </header>
 
-        {/* 테스트 버튼들 */}
-        <div style={{ 
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-          gap: '1.6rem',
-          marginBottom: '3rem'
-        }}>
-          <div style={{
-            backgroundColor: '#ffffff',
-            border: '0.1rem solid #e9ecef',
-            borderRadius: '1.2rem',
-            padding: '2.4rem',
-            textAlign: 'center',
-            boxShadow: '0 0.4rem 0.6rem rgba(0, 0, 0, 0.1)'
-          }}>
-            <div style={{ fontSize: '4rem', marginBottom: '1.6rem' }}>🍷</div>
-            <h3 style={{ fontSize: '1.8rem', fontWeight: '600', color: '#212529', marginBottom: '1rem' }}>
-              와인 등록 (API 연동)
-            </h3>
-            <p style={{ fontSize: '1.4rem', color: '#6c757d', marginBottom: '2rem', lineHeight: '1.5' }}>
-              ModalProvider + fetchWithAuth<br/>
-              실제 서버에 와인 데이터 저장
-            </p>
-            <Button
-              variant="primary"
-              onClick={openCreateWineModal}
-              style={{ width: '100%', padding: '1.2rem 2.4rem' }}
-            >
-              와인 등록하기
-            </Button>
-          </div>
-
-          <div style={{
-            backgroundColor: '#ffffff',
-            border: '0.1rem solid #e9ecef',
-            borderRadius: '1.2rem',
-            padding: '2.4rem',
-            textAlign: 'center',
-            boxShadow: '0 0.4rem 0.6rem rgba(0, 0, 0, 0.1)'
-          }}>
-            <div style={{ fontSize: '4rem', marginBottom: '1.6rem' }}>⭐</div>
-            <h3 style={{ fontSize: '1.8rem', fontWeight: '600', color: '#212529', marginBottom: '1rem' }}>
-              리뷰 등록 (API 연동)
-            </h3>
-            <p style={{ fontSize: '1.4rem', color: '#6c757d', marginBottom: '2rem', lineHeight: '1.5' }}>
-              첫 번째 와인 ID를 사용<br/>
-              실제 서버에 리뷰 데이터 저장
-            </p>
-            <Button
-              variant="primary"
-              onClick={() => {
-                if (createdWines.length > 0) {
-                  openCreateReviewModal(createdWines[0].id.toString());
-                } else {
-                  setLastAction('리뷰를 작성할 와인을 먼저 등록해주세요!');
-                }
-              }}
-              style={{ width: '100%', padding: '1.2rem 2.4rem' }}
-            >
-              리뷰 작성하기
-            </Button>
-          </div>
-
-          <div style={{
-            backgroundColor: '#ffffff',
-            border: '0.1rem solid #e9ecef',
-            borderRadius: '1.2rem',
-            padding: '2.4rem',
-            textAlign: 'center',
-            boxShadow: '0 0.4rem 0.6rem rgba(0, 0, 0, 0.1)'
-          }}>
-            <div style={{ fontSize: '4rem', marginBottom: '1.6rem' }}>🔍</div>
-            <h3 style={{ fontSize: '1.8rem', fontWeight: '600', color: '#212529', marginBottom: '1rem' }}>
-              필터 테스트
-            </h3>
-            <p style={{ fontSize: '1.4rem', color: '#6c757d', marginBottom: '2rem', lineHeight: '1.5' }}>
-              ModalProvider 패턴<br/>
-              UI 전용 (서버 연동 없음)
-            </p>
-            <Button
-              variant="primary"
-              onClick={() => openFilterModal(FILTER_DEFAULT_VALUES)}
-              style={{ width: '100%', padding: '1.2rem 2.4rem' }}
-            >
-              필터 설정하기
-            </Button>
-          </div>
-
-          <div style={{
-            backgroundColor: '#ffffff',
-            border: '0.1rem solid #e9ecef',
-            borderRadius: '1.2rem',
-            padding: '2.4rem',
-            textAlign: 'center',
-            boxShadow: '0 0.4rem 0.6rem rgba(0, 0, 0, 0.1)'
-          }}>
-            <div style={{ fontSize: '4rem', marginBottom: '1.6rem' }}>🔄</div>
-            <h3 style={{ fontSize: '1.8rem', fontWeight: '600', color: '#212529', marginBottom: '1rem' }}>
-              데이터 새로고침
-            </h3>
-            <p style={{ fontSize: '1.4rem', color: '#6c757d', marginBottom: '2rem', lineHeight: '1.5' }}>
-              서버에서 최신 데이터<br/>
-              가져오기 (API 호출)
-            </p>
-            <Button
-              variant="secondary"
-              onClick={refreshData}
-              style={{ width: '100%', padding: '1.2rem 2.4rem' }}
-            >
-              데이터 새로고침
-            </Button>
-          </div>
-        </div>
-
-        {/* 최근 작업 결과 */}
-        {lastAction && (
-          <div style={{
-            backgroundColor: '#d4edda',
-            border: '0.1rem solid #c3e6cb',
-            borderRadius: '1.2rem',
-            padding: '2rem',
-            marginBottom: '2rem',
-            textAlign: 'center',
-            animation: 'fadeIn 0.5s ease-out'
-          }}>
-            <div style={{
-              fontSize: '2.4rem',
-              marginBottom: '1rem'
-            }}>
-              ✅
+        <main className={styles.main}>
+          {/* API 테스트 섹션 */}
+          <section className={styles.section}>
+            <h2>📡 API 연동 테스트</h2>
+            <div className={styles.buttonGroup}>
+              <Button variant="secondary" onClick={handleApiConnectionTest}>
+                API 연결 테스트
+              </Button>
+              <Button variant="primary" onClick={handleAuthenticatedApiTest} disabled={!isAuthenticated}>
+                인증된 API 테스트
+              </Button>
+              <Button variant="secondary" onClick={loadSampleWines}>
+                샘플 와인 데이터 로드
+              </Button>
+              <Button 
+                variant="primary" 
+                onClick={testWineCreation}
+                disabled={!isAuthenticated}
+              >
+                와인 생성 API 테스트
+              </Button>
+              <Button 
+                variant="primary" 
+                onClick={testReviewCreation}
+                disabled={!isAuthenticated || sampleWines.length === 0}
+              >
+                리뷰 생성 API 테스트
+              </Button>
             </div>
-            <h3 style={{ 
-              fontSize: '1.8rem', 
-              fontWeight: '600', 
-              color: '#155724', 
-              marginBottom: '0.8rem' 
-            }}>
-              테스트 완료!
-            </h3>
-            <p style={{ 
-              fontSize: '1.5rem', 
-              color: '#155724', 
-              margin: 0,
-              lineHeight: '1.5'
-            }}>
-              {lastAction}
-            </p>
-            <Button
-              variant="secondary"
-              onClick={() => setLastAction(null)}
-              style={{ 
-                marginTop: '1.2rem',
-                padding: '0.8rem 1.6rem',
-                fontSize: '1.3rem'
-              }}
-            >
-              확인
-            </Button>
-          </div>
-        )}
+          </section>
 
-        {/* 생성된 와인 데이터 */}
-        {createdWines.length > 0 && (
-          <div style={{
-            backgroundColor: '#ffffff',
-            border: '0.1rem solid #e9ecef',
-            borderRadius: '1.2rem',
-            padding: '2.4rem',
-            marginBottom: '2rem',
-            boxShadow: '0 0.4rem 0.6rem rgba(0, 0, 0, 0.1)'
-          }}>
-            <h3 style={{ 
-              fontSize: '2rem', 
-              fontWeight: '700', 
-              color: '#212529', 
-              marginBottom: '2rem',
-              borderBottom: '0.2rem solid #6C5CE7',
-              paddingBottom: '1rem',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.8rem'
-            }}>
-              🍷 생성된 와인 데이터 (최근 10개)
-            </h3>
-            
-            <div style={{ display: 'grid', gap: '1.2rem' }}>
-              {createdWines.map((wine) => (
-                <div key={wine.id} style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  padding: '1.6rem',
-                  backgroundColor: '#f8f9fa',
-                  borderRadius: '0.8rem',
-                  border: '0.1rem solid #e9ecef'
-                }}>
-                  <div style={{ flex: 1 }}>
-                    <h4 style={{ fontSize: '1.6rem', fontWeight: '600', color: '#495057', margin: 0 }}>
-                      {wine.name}
-                    </h4>
-                    <p style={{ fontSize: '1.3rem', color: '#6c757d', margin: '0.4rem 0 0 0' }}>
-                      {wine.type} | {wine.region} | ₩{wine.price?.toLocaleString()}
-                    </p>
-                  </div>
-                  <div style={{ display: 'flex', gap: '0.8rem', alignItems: 'center' }}>
-                    <span style={{ 
-                      fontSize: '1.2rem', 
-                      color: '#6c757d',
-                      padding: '0.4rem 0.8rem',
-                      backgroundColor: '#ffffff',
-                      borderRadius: '0.4rem',
-                      border: '0.1rem solid #dee2e6'
-                    }}>
-                      ID: {wine.id}
-                    </span>
-                    <Button
-                      variant="secondary"
-                      onClick={() => openEditWineModal(wine.id.toString())}
-                      style={{ padding: '0.6rem 1.2rem', fontSize: '1.2rem' }}
-                    >
-                      수정
-                    </Button>
-                    <Button
-                      variant="secondary"
-                      onClick={() => setShowConfirmModal({type: 'wine', id: wine.id})}
-                      style={{ 
-                        padding: '0.6rem 1.2rem', 
-                        fontSize: '1.2rem',
-                        backgroundColor: '#dc3545',
-                        color: 'white'
-                      }}
-                    >
-                      삭제
-                    </Button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* 필터 결과 */}
-        {filterResults && (
-          <div style={{
-            backgroundColor: '#ffffff',
-            border: '0.1rem solid #e9ecef',
-            borderRadius: '1.2rem',
-            padding: '2.4rem',
-            marginBottom: '2rem',
-            boxShadow: '0 0.4rem 0.6rem rgba(0, 0, 0, 0.1)'
-          }}>
-            <h3 style={{ 
-              fontSize: '2rem', 
-              fontWeight: '700', 
-              color: '#212529', 
-              marginBottom: '2rem',
-              borderBottom: '0.2rem solid #6C5CE7',
-              paddingBottom: '1rem',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.8rem'
-            }}>
-              🔍 적용된 필터 설정
-            </h3>
-            
-            <div style={{
-              backgroundColor: '#f8f9fa',
-              border: '0.1rem solid #e9ecef',
-              borderRadius: '0.8rem',
-              padding: '1.6rem'
-            }}>
-              <pre style={{ 
-                fontSize: '1.3rem',
-                color: '#495057',
-                margin: 0,
-                whiteSpace: 'pre-wrap',
-                fontFamily: 'monospace'
-              }}>
-                {JSON.stringify(filterResults, null, 2)}
-              </pre>
-            </div>
-          </div>
-        )}
-
-        {/* 사용법 안내 */}
-        <div style={{
-          backgroundColor: '#fff3cd',
-          border: '0.1rem solid #ffeeba',
-          borderRadius: '0.8rem',
-          padding: '2rem'
-        }}>
-          <h3 style={{ fontSize: '1.6rem', fontWeight: '600', color: '#856404', marginBottom: '1rem' }}>
-            💡 실제 API 연동 테스트
-          </h3>
-          <ul style={{ fontSize: '1.4rem', color: '#856404', lineHeight: '1.6', paddingLeft: '2rem' }}>
-            <li style={{ marginBottom: '0.8rem' }}>✅ 실제 서버 API와 연동된 테스트 환경입니다.</li>
-            <li style={{ marginBottom: '0.8rem' }}>✅ fetchWithAuth를 사용하여 인증 시스템을 테스트합니다.</li>
-            <li style={{ marginBottom: '0.8rem' }}>✅ 생성된 데이터는 실제로 서버에 저장되며 수정/삭제 가능합니다.</li>
-            <li style={{ marginBottom: '0.8rem' }}>✅ 토큰 만료 시 자동 갱신을 테스트할 수 있습니다.</li>
-            <li>⚠️ 테스트 후 불필요한 데이터는 삭제 버튼으로 정리해주세요.</li>
-          </ul>
-        </div>
-
-        {/* 삭제 확인 모달 */}
-        {showConfirmModal && (
-          <ConfirmationModal
-            isOpen={true}
-            onClose={() => setShowConfirmModal(null)}
-            onConfirm={() => handleDelete(showConfirmModal.type, showConfirmModal.id)}
-            title={`${showConfirmModal.type === 'wine' ? '와인' : '리뷰'} 데이터를 삭제하시겠습니까?`}
-            confirmText="삭제하기"
-            cancelText="취소"
-            variant="destructive"
+          {/* 모달 테스트 섹션 */}
+          <ModalTestSection 
+            isAuthenticated={isAuthenticated}
+            sampleWines={sampleWines}
+            onTestResult={addTestResult}
           />
-        )}
-      </TestLayout>
-    </>
+
+          {/* 테스트 결과 섹션 */}
+          <section className={styles.section}>
+            <h2>📊 테스트 결과</h2>
+            <div className={styles.results}>
+              {testResults.length === 0 ? (
+                <p className={styles.noResults}>아직 테스트 결과가 없습니다.</p>
+              ) : (
+                <div className={styles.resultsList}>
+                  {testResults.map((result, index) => (
+                    <div 
+                      key={index} 
+                      className={`${styles.resultItem} ${result.success ? styles.success : styles.error}`}
+                    >
+                      <div className={styles.resultHeader}>
+                        <span className={styles.resultIcon}>
+                          {result.success ? '✅' : '❌'}
+                        </span>
+                        <span className={styles.resultTime}>{result.timestamp}</span>
+                      </div>
+                      <p className={styles.resultMessage}>{result.message}</p>
+                      {result.data && (
+                        <details className={styles.resultData}>
+                          <summary>데이터 보기</summary>
+                          <pre>{JSON.stringify(result.data, null, 2)}</pre>
+                        </details>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </section>
+        </main>
+      </div>
+    </ModalProvider>
   );
 }
 
-// ModalProvider로 감싸진 메인 컴포넌트
-export default function ModalTestPage() {
+// 모달 테스트 컴포넌트 분리
+function ModalTestSection({ 
+  isAuthenticated, 
+  sampleWines, 
+  onTestResult 
+}: { 
+  isAuthenticated: boolean;
+  sampleWines: WineDetailType[];
+  onTestResult: (result: Omit<TestResult, 'timestamp'>) => void;
+}) {
+  const { openCreateWineModal, openEditWineModal } = useWineModal();
+  const { openCreateReviewModal } = useReviewModal();
+  const { openFilterModal } = useFilterModal();
+
   return (
-    <ModalProvider>
-      <ModalTestContent />
-    </ModalProvider>
+    <section className={styles.section}>
+      <h2>🎭 모달 UI 테스트</h2>
+      
+      {/* 와인 모달 테스트 */}
+      <div className={styles.modalTestGroup}>
+        <h3>🍷 와인 모달</h3>
+        <div className={styles.buttonGroup}>
+          <Button 
+            variant="primary" 
+            onClick={() => {
+              onTestResult({ success: true, message: '와인 생성 모달 열기 시도' });
+              openCreateWineModal();
+            }}
+            disabled={!isAuthenticated}
+          >
+            와인 생성 모달
+          </Button>
+          <Button 
+            variant="secondary" 
+            onClick={() => {
+              if (sampleWines.length === 0) {
+                onTestResult({ success: false, message: '수정할 와인이 없습니다. 먼저 샘플 데이터를 로드해주세요.' });
+                return;
+              }
+              onTestResult({ success: true, message: '와인 수정 모달 열기 시도' });
+              openEditWineModal(sampleWines[0].id.toString());
+            }}
+            disabled={!isAuthenticated || sampleWines.length === 0}
+          >
+            와인 수정 모달
+          </Button>
+        </div>
+      </div>
+
+      {/* 리뷰 모달 테스트 */}
+      <div className={styles.modalTestGroup}>
+        <h3>⭐ 리뷰 모달</h3>
+        <div className={styles.buttonGroup}>
+          <Button 
+            variant="primary" 
+            onClick={() => {
+              if (sampleWines.length === 0) {
+                onTestResult({ success: false, message: '리뷰를 작성할 와인이 없습니다. 먼저 샘플 데이터를 로드해주세요.' });
+                return;
+              }
+              onTestResult({ success: true, message: '리뷰 생성 모달 열기 시도' });
+              openCreateReviewModal(sampleWines[0].id.toString());
+            }}
+            disabled={!isAuthenticated || sampleWines.length === 0}
+          >
+            리뷰 생성 모달
+          </Button>
+          <Button 
+            variant="secondary" 
+            onClick={() => {
+              onTestResult({ success: true, message: '리뷰 수정 모달은 실제 리뷰 ID가 필요합니다' });
+              // 실제 구현시에는 실제 리뷰 ID를 사용
+              // openEditReviewModal(sampleWines[0].id.toString(), 'review-id');
+            }}
+            disabled={!isAuthenticated}
+          >
+            리뷰 수정 모달 (준비중)
+          </Button>
+        </div>
+      </div>
+
+      {/* 필터 모달 테스트 */}
+      <div className={styles.modalTestGroup}>
+        <h3>🔍 필터 모달</h3>
+        <div className={styles.buttonGroup}>
+          <Button 
+            variant="secondary" 
+            onClick={() => {
+              onTestResult({ success: true, message: '필터 모달 열기 시도' });
+              openFilterModal({
+                wineTypes: [],
+                priceRange: [0, 400000],
+                ratingRange: [0, 5],
+                selectedRating: 'all'
+              });
+            }}
+          >
+            필터 모달 열기
+          </Button>
+        </div>
+      </div>
+    </section>
   );
 }
