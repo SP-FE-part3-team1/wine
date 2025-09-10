@@ -1,3 +1,5 @@
+'use client';
+
 // 기본 Modal 컴포넌트
 export { Modal } from './Modal';
 export { ConfirmationModal } from './ConfirmationModal';

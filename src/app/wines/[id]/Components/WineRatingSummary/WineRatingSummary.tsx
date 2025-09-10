@@ -6,18 +6,27 @@ import styles from './WineRatingSummary.module.css';
 
 import Button from '@/components/Button/Button';
 import { StarRating } from '@/components/StarRating/StarRating';
+import { ModalProvider, useQuickModal } from '@/components/Modal';
 
 function WineRatingSummary({
   avgRating,
   reviewCount,
   ratingDistribution,
-  onWriteReviewClick,
 }: WineRatingSummaryProps) {
+  // 모달
+  const modal = useQuickModal();
+
   // 1. Object.entries로 배열로 만든 뒤, 바로 정렬.
   const distributionEntries = Object.entries(ratingDistribution)
     .sort(([starsA], [starsB]) => Number(starsB) - Number(starsA));
 
+  // '리뷰 남기기' 버튼 클릭 핸들러
+  const handleWriteReviewClick = () => {
+    modal.add();
+  };
+
   return (
+    <ModalProvider>
     <div className={styles.container}>
       {/* 왼쪽: 평균 점수 섹션 */}
       <div className={styles.summarySection}>
@@ -51,11 +60,15 @@ function WineRatingSummary({
           })}
       </div>
         <div className={styles.buttonWrapper}>
-         <Button variant="primary" onClick={onWriteReviewClick} className={styles.reviewButton}>
+         <Button 
+         variant="primary" 
+         onClick={handleWriteReviewClick}
+         className={styles.reviewButton}>
           리뷰 남기기
         </Button>
         </div>
     </div>
+    </ModalProvider>
   );
 }
 

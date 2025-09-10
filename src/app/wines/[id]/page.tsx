@@ -33,13 +33,12 @@ type PageProps = {
 export default async function WineDetailPage({ params }: {
   params: Promise<{ id: string }>; // params가 Promise임을 명시
 }) {
+
   // Promise가 이행(resolve)되기를 기다린 후, 바로 id를 구조 분해합니다.
   const { id } = await params;
 
   // 와인 데이터
   const wine = await getWine(id);
-
- 
   
   if (!wine) {
     notFound();
@@ -83,7 +82,6 @@ export default async function WineDetailPage({ params }: {
           avgRating={wine.avgRating}
           reviewCount={wine.reviewCount}
           ratingDistribution={ratingDistribution}
-          // onWriteReviewClick={handleWriteReview}
         />}
       </div>
       

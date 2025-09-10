@@ -8,6 +8,7 @@ import styles from './ReviewList.module.css'; // 아래에 CSS 코드도 추가�
 
 import Image from 'next/image';
 import Button from '@/components/Button/Button';
+import { useQuickModal } from '@/components/Modal';
 
 
 import { likeReview, unlikeReview, deleteReview} from '@/lib/review'; 
@@ -20,8 +21,10 @@ interface ReviewListProps {
 }
 
 
-export default function ReviewList({ initialReviews, currentUser }: ReviewListProps) { 
+export default function ReviewList({ initialReviews, wineId, currentUser }: ReviewListProps) { 
+  const modal = useQuickModal();
 
+  // 리뷰 상태 관리
   const [reviews, setReviews] = useState<Review[]>(initialReviews);
   
  const observerRef = useRef<HTMLDivElement | null>(null);
@@ -56,7 +59,11 @@ export default function ReviewList({ initialReviews, currentUser }: ReviewListPr
       }
   };
 
-  //@TODO: 수정 핸들러 구현
+  //수정 핸들러
+  const handleEdit = (reviewId: number) => {
+      modal.review.edit(wineId, reviewId);
+    }
+
 
   // 삭제 핸들러
   const handleDelete = (reviewId: number) => {
@@ -80,6 +87,10 @@ export default function ReviewList({ initialReviews, currentUser }: ReviewListPr
     } 
   };
 
+  // '리뷰 남기기' 버튼 클릭 핸들러
+  const handleWriteReviewClick = () => {
+    modal.add();
+  };
 
   return (
     <section className={styles.reviewSection}>
@@ -92,6 +103,7 @@ export default function ReviewList({ initialReviews, currentUser }: ReviewListPr
               review={review}
               onLikeClick={() => handleLike(review.id, review.isLiked)}
               onDelete={handleDelete} 
+              onEdit={handleEdit}
               currentUser={currentUser}
             />
           ))
@@ -102,7 +114,11 @@ export default function ReviewList({ initialReviews, currentUser }: ReviewListPr
           <p>작성된 리뷰가 없어요</p>
            <div className={styles.buttonWrapper}>
           </div>
-         <Button variant="primary" className={styles.reviewButton}>
+         <Button 
+         variant="primary" 
+         className={styles.reviewButton}
+         onClick={handleWriteReviewClick}
+         >
           리뷰 남기기
         </Button>
         </div>

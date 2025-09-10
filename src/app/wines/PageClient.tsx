@@ -12,6 +12,7 @@ import { Chip } from "@/components/Chip";
 import RangeSlider from "@/components/RangeSlider/RangeSlider";
 import { RatingRadio } from "@/components/RatingRadio";
 import { components } from "@/types/types";
+import { useQuickModal } from "@/components/Modal";
 
 export type WineListType = components["schemas"]["WineListType"];
 export default function PageClient({
@@ -22,6 +23,7 @@ export default function PageClient({
   recommendedWines: WineListType[];
 }) {
   const router = useRouter();
+  const modal = useQuickModal();
   const [search, setSearch] = useState("");
   const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 400000]);
@@ -65,7 +67,7 @@ export default function PageClient({
 
       {/* 필터/검색/등록 버튼 */}
       <div className={styles.topBar}>
-        <div className={styles.filterWrapper}>
+        <div className={styles.filterWrapper} onClick={() => modal.filter()}>
           <FilterIcon />
         </div>
         <div className={styles.searchInput}>
@@ -81,19 +83,23 @@ export default function PageClient({
             variant="primary"
             ariaLabel="와인 등록하기"
             className={styles.registerButton}
+            onClick={() => modal.add()}
           >
             와인 등록하기
           </Button>
         </div>
       </div>
-      <div className={styles.mobileFilterWrapper}>
+      <div
+        className={styles.mobileFilterWrapper}
+        onClick={() => modal.filter()}
+      >
         <FilterIcon />
       </div>
 
       {/* 본문 레이아웃 */}
       <div className={styles.contentLayout}>
         {/* 필터 영역 */}
-        <aside className={styles.filterPanel}>
+        <div className={styles.filterPanel}>
           <div className={styles.desktopChip}>
             <h3>WINE TYPES</h3>
             <Chip
@@ -141,10 +147,11 @@ export default function PageClient({
             variant="primary"
             ariaLabel="와인 등록하기"
             className={styles.registerButtonSide}
+            onClick={() => modal.add()}
           >
             와인 등록하기
           </Button>
-        </aside>
+        </div>
 
         {/* 카드 리스트 */}
         <div className={styles.wineList}>
@@ -172,6 +179,7 @@ export default function PageClient({
           variant="primary"
           ariaLabel="와인 등록하기"
           className={styles.mobileRegisterBtn}
+          onClick={() => modal.add()}
         >
           와인 등록하기
         </Button>
