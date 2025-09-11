@@ -10,11 +10,12 @@ import DropdownMenu from "@/components/DropdownMenu/DropdownMenu";
 import { DropdownMenuItem } from "@/components/DropdownMenu/types";
 import { useQuickModal, ConfirmationModal } from "@/components/Modal";
 import { deleteReview } from "@/actions/review.action";
+import { formatTimeAgo } from "@/utils/formatTime";
 
 export type Review = {
   id: string;
   rating: number;
-  time: string;
+  updatedAt: string;
   wine: string;
   note: string;
   /** 있으면 리뷰 수정에 함께 사용됨 */
@@ -79,7 +80,7 @@ function MyProfileReviewCard({ review, onDeleted }: Props) {
             {review.rating.toFixed(1)}
           </Tag>
           <p className={`${styles.time} ${font["text-md-regular"]}`}>
-            {review.time}
+            {formatTimeAgo(review.updatedAt)}
           </p>
         </div>
         <div className={styles.right}>

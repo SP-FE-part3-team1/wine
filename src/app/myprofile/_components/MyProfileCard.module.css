@@ -30,6 +30,28 @@
   color: var(--grayscale-800);
 }
 
+.wrapperprofile {
+  display: grid;
+  gap: 0.4rem;
+  justify-content: center;
+}
+
+.nickname1 {
+  justify-self: center;
+}
+
+.resetBtn {
+  background: none;
+  border: 0;
+  padding: 0;
+  color: var(--grayscale-500);
+  cursor: pointer;
+  font-size: 12px;
+}
+.resetBtn:hover {
+  color: var(--grayscale-800);
+}
+
 .nickname {
   width: 100%;
   padding: 1rem 0 0.8rem 0.2rem;
