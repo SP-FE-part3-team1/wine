@@ -20,7 +20,8 @@ const WINE_TYPE_FILTER_OPTIONS = [
 export const FilterModal = ({
   initialData,
   onClose,
-  onApply
+  onApply,
+  maxPrice = 400000 // 기본값: 400000, 동적으로 전달받으면 해당 값 사용
 }: FilterModalProps) => {
   const [filterData, setFilterData] = useState<FilterState>(initialData);
 
@@ -77,20 +78,20 @@ export const FilterModal = ({
                   <div 
                     className={styles.sliderRange}
                     style={{
-                      left: `${((filterData.priceRange[0] || 0) / 400000) * (283 - 24)}px`,
-                      width: `${(((filterData.priceRange[1] || 400000) - (filterData.priceRange[0] || 0)) / 400000) * (283 - 24)}px`
+                      left: `${((filterData.priceRange[0] || 0) / maxPrice) * (283 - 24)}px`,
+                      width: `${(((filterData.priceRange[1] || maxPrice) - (filterData.priceRange[0] || 0)) / maxPrice) * (283 - 24)}px`
                     }}
                   />
                 </div>
                 <input
                   type="range"
                   min="0"
-                  max="400000"
+                  max={maxPrice}
                   step="10000"
                   value={filterData.priceRange[0] || 0}
                   onChange={(e) => {
                     const value = parseInt(e.target.value);
-                    const maxValue = filterData.priceRange[1] || 400000;
+                    const maxValue = filterData.priceRange[1] || maxPrice;
                     updateFilterData('priceRange', [Math.min(value, maxValue), maxValue] as [number, number]);
                   }}
                   className={`${styles.rangeInput} ${styles.rangeInputMin}`}
@@ -98,9 +99,9 @@ export const FilterModal = ({
                 <input
                   type="range"
                   min="0"
-                  max="400000"
+                  max={maxPrice}
                   step="10000"
-                  value={filterData.priceRange[1] || 400000}
+                  value={filterData.priceRange[1] || maxPrice}
                   onChange={(e) => {
                     const value = parseInt(e.target.value);
                     const minValue = filterData.priceRange[0] || 0;
@@ -111,7 +112,7 @@ export const FilterModal = ({
                 <div 
                   className={styles.priceLabel}
                   style={{
-                    left: `${12 + ((filterData.priceRange[0] || 0) / 400000) * (283 - 24)}px`
+                    left: `${12 + ((filterData.priceRange[0] || 0) / maxPrice) * (283 - 24)}px`
                   }}
                 >
                   ₩{(filterData.priceRange[0] || 0).toLocaleString()}
@@ -119,10 +120,10 @@ export const FilterModal = ({
                 <div 
                   className={styles.priceLabel}
                   style={{
-                    left: `${12 + ((filterData.priceRange[1] || 400000) / 400000) * (283 - 24)}px`
+                    left: `${12 + ((filterData.priceRange[1] || maxPrice) / maxPrice) * (283 - 24)}px`
                   }}
                 >
-                  ₩{(filterData.priceRange[1] || 400000).toLocaleString()}
+                  ₩{(filterData.priceRange[1] || maxPrice).toLocaleString()}
                 </div>
               </div>
             </div>

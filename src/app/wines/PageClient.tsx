@@ -94,7 +94,7 @@ export default function PageClient({
               priceRange,
               rating,
             };
-            modal.filter(currentFilters, handleFilterApply);
+            modal.filter(currentFilters, handleFilterApply, maxPrice);
           }}
         >
           <FilterIcon />
@@ -141,7 +141,7 @@ export default function PageClient({
             priceRange,
             rating,
           };
-          modal.filter(currentFilters, handleFilterApply);
+          modal.filter(currentFilters, handleFilterApply, maxPrice);
         }}
       >
         <FilterIcon />

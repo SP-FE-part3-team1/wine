@@ -128,6 +128,7 @@ export const ModalProvider = ({ children }: ModalProviderProps) => {
         return (
           <FilterModal
             initialData={modalData.initialData as FilterState}
+            maxPrice={modalData.maxPrice as number | undefined}
             onClose={modalManager.closeModal}
             onApply={(filters) => {
               // 필터 적용 콜백이 있으면 실행

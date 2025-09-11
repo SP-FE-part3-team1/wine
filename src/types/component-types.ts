@@ -149,6 +149,7 @@ export interface FilterModalProps {
   initialData: FilterState;
   onClose: () => void;
   onApply: (filters: FilterState) => void;
+  maxPrice?: number; // 동적 최대 가격 (기본값: 400000)
 }
 
 // Modal Manager Hook 반환 타입
@@ -163,7 +164,8 @@ export interface UseModalManagerReturn {
   ) => Promise<void>;
   openFilterModal: (
     currentFilters: FilterState,
-    onApply?: (filters: FilterState) => void
+    onApply?: (filters: FilterState) => void,
+    maxPrice?: number
   ) => void;
   closeModal: () => void;
 }

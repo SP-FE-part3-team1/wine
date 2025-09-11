@@ -152,15 +152,18 @@ export const useModalManager = (): UseModalManagerReturn => {
   /**
    * 필터 모달 열기
    * @param currentFilters - 현재 적용된 필터 상태
+   * @param onApply - 필터 적용 콜백
+   * @param maxPrice - 가격 슬라이더 최대값 (옵션)
    */
   const openFilterModal = useCallback(
-    (currentFilters: FilterState, onApply?: (filters: FilterState) => void) => {
+    (currentFilters: FilterState, onApply?: (filters: FilterState) => void, maxPrice?: number) => {
       setModalState({
         activeModal: ModalType.FILTER,
         modalData: {
           initialData: currentFilters,
           onClose: closeModal,
           onApply,
+          maxPrice,
         },
         isLoading: false,
       });

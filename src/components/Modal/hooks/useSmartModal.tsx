@@ -37,6 +37,7 @@ interface ModalData {
   intent?: string;
   onApply?: (filters: FilterState) => void;
   onSuccess?: (review: components["schemas"]["ReviewDetailType"]) => void;
+  maxPrice?: number;
   [key: string]: unknown;
 }
 
@@ -219,7 +220,7 @@ export const useSmartModal = (options: SmartModalOptions = {}) => {
         }
       };
       const currentFilters = data?.filters || FILTER_DEFAULT_VALUES;
-      return openFilterModal(currentFilters, handleApply);
+      return openFilterModal(currentFilters, handleApply, data?.maxPrice);
     },
     [openFilterModal, options]
   );
@@ -416,9 +417,10 @@ export const useSmartModal = (options: SmartModalOptions = {}) => {
     edit: (data?: ModalData) => openSmartModal("edit", data),
     filter: (
       filters?: FilterState,
-      onApply?: (filters: FilterState) => void
+      onApply?: (filters: FilterState) => void,
+      maxPrice?: number
     ) => {
-      openSmartModal("filter", { filters, onApply });
+      openSmartModal("filter", { filters, onApply, maxPrice });
     },
 
     // 명시적 액션 (타입 안전)
@@ -486,9 +488,10 @@ export const useQuickModal = (customOptions?: Partial<SmartModalOptions>) => {
     edit: smartModal.edit, // 수정하기 (페이지별 자동 판별)
     filter: (
       filters?: FilterState,
-      onApply?: (filters: FilterState) => void
+      onApply?: (filters: FilterState) => void,
+      maxPrice?: number
     ) => {
-      smartModal.filter(filters, onApply);
+      smartModal.filter(filters, onApply, maxPrice);
     }, // 필터 열기
 
     // 명시적 제어가 필요한 경우
