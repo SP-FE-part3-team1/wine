@@ -19,6 +19,13 @@ import {
 import { createReview, updateReview } from "@/actions/review.action";
 import { components } from "@/types/types";
 import { StarRating } from "../../StarRating/StarRating";
+
+// 전역 window 타입 확장
+declare global {
+  interface Window {
+    reviewUpdateCallbacks?: Array<(review: components["schemas"]["ReviewDetailType"], mode: "create" | "edit") => void>;
+  }
+}
 import { Chip } from "../../Chip/Chip";
 import Button from "../../Button/Button";
 import styles from "./ReviewFormModal.module.css";
@@ -74,16 +81,21 @@ export const ReviewFormModal = ({
       if (onSuccess && result) {
         onSuccess(result);
       }
-      
+
       // 글로벌 콜백 처리 - 전체 페이지에서 리뷰 업데이트 사용
-      if (typeof window !== 'undefined' && (window as any).reviewUpdateCallbacks) {
-        (window as any).reviewUpdateCallbacks.forEach((callback: (review: components["schemas"]["ReviewDetailType"], mode: "create" | "edit") => void) => {
-          try {
-            callback(result, mode);
-          } catch (error) {
-            console.error('Review callback error:', error);
+      if (
+        typeof window !== "undefined" &&
+        window.reviewUpdateCallbacks
+      ) {
+        window.reviewUpdateCallbacks.forEach(
+          (callback) => {
+            try {
+              callback(result, mode);
+            } catch (error) {
+              console.error("Review callback error:", error);
+            }
           }
-        });
+        );
       }
       router.refresh(); // 페이지 새로고침
       onClose();
@@ -107,20 +119,20 @@ export const ReviewFormModal = ({
         <div className={styles.wineHeader}>
           <div className={styles.wineImageContainer}>
             {wineImage ? (
-              <img 
-                src={wineImage} 
-                alt={wineName || "와인"} 
+              <img
+                src={wineImage}
+                alt={wineName || "와인"}
                 className={styles.wineImage}
                 onError={(e) => {
                   // 이미지 로드 실패시 기본 SVG 아이콘으로 대체
                   const target = e.target as HTMLImageElement;
-                  target.style.display = 'none';
-                  target.nextElementSibling?.removeAttribute('style');
+                  target.style.display = "none";
+                  target.nextElementSibling?.removeAttribute("style");
                 }}
               />
             ) : null}
             <svg
-              style={wineImage ? { display: 'none' } : {}}
+              style={wineImage ? { display: "none" } : {}}
               width="59"
               height="59"
               viewBox="0 0 59 59"
@@ -289,7 +301,11 @@ export const ReviewFormModal = ({
             disabled={!validateForm() || isSubmitting}
             className={styles.submitButton}
           >
-            {isSubmitting ? "저장 중..." : (mode === "edit" ? "리뷰 수정하기" : "리뷰 남기기")}
+            {isSubmitting
+              ? "저장 중..."
+              : mode === "edit"
+              ? "리뷰 수정하기"
+              : "리뷰 남기기"}
           </Button>
         </div>
       </div>
