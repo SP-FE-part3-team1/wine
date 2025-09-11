@@ -106,6 +106,8 @@ export const ModalProvider = ({ children }: ModalProviderProps) => {
             wineId={modalData.wineId as string}
             reviewId={modalData.reviewId as string | undefined}
             initialData={modalData.initialData as ReviewFormData | undefined}
+            wineName={modalData.wineName as string | undefined}
+            wineImage={modalData.wineImage as string | undefined}
             onClose={modalManager.closeModal}
             onSuccess={(review) => {
               // 성공 콜백이 있으면 실행

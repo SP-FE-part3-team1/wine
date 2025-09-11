@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, useCallback } from "react";
 import MyWineCard from "./_components/MyWineCard";
 import MyProfileReviewCard from "./_components/MyProfileReviewCard";
 import MyProfileCard from "./_components/MyProfileCard";
@@ -71,12 +71,33 @@ type Props = {
 export default function MyProfilePageClient({ initial }: Props) {
   const [active, setActive] = useState<TabKey>("reviews");
 
-  // 이미 서버에서 다 받아옴 → 로딩/에러 상태 불필요
-  const { myprofile, reviews, wines } = initial;
+  // 동적 업데이트를 위한 상태 관리
+  const [reviews, setReviews] = useState<ReviewCardData[]>([]);
+  const [wines, setWines] = useState<MyWineCardData[]>([]);
+  const currentReviews = reviews.length > 0 ? reviews : initial.reviews;
+  const currentWines = wines.length > 0 ? wines : initial.wines;
+  const { myprofile } = initial;
+  
+  // 삭제 콜백 함수들
+  const handleReviewDeleted = useCallback((deletedId: string) => {
+    if (reviews.length === 0) {
+      setReviews(initial.reviews.filter(r => String(r.id) !== deletedId));
+    } else {
+      setReviews(prev => prev.filter(r => String(r.id) !== deletedId));
+    }
+  }, [reviews.length, initial.reviews]);
+  
+  const handleWineDeleted = useCallback((deletedId: string) => {
+    if (wines.length === 0) {
+      setWines(initial.wines.filter(w => String(w.id) !== deletedId));
+    } else {
+      setWines(prev => prev.filter(w => String(w.id) !== deletedId));
+    }
+  }, [wines.length, initial.wines]);
 
   const counts = useMemo(
-    () => ({ reviews: reviews.length, wines: wines.length }),
-    [reviews, wines]
+    () => ({ reviews: currentReviews.length, wines: currentWines.length }),
+    [currentReviews.length, currentWines.length]
   );
 
   return (
@@ -126,7 +147,7 @@ export default function MyProfilePageClient({ initial }: Props) {
 
           <div className={styles.list}>
             {active === "reviews" ? (
-              reviews.length === 0 ? (
+              currentReviews.length === 0 ? (
                 <div className={styles.warningwrapper}>
                   <div className={styles.warning}>
                     <Image
@@ -141,11 +162,11 @@ export default function MyProfilePageClient({ initial }: Props) {
                   </div>
                 </div>
               ) : (
-                reviews.map((r) => (
-                  <MyProfileReviewCard key={r.id} review={toCardReview(r)} />
+                currentReviews.map((r) => (
+                  <MyProfileReviewCard key={r.id} review={toCardReview(r)} onDeleted={handleReviewDeleted} />
                 ))
               )
-            ) : wines.length === 0 ? (
+            ) : currentWines.length === 0 ? (
               <div className={styles.warningwrapper}>
                 <div className={styles.warning}>
                   <Image
@@ -158,7 +179,7 @@ export default function MyProfilePageClient({ initial }: Props) {
                 </div>
               </div>
             ) : (
-              wines.map((w) => <MyWineCard key={w.id} mywine={w} />)
+              currentWines.map((w) => <MyWineCard key={w.id} mywine={w} onDeleted={handleWineDeleted} />)
             )}
           </div>
         </section>

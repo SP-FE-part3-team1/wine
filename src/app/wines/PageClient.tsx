@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
 import WineCarousel from "./Components/WineCarousel/WineCarousel";
@@ -13,6 +13,8 @@ import RangeSlider from "@/components/RangeSlider/RangeSlider";
 import { RatingRadio } from "@/components/RatingRadio";
 import { components } from "@/types/types";
 import { useQuickModal } from "@/components/Modal";
+import { UNIFIED_RATING_OPTIONS } from "@/components/Modal/manager/modalConfigs";
+import type { FilterState } from "@/types/component-types";
 
 export type WineListType = components["schemas"]["WineListType"];
 export default function PageClient({
@@ -30,6 +32,13 @@ export default function PageClient({
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 400000]);
   const [rating, setRating] = useState<string>("");
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  // 필터 적용 콜백 함수
+  const handleFilterApply = useCallback((newFilters: FilterState) => {
+    setSelectedTypes(newFilters.selectedTypes);
+    setPriceRange(newFilters.priceRange);
+    setRating(newFilters.rating);
+  }, []);
 
   // 검색/필터링 로직
   const filteredWines = wines.filter((wine) => {
@@ -69,7 +78,14 @@ export default function PageClient({
 
       {/* 필터/검색/등록 버튼 */}
       <div className={styles.topBar}>
-        <div className={styles.filterWrapper} onClick={() => modal.filter()}>
+        <div className={styles.filterWrapper} onClick={() => {
+          const currentFilters: FilterState = {
+            selectedTypes,
+            priceRange,
+            rating
+          };
+          modal.filter(currentFilters, handleFilterApply);
+        }}>
           <FilterIcon />
         </div>
         <div className={styles.searchInput}>
@@ -108,7 +124,14 @@ export default function PageClient({
       </div>
       <div
         className={styles.mobileFilterWrapper}
-        onClick={() => modal.filter()}
+        onClick={() => {
+          const currentFilters: FilterState = {
+            selectedTypes,
+            priceRange,
+            rating
+          };
+          modal.filter(currentFilters, handleFilterApply);
+        }}
       >
         <FilterIcon />
       </div>
@@ -151,13 +174,7 @@ export default function PageClient({
               name="rating"
               value={rating}
               onChange={setRating}
-              options={[
-                { value: "all", label: "전체" },
-                { value: "4", label: "4.5 - 5.0" },
-                { value: "3", label: "4.0 - 4.5" },
-                { value: "2", label: "3.5 - 4.0" },
-                { value: "1", label: "3.0 - 3.5" },
-              ]}
+              options={UNIFIED_RATING_OPTIONS}
             />
           </div>
           <Button

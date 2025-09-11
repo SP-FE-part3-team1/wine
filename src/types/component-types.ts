@@ -134,15 +134,15 @@ export interface ReviewFormModalProps {
   onClose: () => void;
   onSuccess?: (review: components["schemas"]["ReviewDetailType"]) => void;
   wineName?: string;
+  wineImage?: string;
   wineAvgRating?: number;
 }
 
-// 필터 관련 타입
+// 필터 관련 타입 (데스크탑과 모바일 통합)
 export interface FilterState {
-  wineTypes: string[];
+  selectedTypes: string[];
   priceRange: [number, number];
-  ratingRange: [number, number];
-  selectedRating?: string;
+  rating: string;
 }
 
 export interface FilterModalProps {
@@ -158,7 +158,8 @@ export interface UseModalManagerReturn {
   openReviewModal: (
     mode: "create" | "edit",
     wineId: string,
-    reviewId?: string
+    reviewId?: string | null,
+    onSuccess?: (review: components["schemas"]["ReviewDetailType"]) => void
   ) => Promise<void>;
   openFilterModal: (
     currentFilters: FilterState,

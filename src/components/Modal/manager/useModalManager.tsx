@@ -98,6 +98,19 @@ export const useModalManager = (): UseModalManagerReturn => {
       onSuccess?: ReviewFormModalProps["onSuccess"]
     ) => {
       let initialData = null;
+      let wineName = "";
+      let wineImage = "";
+
+      // 와인 정보 로드
+      try {
+        const wine = await getWine(wineId);
+        if (wine) {
+          wineName = wine.name;
+          wineImage = wine.image;
+        }
+      } catch (error) {
+        console.error("Failed to load wine data:", error);
+      }
 
       // 수정 모드인 경우 기존 데이터 로드
       if (mode === "edit" && reviewId) {
@@ -127,6 +140,8 @@ export const useModalManager = (): UseModalManagerReturn => {
           initialData,
           onClose: closeModal,
           onSuccess,
+          wineName,
+          wineImage,
         },
         isLoading: false,
       });

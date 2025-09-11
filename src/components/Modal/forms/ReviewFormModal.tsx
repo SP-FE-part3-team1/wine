@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Modal } from "../Modal";
 import {
@@ -17,6 +17,7 @@ import {
 // import { reviewApiUrls } from "./api-urls";
 // ✅ 새로운 Server Action을 임포트합니다. (파일 경로는 실제 프로젝트에 맞게 조정)
 import { createReview, updateReview } from "@/actions/review.action";
+import { components } from "@/types/types";
 import { StarRating } from "../../StarRating/StarRating";
 import { Chip } from "../../Chip/Chip";
 import Button from "../../Button/Button";
@@ -30,6 +31,7 @@ export const ReviewFormModal = ({
   onClose,
   onSuccess,
   wineName,
+  wineImage,
   wineAvgRating,
 }: ReviewFormModalProps) => {
   const router = useRouter();
@@ -72,6 +74,17 @@ export const ReviewFormModal = ({
       if (onSuccess && result) {
         onSuccess(result);
       }
+      
+      // 글로벌 콜백 처리 - 전체 페이지에서 리뷰 업데이트 사용
+      if (typeof window !== 'undefined' && (window as any).reviewUpdateCallbacks) {
+        (window as any).reviewUpdateCallbacks.forEach((callback: (review: components["schemas"]["ReviewDetailType"], mode: "create" | "edit") => void) => {
+          try {
+            callback(result, mode);
+          } catch (error) {
+            console.error('Review callback error:', error);
+          }
+        });
+      }
       router.refresh(); // 페이지 새로고침
       onClose();
     } catch (error) {
@@ -90,10 +103,24 @@ export const ReviewFormModal = ({
       className={styles.reviewFormModal}
     >
       <div className={styles.modalContent}>
-        {/* Wine Icon and Title - Matching Figma Design */}
+        {/* Wine Header - 와인 이미지와 이름 */}
         <div className={styles.wineHeader}>
-          <div className={styles.wineIcon}>
+          <div className={styles.wineImageContainer}>
+            {wineImage ? (
+              <img 
+                src={wineImage} 
+                alt={wineName || "와인"} 
+                className={styles.wineImage}
+                onError={(e) => {
+                  // 이미지 로드 실패시 기본 SVG 아이콘으로 대체
+                  const target = e.target as HTMLImageElement;
+                  target.style.display = 'none';
+                  target.nextElementSibling?.removeAttribute('style');
+                }}
+              />
+            ) : null}
             <svg
+              style={wineImage ? { display: 'none' } : {}}
               width="59"
               height="59"
               viewBox="0 0 59 59"
@@ -246,15 +273,25 @@ export const ReviewFormModal = ({
           </div>
         </div>
 
-        {/* 버튼 - 리뷰등록.png 정확히 구현 */}
-        <Button
-          variant="primary"
-          onClick={handleSubmit}
-          disabled={!validateForm() || isSubmitting}
-          className={styles.submitButton}
-        >
-          {isSubmitting ? "저장 중..." : "리뷰 남기기"}
-        </Button>
+        {/* 버튼 그룹 - 와인 등록 모달과 동일한 패턴 */}
+        <div className={styles.buttonGroup}>
+          <Button
+            variant="secondary"
+            onClick={onClose}
+            disabled={isSubmitting}
+            className={styles.cancelButton}
+          >
+            취소
+          </Button>
+          <Button
+            variant="primary"
+            onClick={handleSubmit}
+            disabled={!validateForm() || isSubmitting}
+            className={styles.submitButton}
+          >
+            {isSubmitting ? "저장 중..." : (mode === "edit" ? "리뷰 수정하기" : "리뷰 남기기")}
+          </Button>
+        </div>
       </div>
     </Modal>
   );

@@ -6,6 +6,7 @@ import { useModal } from "../manager/ModalProvider";
 import { FILTER_DEFAULT_VALUES } from "../manager/modalConfigs";
 import { hasToken } from "@/actions/hasToken.action";
 import type { FilterState } from "../../../types/component-types";
+import type { components } from "../../../types/types";
 
 /**
  * 🚀 스마트 모달 훅 - 컨텍스트 기반 자동 모달 선택 (완전 개선 버전)
@@ -35,6 +36,7 @@ interface ModalData {
   filters?: FilterState;
   intent?: string;
   onApply?: (filters: FilterState) => void;
+  onSuccess?: (review: components["schemas"]["ReviewDetailType"]) => void;
   [key: string]: unknown;
 }
 
@@ -177,14 +179,14 @@ export const useSmartModal = (options: SmartModalOptions = {}) => {
         case "review":
           const wineId = safeConvertId(data?.wineId);
           if (!wineId) throw new Error("와인 ID가 필요합니다.");
-          return await openReviewModal("create", wineId);
+          return await openReviewModal("create", wineId, undefined, data?.onSuccess);
         case "edit":
           const editWineId = safeConvertId(data?.wineId);
           const reviewId = safeConvertId(data?.reviewId);
           if (!editWineId || !reviewId) {
             throw new Error("와인 ID와 리뷰 ID가 필요합니다.");
           }
-          return await openReviewModal("edit", editWineId, reviewId);
+          return await openReviewModal("edit", editWineId, reviewId, data?.onSuccess);
         default:
           throw new Error(`지원하지 않는 리뷰 액션: ${intent}`);
       }
@@ -209,7 +211,7 @@ export const useSmartModal = (options: SmartModalOptions = {}) => {
       const currentFilters = data?.filters || FILTER_DEFAULT_VALUES;
       return openFilterModal(currentFilters, handleApply);
     },
-    [openFilterModal, options.onFilterApply]
+    [openFilterModal, options]
   );
 
   // ➕ 생성 액션 처리 (페이지별 자동 추론, 비동기)
@@ -282,14 +284,14 @@ export const useSmartModal = (options: SmartModalOptions = {}) => {
         case "review-create":
           const reviewWineId = safeConvertId(data?.wineId);
           if (!reviewWineId) throw new Error("와인 ID가 필요합니다.");
-          return await openReviewModal("create", reviewWineId);
+          return await openReviewModal("create", reviewWineId, null, data?.onSuccess);
 
         case "review-edit":
           const editWineId = safeConvertId(data?.wineId);
           const reviewId = safeConvertId(data?.reviewId);
           if (!editWineId || !reviewId)
             throw new Error("와인 ID와 리뷰 ID가 필요합니다.");
-          return await openReviewModal("edit", editWineId, reviewId);
+          return await openReviewModal("edit", editWineId, reviewId, data?.onSuccess);
       }
 
       // 2. 컨텍스트 기반 자동 추론 (비동기 지원)
@@ -475,8 +477,19 @@ export const useQuickModal = (customOptions?: Partial<SmartModalOptions>) => {
       edit: smartModal.editWine,
     },
     review: {
-      create: smartModal.reviewWine,
-      edit: smartModal.editReview,
+      create: (wineId: string | number, options?: { onSuccess?: (review: components["schemas"]["ReviewDetailType"]) => void }) => {
+        return smartModal.openSmartModal("review-create", { 
+          wineId, 
+          onSuccess: options?.onSuccess 
+        });
+      },
+      edit: (wineId: string | number, reviewId: string | number, options?: { onSuccess?: (review: components["schemas"]["ReviewDetailType"]) => void }) => {
+        return smartModal.openSmartModal("review-edit", { 
+          wineId, 
+          reviewId,
+          onSuccess: options?.onSuccess 
+        });
+      },
     },
 
     // 상태 및 유틸리티
