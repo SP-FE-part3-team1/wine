@@ -24,8 +24,8 @@ export default async function RootLayout({
     <html lang="ko" className={`${pretendard.variable}`}>
       <body className={`${pretendard.className}`}>
         <ModalProvider>
-        <ClientLayout isLoggedIn={isLoggedIn}>{children}</ClientLayout>
-        <div className="modal-root"></div>
+          <ClientLayout isLoggedIn={isLoggedIn}>{children}</ClientLayout>
+          <div className="modal-root"></div>
         </ModalProvider>
       </body>
       <Script
