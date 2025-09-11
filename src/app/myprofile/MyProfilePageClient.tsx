@@ -135,7 +135,9 @@ export default function MyProfilePageClient({ initial }: Props) {
                       width={100}
                       height={100}
                     />
-                    <p>작성된 후기가 없습니다.</p>
+                    <p className={styles.warningtext}>
+                      작성된 후기가 없습니다.
+                    </p>
                   </div>
                 </div>
               ) : (
@@ -152,7 +154,7 @@ export default function MyProfilePageClient({ initial }: Props) {
                     width={100}
                     height={100}
                   />
-                  <p>등록한 와인이 없습니다.</p>
+                  <p className={styles.warningtext}>등록한 와인이 없습니다.</p>
                 </div>
               </div>
             ) : (
