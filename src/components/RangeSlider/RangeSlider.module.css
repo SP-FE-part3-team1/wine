@@ -18,6 +18,10 @@
   white-space: nowrap;
 }
 
+.bubbleAbove {
+  top: -5rem;
+}
+
 .thumb {
   -webkit-appearance: none;
   appearance: none;

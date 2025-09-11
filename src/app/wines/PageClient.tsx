@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
 import WineCarousel from "./Components/WineCarousel/WineCarousel";
@@ -27,9 +27,18 @@ export default function PageClient({
   const [search, setSearch] = useState("");
   const [isSearching, setIsSearching] = useState(false);
   const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
-  const [priceRange, setPriceRange] = useState<[number, number]>([0, 400000]);
   const [rating, setRating] = useState<string>("");
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  // 와인 가격 중 최대값
+  const maxPrice = useMemo(() => {
+    const validPrices = wines
+      .map((w) => w.price)
+      .filter((p): p is number => typeof p === "number" && !isNaN(p));
+    return validPrices.length > 0 ? Math.max(...validPrices) : 0;
+  }, [wines]);
+
+  const [priceRange, setPriceRange] = useState<[number, number]>([0, maxPrice]);
 
   // 검색/필터링 로직
   const filteredWines = wines.filter((wine) => {
@@ -137,8 +146,8 @@ export default function PageClient({
             <RangeSlider
               type="range"
               min={0}
-              max={400000}
-              step={1000}
+              max={maxPrice}
+              step={10000}
               value={priceRange}
               onChange={setPriceRange}
               showValue
