@@ -8,6 +8,9 @@ import MyProfileCard from "./_components/MyProfileCard";
 import styles from "./MyProfilePage.module.css";
 import font from "@/app/fonts.module.css";
 import Image from "next/image";
+import Button from "@/components/Button/Button";
+import Link from "next/link";
+import { useQuickModal } from "@/components/Modal";
 
 import type { MyProfile } from "@/actions/myprofile.action";
 import type { ReviewCardData } from "@/actions/myreviews.action";
@@ -77,23 +80,30 @@ export default function MyProfilePageClient({ initial }: Props) {
   const currentReviews = reviews.length > 0 ? reviews : initial.reviews;
   const currentWines = wines.length > 0 ? wines : initial.wines;
   const { myprofile } = initial;
-  
+  const modal = useQuickModal();
+
   // 삭제 콜백 함수들
-  const handleReviewDeleted = useCallback((deletedId: string) => {
-    if (reviews.length === 0) {
-      setReviews(initial.reviews.filter(r => String(r.id) !== deletedId));
-    } else {
-      setReviews(prev => prev.filter(r => String(r.id) !== deletedId));
-    }
-  }, [reviews.length, initial.reviews]);
-  
-  const handleWineDeleted = useCallback((deletedId: string) => {
-    if (wines.length === 0) {
-      setWines(initial.wines.filter(w => String(w.id) !== deletedId));
-    } else {
-      setWines(prev => prev.filter(w => String(w.id) !== deletedId));
-    }
-  }, [wines.length, initial.wines]);
+  const handleReviewDeleted = useCallback(
+    (deletedId: string) => {
+      if (reviews.length === 0) {
+        setReviews(initial.reviews.filter((r) => String(r.id) !== deletedId));
+      } else {
+        setReviews((prev) => prev.filter((r) => String(r.id) !== deletedId));
+      }
+    },
+    [reviews.length, initial.reviews]
+  );
+
+  const handleWineDeleted = useCallback(
+    (deletedId: string) => {
+      if (wines.length === 0) {
+        setWines(initial.wines.filter((w) => String(w.id) !== deletedId));
+      } else {
+        setWines((prev) => prev.filter((w) => String(w.id) !== deletedId));
+      }
+    },
+    [wines.length, initial.wines]
+  );
 
   const counts = useMemo(
     () => ({ reviews: currentReviews.length, wines: currentWines.length }),
@@ -159,11 +169,25 @@ export default function MyProfilePageClient({ initial }: Props) {
                     <p className={styles.warningtext}>
                       작성된 후기가 없습니다.
                     </p>
+                    <Link href={"/wines"}>
+                      <Button
+                        variant="secondary"
+                        radius={12}
+                        className={`${styles.reveiwBtn} ${font["text-lg-semibold"]}`}
+                        style={{ width: "15em", height: "5rem" }}
+                      >
+                        와인 후기 작성하러 가기
+                      </Button>
+                    </Link>
                   </div>
                 </div>
               ) : (
                 currentReviews.map((r) => (
-                  <MyProfileReviewCard key={r.id} review={toCardReview(r)} onDeleted={handleReviewDeleted} />
+                  <MyProfileReviewCard
+                    key={r.id}
+                    review={toCardReview(r)}
+                    onDeleted={handleReviewDeleted}
+                  />
                 ))
               )
             ) : currentWines.length === 0 ? (
@@ -176,10 +200,26 @@ export default function MyProfilePageClient({ initial }: Props) {
                     height={100}
                   />
                   <p className={styles.warningtext}>등록한 와인이 없습니다.</p>
+
+                  <Button
+                    variant="secondary"
+                    radius={12}
+                    className={`${styles.wineAddBtn} ${font["text-lg-semibold"]}`}
+                    style={{ width: "15em", height: "5rem" }}
+                    onClick={() => modal.add()}
+                  >
+                    와인 등록하기
+                  </Button>
                 </div>
               </div>
             ) : (
-              currentWines.map((w) => <MyWineCard key={w.id} mywine={w} onDeleted={handleWineDeleted} />)
+              currentWines.map((w) => (
+                <MyWineCard
+                  key={w.id}
+                  mywine={w}
+                  onDeleted={handleWineDeleted}
+                />
+              ))
             )}
           </div>
         </section>
