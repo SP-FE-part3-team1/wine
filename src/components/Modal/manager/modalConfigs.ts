@@ -88,13 +88,18 @@ export const UNIFIED_RATING_OPTIONS = [
 ];
 
 /**
- * 필터 기본값 (데스크탑과 모바일 통합)
+ * 필터 기본값 (데스크탑과 모바일 통합) - 동적 최대값 지원
  */
-export const FILTER_DEFAULT_VALUES: FilterState = {
+export const createFilterDefaultValues = (maxPrice: number = 400000): FilterState => ({
   selectedTypes: [],
-  priceRange: [0, 400000],
+  priceRange: [0, maxPrice],
   rating: "all",
-};
+});
+
+/**
+ * @deprecated 하드코딩된 기본값 - createFilterDefaultValues 사용 권장
+ */
+export const FILTER_DEFAULT_VALUES: FilterState = createFilterDefaultValues();
 
 /**
  * 맛 프로필 슬라이더 설정

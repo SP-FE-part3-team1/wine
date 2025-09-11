@@ -3,7 +3,7 @@
 import { useState, useCallback } from 'react';
 import { Modal } from '../Modal';
 import { FilterModalProps, FilterState } from '../../../types/component-types';
-import { FILTER_DEFAULT_VALUES, UNIFIED_RATING_OPTIONS } from '../manager/modalConfigs';
+import { createFilterDefaultValues, UNIFIED_RATING_OPTIONS } from '../manager/modalConfigs';
 import { Chip } from '../../Chip/Chip';
 import { RatingRadio } from '../../RatingRadio/RatingRadio';
 import Button from '../../Button/Button';
@@ -36,7 +36,7 @@ export const FilterModal = ({
 
   // 필터 초기화
   const handleReset = () => {
-    setFilterData(FILTER_DEFAULT_VALUES);
+    setFilterData(createFilterDefaultValues(maxPrice));
   };
 
   // 필터 적용

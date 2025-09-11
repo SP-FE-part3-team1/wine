@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useMemo } from "react";
+import { useState, useCallback, useMemo, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
 import WineCarousel from "./Components/WineCarousel/WineCarousel";
@@ -46,7 +46,14 @@ export default function PageClient({
     return validPrices.length > 0 ? Math.max(...validPrices) : 0;
   }, [wines]);
 
-  const [priceRange, setPriceRange] = useState<[number, number]>([0, maxPrice]);
+  const [priceRange, setPriceRange] = useState<[number, number]>([0, 0]);
+
+  // maxPrice가 계산되면 priceRange 업데이트
+  useEffect(() => {
+    if (maxPrice > 0) {
+      setPriceRange(prev => [prev[0], maxPrice]);
+    }
+  }, [maxPrice]);
 
   // 검색/필터링 로직
   const filteredWines = wines.filter((wine) => {
