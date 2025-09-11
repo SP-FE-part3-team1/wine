@@ -153,14 +153,22 @@ export const transformWineDataForApi = (
 
 export const transformReviewDataForApi = (
   formData: ReviewFormData,
-  wineId: string
-): components["schemas"]["CreateReviewBody"] => ({
-  rating: formData.rating,
-  content: formData.content,
-  aroma: formData.aroma,
-  lightBold: formData.lightBold,
-  smoothTannic: formData.smoothTannic,
-  drySweet: formData.drySweet,
-  softAcidic: formData.softAcidic,
-  wineId: parseInt(wineId),
-});
+  wineId?: string
+):
+  | components["schemas"]["CreateReviewBody"]
+  | components["schemas"]["UpdateReviewBody"] => {
+  const baseData = {
+    rating: formData.rating,
+    content: formData.content,
+    aroma: formData.aroma,
+    lightBold: formData.lightBold,
+    smoothTannic: formData.smoothTannic,
+    drySweet: formData.drySweet,
+    softAcidic: formData.softAcidic,
+  };
+
+  if (wineId) {
+    return { ...baseData, wineId: parseInt(wineId) };
+  }
+  return baseData;
+};

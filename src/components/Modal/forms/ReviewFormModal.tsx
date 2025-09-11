@@ -23,7 +23,12 @@ import { StarRating } from "../../StarRating/StarRating";
 // 전역 window 타입 확장
 declare global {
   interface Window {
-    reviewUpdateCallbacks?: Array<(review: components["schemas"]["ReviewDetailType"], mode: "create" | "edit") => void>;
+    reviewUpdateCallbacks?: Array<
+      (
+        review: components["schemas"]["ReviewDetailType"],
+        mode: "create" | "edit"
+      ) => void
+    >;
   }
 }
 import { Chip } from "../../Chip/Chip";
@@ -69,13 +74,18 @@ export const ReviewFormModal = ({
     setIsSubmitting(true);
 
     try {
-      const apiData = transformReviewDataForApi(formData, wineId);
       let result;
 
       if (mode === "edit" && reviewId) {
+        // 수정 시에는 wineId를 제외한 데이터를 전송합니다.
+        const apiData = transformReviewDataForApi(formData);
         result = await updateReview(reviewId, apiData);
       } else {
-        result = await createReview(apiData);
+        // 생성 시에는 wineId를 포함한 데이터를 전송합니다.
+        const apiData = transformReviewDataForApi(formData, wineId);
+        result = await createReview(
+          apiData as components["schemas"]["CreateReviewBody"]
+        );
       }
 
       if (onSuccess && result) {
@@ -83,19 +93,14 @@ export const ReviewFormModal = ({
       }
 
       // 글로벌 콜백 처리 - 전체 페이지에서 리뷰 업데이트 사용
-      if (
-        typeof window !== "undefined" &&
-        window.reviewUpdateCallbacks
-      ) {
-        window.reviewUpdateCallbacks.forEach(
-          (callback) => {
-            try {
-              callback(result, mode);
-            } catch (error) {
-              console.error("Review callback error:", error);
-            }
+      if (typeof window !== "undefined" && window.reviewUpdateCallbacks) {
+        window.reviewUpdateCallbacks.forEach((callback) => {
+          try {
+            callback(result, mode);
+          } catch (error) {
+            console.error("Review callback error:", error);
           }
-        );
+        });
       }
       router.refresh(); // 페이지 새로고침
       onClose();

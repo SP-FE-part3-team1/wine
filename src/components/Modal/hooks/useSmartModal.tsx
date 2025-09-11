@@ -179,14 +179,24 @@ export const useSmartModal = (options: SmartModalOptions = {}) => {
         case "review":
           const wineId = safeConvertId(data?.wineId);
           if (!wineId) throw new Error("와인 ID가 필요합니다.");
-          return await openReviewModal("create", wineId, undefined, data?.onSuccess);
+          return await openReviewModal(
+            "create",
+            wineId,
+            undefined,
+            data?.onSuccess
+          );
         case "edit":
           const editWineId = safeConvertId(data?.wineId);
           const reviewId = safeConvertId(data?.reviewId);
           if (!editWineId || !reviewId) {
             throw new Error("와인 ID와 리뷰 ID가 필요합니다.");
           }
-          return await openReviewModal("edit", editWineId, reviewId, data?.onSuccess);
+          return await openReviewModal(
+            "edit",
+            editWineId,
+            reviewId,
+            data?.onSuccess
+          );
         default:
           throw new Error(`지원하지 않는 리뷰 액션: ${intent}`);
       }
@@ -284,14 +294,24 @@ export const useSmartModal = (options: SmartModalOptions = {}) => {
         case "review-create":
           const reviewWineId = safeConvertId(data?.wineId);
           if (!reviewWineId) throw new Error("와인 ID가 필요합니다.");
-          return await openReviewModal("create", reviewWineId, null, data?.onSuccess);
+          return await openReviewModal(
+            "create",
+            reviewWineId,
+            null,
+            data?.onSuccess
+          );
 
         case "review-edit":
           const editWineId = safeConvertId(data?.wineId);
           const reviewId = safeConvertId(data?.reviewId);
           if (!editWineId || !reviewId)
             throw new Error("와인 ID와 리뷰 ID가 필요합니다.");
-          return await openReviewModal("edit", editWineId, reviewId, data?.onSuccess);
+          return await openReviewModal(
+            "edit",
+            editWineId,
+            reviewId,
+            data?.onSuccess
+          );
       }
 
       // 2. 컨텍스트 기반 자동 추론 (비동기 지원)
@@ -477,17 +497,32 @@ export const useQuickModal = (customOptions?: Partial<SmartModalOptions>) => {
       edit: smartModal.editWine,
     },
     review: {
-      create: (wineId: string | number, options?: { onSuccess?: (review: components["schemas"]["ReviewDetailType"]) => void }) => {
-        return smartModal.openSmartModal("review-create", { 
-          wineId, 
-          onSuccess: options?.onSuccess 
+      create: (
+        wineId: string | number,
+        options?: {
+          onSuccess?: (
+            review: components["schemas"]["ReviewDetailType"]
+          ) => void;
+        }
+      ) => {
+        return smartModal.openSmartModal("review-create", {
+          wineId,
+          onSuccess: options?.onSuccess,
         });
       },
-      edit: (wineId: string | number, reviewId: string | number, options?: { onSuccess?: (review: components["schemas"]["ReviewDetailType"]) => void }) => {
-        return smartModal.openSmartModal("review-edit", { 
-          wineId, 
+      edit: (
+        wineId: string | number,
+        reviewId: string | number,
+        options?: {
+          onSuccess?: (
+            review: components["schemas"]["ReviewDetailType"]
+          ) => void;
+        }
+      ) => {
+        return smartModal.openSmartModal("review-edit", {
+          wineId,
           reviewId,
-          onSuccess: options?.onSuccess 
+          onSuccess: options?.onSuccess,
         });
       },
     },
