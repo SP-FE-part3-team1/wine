@@ -34,7 +34,7 @@ const Nav = ({
             className={style.profile_image_container}
             style={{
               backgroundImage: image
-                ? `"url('${image}')"`
+                ? `url('${image}')`
                 : "url('/assets/images/icon/profile.svg')",
               backgroundRepeat: "no-repeat",
               backgroundPosition: "center",
