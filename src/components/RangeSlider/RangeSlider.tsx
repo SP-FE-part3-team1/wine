@@ -50,7 +50,12 @@ export default function RangeSlider(props: Props) {
       <div className={styles.track} style={trackStyle}>
         {props.showValue && (
           <>
-            <div className={styles.bubble} style={{ left: `${pct(minVal)}%` }}>
+            <div
+              className={`${styles.bubble} ${
+                Math.abs(maxVal - minVal) < step * 10 ? styles.bubbleAbove : ""
+              }`}
+              style={{ left: `${pct(minVal)}%` }}
+            >
               {formatKRW(minVal)}
             </div>
             <div className={styles.bubble} style={{ left: `${pct(maxVal)}%` }}>
