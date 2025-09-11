@@ -14,7 +14,7 @@ import { deleteReview } from "@/actions/review.action";
 export type Review = {
   id: string;
   rating: number;
-  time: string;
+  updatedAt: string;
   wine: string;
   note: string;
   /** 있으면 리뷰 수정에 함께 사용됨 */
@@ -79,7 +79,7 @@ function MyProfileReviewCard({ review, onDeleted }: Props) {
             {review.rating.toFixed(1)}
           </Tag>
           <p className={`${styles.time} ${font["text-md-regular"]}`}>
-            {review.time}
+            {review.updatedAt}
           </p>
         </div>
         <div className={styles.right}>
