@@ -47,6 +47,24 @@
   gap: 3rem;
 }
 
+.warningwrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 7rem;
+}
+
+.warning {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.warningtext {
+  color: var(--grayscale-500);
+}
+
 /* 탭 헤더 */
 .tabsRow {
   display: grid;
