@@ -107,7 +107,13 @@ export const WineFormModal = ({
       if (onSuccess) {
         onSuccess(result);
       }
-      router.refresh(); // 페이지 새로고침
+      
+      // 생성 모드이면 상세 페이지로 이동, 수정 모드이면 현재 페이지 새로고침
+      if (mode === "create" && result?.id) {
+        router.push(`/wines/${result.id}`);
+      } else {
+        router.refresh();
+      }
       onClose();
     } catch (error) {
       console.error(`Error ${mode}ing wine:`, error);

@@ -3,7 +3,7 @@
 import { useState, useCallback } from 'react';
 import { Modal } from '../Modal';
 import { FilterModalProps, FilterState } from '../../../types/component-types';
-import { FILTER_DEFAULT_VALUES } from '../manager/modalConfigs';
+import { FILTER_DEFAULT_VALUES, UNIFIED_RATING_OPTIONS } from '../manager/modalConfigs';
 import { Chip } from '../../Chip/Chip';
 import { RatingRadio } from '../../RatingRadio/RatingRadio';
 import Button from '../../Button/Button';
@@ -16,14 +16,6 @@ const WINE_TYPE_FILTER_OPTIONS = [
   { value: 'SPARKLING', label: 'Sparkling' }
 ];
 
-// sm.png 피그마 디자인에 맞는 평점 옵션
-const RATING_OPTIONS = [
-  { value: 'all', label: '전체' },
-  { value: '4.8-5.0', label: '4.8 - 5.0' },
-  { value: '4.5-4.8', label: '4.5 - 4.8' },
-  { value: '4.0-4.5', label: '4.0 - 4.5' },
-  { value: '3.0-4.0', label: '3.0 - 4.0' }
-];
 
 export const FilterModal = ({
   initialData,
@@ -67,8 +59,8 @@ export const FilterModal = ({
           <h3 className={styles.sectionTitle}>WINE TYPES</h3>
           <Chip
             options={WINE_TYPE_FILTER_OPTIONS}
-            selectedValues={filterData.wineTypes || []}
-            onSelectionChange={(values) => updateFilterData('wineTypes', values)}
+            selectedValues={filterData.selectedTypes || []}
+            onSelectionChange={(values) => updateFilterData('selectedTypes', values)}
             multiple={true}
             ariaLabel="와인 타입 필터"
             className={styles.wineTypeChipContainer}
@@ -141,9 +133,9 @@ export const FilterModal = ({
         <div className={styles.section}>
           <h3 className={styles.sectionTitle}>RATING</h3>
           <RatingRadio
-            options={RATING_OPTIONS}
-            value={filterData.selectedRating || 'all'}
-            onChange={(value) => updateFilterData('selectedRating', value)}
+            options={UNIFIED_RATING_OPTIONS}
+            value={filterData.rating || 'all'}
+            onChange={(value) => updateFilterData('rating', value)}
             name="rating-filter"
             className="filterModalRating"
           />

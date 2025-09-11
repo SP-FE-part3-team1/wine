@@ -23,17 +23,34 @@
   margin-bottom: 1.2rem;
 }
 
-.wineIcon {
+/* 와인 이미지 컨테이너 */
+.wineImageContainer {
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 8px;
   width: 6.8rem;
   height: 6.8rem;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+/* 실제 와인 이미지 */
+.wineImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* SVG 아이콘 (이미지 대체용) */
+.wineImageContainer svg {
   padding: 0.7rem;
   color: #6c5ce7;
-  flex-shrink: 0;
   background-color: #f1f0ff;
+  border-radius: 8px;
+  width: 100%;
+  height: 100%;
 }
 
 .wineInfo {
@@ -202,16 +219,15 @@
 
 /* 제출 버튼 - 리뷰등록.png 정확히 구현 */
 .submitButton {
-  width: 100%;
-  height: 4.8rem;
-  margin-top: 1.6rem;
+  flex: 1;
+  height: 5.2rem;
   padding: 1.2rem 2.4rem;
   background-color: #6c5ce7 !important;
   color: #ffffff !important;
   border: none !important;
   border-radius: 0.8rem !important;
-  font-size: 1.4rem !important;
-  font-weight: 500 !important;
+  font-size: 1.6rem !important;
+  font-weight: 600 !important;
   cursor: pointer;
   transition: all 0.2s ease;
 }
@@ -336,6 +352,42 @@
   outline: 0.2rem solid #6c5ce7;
   outline-offset: 0.2rem;
 }
+
+/* 버튼 그룹 스타일 - 와인 등록 모달과 동일하게 */
+.buttonGroup {
+  display: flex;
+  gap: 1.2rem;
+  margin-top: 1.6rem;
+}
+
+.cancelButton {
+  flex: 1;
+  height: 5.2rem;
+  font-size: 1.6rem;
+  font-weight: 600;
+  border: 0.1rem solid #dee2e6;
+  background: #ffffff;
+  color: #495057;
+  border-radius: 0.8rem;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.cancelButton:hover {
+  background: #f8f9fa;
+  border-color: #adb5bd;
+}
+
+.cancelButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.cancelButton:focus-visible {
+  outline: 0.2rem solid #6c5ce7;
+  outline-offset: 0.2rem;
+}
+
 
 /* 추가적인 outline 제거 보장 */
 .reviewTextarea,

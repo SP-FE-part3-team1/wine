@@ -16,7 +16,7 @@ export const WINE_FORM_CONFIG = {
       type: "RED" as WineType,
       region: "",
       price: 0,
-      image: "/assets/images/icon/wine.svg",
+      image: "/assets/images/wine/default-wine-placeholder.png", // 기본 이미지
     } as WineFormData,
     title: "와인 등록하기",
   },
@@ -77,13 +77,23 @@ export const REVIEW_FORM_CONFIG = {
 };
 
 /**
- * 필터 기본값
+ * 통합된 레이팅 옵션 (데스크탑과 모바일 공통)
+ */
+export const UNIFIED_RATING_OPTIONS = [
+  { value: "all", label: "전체" },
+  { value: "4", label: "4.5 - 5.0" },
+  { value: "3", label: "4.0 - 4.5" },
+  { value: "2", label: "3.5 - 4.0" },
+  { value: "1", label: "3.0 - 3.5" },
+];
+
+/**
+ * 필터 기본값 (데스크탑과 모바일 통합)
  */
 export const FILTER_DEFAULT_VALUES: FilterState = {
-  wineTypes: [],
+  selectedTypes: [],
   priceRange: [0, 400000],
-  ratingRange: [0, 5],
-  selectedRating: "all",
+  rating: "all",
 };
 
 /**
@@ -138,7 +148,7 @@ export const transformWineDataForApi = (
   type: formData.type,
   region: formData.region,
   price: formData.price,
-  image: formData.image,
+  image: formData.image || "/assets/images/wine/default-wine-placeholder.png", // 빈 이미지시 기본 이미지
 });
 
 export const transformReviewDataForApi = (
