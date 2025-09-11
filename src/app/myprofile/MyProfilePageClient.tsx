@@ -7,6 +7,7 @@ import MyProfileCard from "./_components/MyProfileCard";
 
 import styles from "./MyProfilePage.module.css";
 import font from "@/app/fonts.module.css";
+import Image from "next/image";
 
 import type { MyProfile } from "@/actions/myprofile.action";
 import type { ReviewCardData } from "@/actions/myreviews.action";
@@ -92,7 +93,7 @@ export default function MyProfilePageClient({ initial }: Props) {
             />
           ) : (
             // 로딩 문구 제거: 데이터가 없을 때만 간단 안내
-            <p>프로필 정보를 불러오지 못했습니다.</p>
+            <p>프로필 정보를 불러오는 중...</p>
           )}
         </div>
       </aside>
@@ -126,14 +127,34 @@ export default function MyProfilePageClient({ initial }: Props) {
           <div className={styles.list}>
             {active === "reviews" ? (
               reviews.length === 0 ? (
-                <p>작성한 후기가 없습니다.</p>
+                <div className={styles.warningwrapper}>
+                  <div className={styles.warning}>
+                    <Image
+                      src="/assets/images/alert/alert.png"
+                      alt=""
+                      width={100}
+                      height={100}
+                    />
+                    <p>작성된 후기가 없습니다.</p>
+                  </div>
+                </div>
               ) : (
                 reviews.map((r) => (
                   <MyProfileReviewCard key={r.id} review={toCardReview(r)} />
                 ))
               )
             ) : wines.length === 0 ? (
-              <p>등록한 와인이 없습니다.</p>
+              <div className={styles.warningwrapper}>
+                <div className={styles.warning}>
+                  <Image
+                    src="/assets/images/alert/alert.png"
+                    alt=""
+                    width={100}
+                    height={100}
+                  />
+                  <p>등록한 와인이 없습니다.</p>
+                </div>
+              </div>
             ) : (
               wines.map((w) => <MyWineCard key={w.id} mywine={w} />)
             )}
