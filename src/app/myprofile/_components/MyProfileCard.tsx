@@ -47,6 +47,7 @@ export default function MyProfileCard({ user }: Props) {
   const [name, setName] = useState("");
   const [imageUrl, setImageUrl] = useState(user.image);
   const [preview, setPreview] = useState<string | null>(null);
+  const [resetImage, setResetImage] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const fileRef = useRef<HTMLInputElement | null>(null);
@@ -71,12 +72,12 @@ export default function MyProfileCard({ user }: Props) {
         setImageUrl(state.image ?? "");
       }
       setError(null);
-
-      // 미리보기/파일 필드 정리
       setPreview(null);
+      setResetImage(false);
+
       if (fileRef.current) fileRef.current.value = "";
 
-      // 다음 프레임에 blob URL revoke
+      // blob URL 정리
       requestAnimationFrame(() => {
         if (blobUrlRef.current) {
           URL.revokeObjectURL(blobUrlRef.current);
@@ -104,6 +105,7 @@ export default function MyProfileCard({ user }: Props) {
       return;
     }
     setError(null);
+    setResetImage(false);
 
     // 이전 blob URL 정리
     if (blobUrlRef.current) {
@@ -116,8 +118,25 @@ export default function MyProfileCard({ user }: Props) {
     setPreview(url);
   };
 
+  // 기본 이미지로 되돌리기
+  const handleResetImage = () => {
+    setError(null);
+    setResetImage(true);
+
+    // 파일/미리보기 초기화
+    if (fileRef.current) fileRef.current.value = "";
+    if (blobUrlRef.current) {
+      URL.revokeObjectURL(blobUrlRef.current);
+      blobUrlRef.current = null;
+    }
+    setPreview(null);
+
+    // 화면 즉시 반영 (기본 이미지 표시)
+    setImageUrl("");
+  };
+
   const changedNickname = !!name.trim() && name.trim() !== displayNickname;
-  const changedImage = !!preview;
+  const changedImage = resetImage || !!preview; // 반드시 boolean으로
   const changed = changedNickname || changedImage;
 
   const currentImageSrc =
@@ -133,17 +152,31 @@ export default function MyProfileCard({ user }: Props) {
             size="md"
             onClick={openPicker}
           />
-          <div style={{ display: "grid", gap: "0.4rem" }}>
-            <p className={font["text-xl-semibold"]}>{displayNickname}</p>
+          <div className={styles.wrapperprofile}>
+            <div className={`${styles.nickname1} ${font["text-xl-semibold"]}`}>
+              {displayNickname}
+            </div>
             {error && (
               <p role="alert" style={{ color: "#d32f2f", fontSize: 12 }}>
                 {error}
               </p>
             )}
+            <div>
+              {(imageUrl || preview) && (
+                <button
+                  type="button"
+                  onClick={handleResetImage}
+                  className={styles.resetBtn}
+                  aria-label="기본 이미지로 변경"
+                >
+                  기본이미지 변경
+                </button>
+              )}
+            </div>
           </div>
         </div>
 
-        {/* 같은 폼에서 닉네임+파일 제출 (파일은 서버에서 uploadImage로 처리) */}
+        {/* 닉네임 + 파일(옵션) 같은 폼에서 제출 */}
         <div className={styles.formaction}>
           <form action={formAction}>
             <input
@@ -155,11 +188,13 @@ export default function MyProfileCard({ user }: Props) {
               style={{ display: "none" }}
               className={styles.inputCol}
             />
+            {resetImage && <input type="hidden" name="removeImage" value="1" />}
 
             <div className={styles.nickname}>
               <label htmlFor="nickname" className={font["text-md-medium"]}>
                 닉네임
               </label>
+
               <div className={styles.fieldRow}>
                 <div className={styles.inputCol}>
                   <CustomInput
