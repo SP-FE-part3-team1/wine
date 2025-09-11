@@ -53,10 +53,10 @@ function toCardReview(r: ReviewCardData) {
   return {
     id: String(r.id),
     rating: r.rating,
-    time: new Date(r.updatedAt).toLocaleDateString(),
     wine: r.wineName ?? r.wine?.name ?? "와인 이름 없음",
     note: r.content,
     wineId: pickWineId(r),
+    updatedAt: r.updatedAt,
   };
 }
 
