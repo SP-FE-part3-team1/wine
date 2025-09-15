@@ -2,7 +2,7 @@
 
 import { fetchWithAuth } from "@/actions/api.action";
 
-const BASE = process.env.NEXT_PUBLIC_API_SERVER_URL!; // 예: https://winereview-api.vercel.app/17-1
+const BASE = process.env.NEXT_PUBLIC_API_SERVER_URL!;
 
 // 안전한 URL 조인
 function joinUrl(base: string, ...parts: (string | number)[]) {
@@ -38,11 +38,6 @@ export type MyWineCardData = {
   region: string;
   price: number;
   imageSrc: string;
-};
-
-type GetResult = {
-  items: MyWineCardData[];
-  nextCursor: number | null;
 };
 
 /** ---------- 유틸 ---------- */

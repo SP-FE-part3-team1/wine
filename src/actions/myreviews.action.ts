@@ -2,7 +2,7 @@
 
 import { fetchWithAuth } from "@/actions/api.action";
 
-const BASE = process.env.NEXT_PUBLIC_API_SERVER_URL!; // 예: https://winereview-api.vercel.app/17-1
+const BASE = process.env.NEXT_PUBLIC_API_SERVER_URL!;
 
 // 슬래시 안전 조인
 function joinUrl(
